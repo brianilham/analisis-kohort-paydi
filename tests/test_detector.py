@@ -1,5 +1,6 @@
 """
-Unit tests for Epic 2: Cohort Analytics Engine and 4D Feature Engineering (`detector.py`).
+Unit tests for Epic 2 & Epic 3: Cohort Analytics Engine, 4D Feature Engineering,
+and Two-Tier Anomaly Detection Engine (`detector.py`).
 """
 
 import numpy as np
@@ -12,6 +13,7 @@ from detector import (
     calculate_cohort_matrices,
     extract_grace_period_watch,
     engineer_agent_features,
+    run_two_tier_detection,
 )
 
 
@@ -156,21 +158,160 @@ def test_feature_separability_for_anomalies(dataset):
     normal_mean_hr = feat_df.loc[feat_df["true_label"] == "Normal", "lapse_shock_vol"].mean()
     hr_mean_shock = feat_df.loc[feat_df["true_label"] == "Hit-and-Run", "lapse_shock_vol"].mean()
 
-    # Hit-and-Run must have substantially higher volume lapse shock than normal agents
     assert hr_mean_shock > normal_mean_hr + 20.0, (
         f"Hit-and-Run lapse_shock_vol ({hr_mean_shock:.2f}) not significantly higher than Normal ({normal_mean_hr:.2f})"
     )
 
-    normal_disp = feat_df.loc[feat_df["true_label"] == "Normal", "ape_disparity_ratio"].mean()
     cp_disp = feat_df.loc[feat_df["true_label"] == "Cherry-Picking", "ape_disparity_ratio"].mean()
-
-    # Cherry-Picking must have high APE disparity ratio (> 1.8x)
     assert cp_disp > 1.8, f"Cherry-Picking APE disparity ratio was {cp_disp:.2f}, expected > 1.8"
 
     cp_shock_ape = feat_df.loc[feat_df["true_label"] == "Cherry-Picking", "lapse_shock_ape"].mean()
     cp_shock_vol = feat_df.loc[feat_df["true_label"] == "Cherry-Picking", "lapse_shock_vol"].mean()
-
-    # In Cherry-Picking, APE shock must significantly exceed volume shock
     assert cp_shock_ape > cp_shock_vol + 15.0, (
         f"Cherry-picking APE shock ({cp_shock_ape:.2f}) should significantly exceed volume shock ({cp_shock_vol:.2f})"
     )
+
+
+# ==============================================================================
+# EPIC 3 TESTS: TWO-TIER DETECTION & MODEL EVALUATION
+# ==============================================================================
+
+
+def test_two_tier_detection_outputs_and_scores(dataset):
+    agents_df, policies_df, history_df = (
+        dataset["agents"],
+        dataset["policies"],
+        dataset["history"],
+    )
+    feat_df = engineer_agent_features(agents_df, policies_df, history_df)
+    detected_df = run_two_tier_detection(feat_df)
+
+    assert len(detected_df) == len(feat_df)
+
+    expected_cols = [
+        "tier1_violation",
+        "tier2_anomaly",
+        "anomaly_score",
+        "risk_category",
+        "primary_risk_drivers",
+    ]
+    for col in expected_cols:
+        assert col in detected_df.columns, f"Missing output column {col}"
+
+    # Score bounded in [0.0, 1.0]
+    scores = detected_df["anomaly_score"]
+    assert (scores >= 0.0).all() and (scores <= 1.0).all()
+
+    # Risk categories check
+    allowed_categories = {
+        "Normal",
+        "Tier 1: Rule Violation (Hit-and-Run)",
+        "Tier 2: ML Anomaly (Cherry-Picking / Hidden Leakage)",
+    }
+    assert set(detected_df["risk_category"]).issubset(allowed_categories)
+
+    # Risk drivers non-empty for flagged agents
+    flagged = detected_df[detected_df["risk_category"] != "Normal"]
+    assert (flagged["primary_risk_drivers"].str.len() > 5).all()
+
+
+def test_tier1_captures_hit_and_run(dataset):
+    """Ensure Tier 1 hard rule flags all extreme Hit-and-Run agents."""
+    agents_df, policies_df, history_df = (
+        dataset["agents"],
+        dataset["policies"],
+        dataset["history"],
+    )
+    feat_df = engineer_agent_features(agents_df, policies_df, history_df)
+    detected_df = run_two_tier_detection(feat_df)
+    merged = detected_df.merge(agents_df[["agent_id", "true_label"]], on="agent_id")
+
+    hr_agents = merged[merged["true_label"] == "Hit-and-Run"]
+    assert len(hr_agents) > 0
+    hr_tier1_captured = hr_agents["tier1_violation"].mean()
+    assert hr_tier1_captured >= 0.83, f"Expected Tier 1 to capture at least 83% of Hit-and-Run, got {hr_tier1_captured:.2%}"
+
+
+def test_tier2_captures_cherry_picking_that_bypasses_tier1(dataset):
+    """Ensure Tier 2 Isolation Forest captures subtle Cherry-Picking agents that pass Tier 1."""
+    agents_df, policies_df, history_df = (
+        dataset["agents"],
+        dataset["policies"],
+        dataset["history"],
+    )
+    feat_df = engineer_agent_features(agents_df, policies_df, history_df)
+    detected_df = run_two_tier_detection(feat_df)
+    merged = detected_df.merge(agents_df[["agent_id", "true_label"]], on="agent_id")
+
+    cp_agents = merged[merged["true_label"] == "Cherry-Picking"]
+    assert len(cp_agents) > 0
+
+    # Cherry-picking agents that bypassed Tier 1
+    cp_bypassed_t1 = cp_agents[~cp_agents["tier1_violation"]]
+    assert len(cp_bypassed_t1) > 0, "Expected some Cherry-Picking agents to bypass Tier 1 volume rule"
+
+    # Tier 2 should catch the vast majority of these bypassed agents
+    cp_t2_catch_rate = cp_bypassed_t1["tier2_anomaly"].mean()
+    assert cp_t2_catch_rate >= 0.70, (
+        f"Tier 2 Isolation Forest catch rate on bypassed CP agents was {cp_t2_catch_rate:.2%}, expected >= 70%"
+    )
+
+
+def test_model_overall_recall_target_on_ground_truth(dataset):
+    """
+    Test SPEC.md Requirement:
+    Recall of anomaly detection against synthetic ground-truth labels >= 85%
+    within top-20% risk ranking.
+    """
+    agents_df, policies_df, history_df = (
+        dataset["agents"],
+        dataset["policies"],
+        dataset["history"],
+    )
+    feat_df = engineer_agent_features(agents_df, policies_df, history_df)
+    detected_df = run_two_tier_detection(feat_df)
+    merged = detected_df.merge(agents_df[["agent_id", "is_anomaly", "true_label"]], on="agent_id")
+
+    # Sort by anomaly_score descending (Risk Ranking)
+    merged_sorted = merged.sort_values("anomaly_score", ascending=False).reset_index(drop=True)
+
+    # Top 20% of agent population
+    top_20_pct_n = int(np.ceil(len(merged_sorted) * 0.20))
+    top_20 = merged_sorted.iloc[:top_20_pct_n]
+
+    total_anomalies = merged["is_anomaly"].sum()
+    anomalies_in_top_20 = top_20["is_anomaly"].sum()
+    recall_top_20 = anomalies_in_top_20 / total_anomalies
+
+    assert recall_top_20 >= 0.85, (
+        f"Recall in Top 20% risk ranking was {recall_top_20:.2%}, target >= 85% required by SPEC.md!"
+    )
+
+
+def test_detector_robustness_with_edge_cases():
+    """Ensure detector handles empty records, single-policy agents, and zero values gracefully."""
+    dummy_agents = pd.DataFrame(
+        {
+            "agent_id": ["AGT-9991", "AGT-9992"],
+            "agent_name": ["Edge Case 1", "Edge Case 2"],
+            "channel": ["Agency", "Bancassurance"],
+            "branch_office": ["Jakarta Selatan", "Surabaya"],
+            "join_date": ["2023-01-01", "2023-01-01"],
+            "total_policies": [1, 0],
+            "total_ape": [5_000_000.0, 0.0],
+            "m12_vol_persistency": [100.0, 0.0],
+            "m13_vol_persistency": [100.0, 0.0],
+            "lapse_shock_vol": [0.0, 0.0],
+            "m12_ape_persistency": [100.0, 0.0],
+            "m13_ape_persistency": [100.0, 0.0],
+            "lapse_shock_ape": [0.0, 0.0],
+            "ape_disparity_ratio": [1.0, 1.0],
+            "cash_payment_ratio": [0.0, 0.0],
+            "grace_period_m11_m12_count": [0, 0],
+            "grace_period_m11_m12_ape": [0.0, 0.0],
+        }
+    )
+    detected = run_two_tier_detection(dummy_agents)
+    assert len(detected) == 2
+    assert not detected["anomaly_score"].isna().any()
+    assert (detected["anomaly_score"] >= 0.0).all()
