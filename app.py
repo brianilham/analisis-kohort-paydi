@@ -75,6 +75,56 @@ st.markdown(
     }
     header[data-testid="stHeader"] * {
         color: #192C4D !important;
+        stroke: #192C4D !important;
+        fill: #192C4D !important;
+    }
+
+    /* Tombol ikon pembuka sidebar saat sidebar sedang ditutup/collapsed */
+    [data-testid="collapsedControl"],
+    [data-testid="stSidebarCollapsedControl"] {
+        display: block !important;
+        visibility: visible !important;
+        z-index: 1000001 !important;
+        top: 0.75rem !important;
+        left: 1rem !important;
+    }
+    [data-testid="collapsedControl"] button,
+    [data-testid="stSidebarCollapsedControl"] button {
+        background-color: #192C4D !important;
+        color: #FFFFFF !important;
+        border: 1.5px solid #192C4D !important;
+        border-radius: 8px !important;
+        padding: 6px 12px !important;
+        box-shadow: 0 2px 8px rgba(25, 44, 77, 0.28) !important;
+        cursor: pointer !important;
+    }
+    [data-testid="collapsedControl"] button:hover,
+    [data-testid="stSidebarCollapsedControl"] button:hover {
+        background-color: #0E1B31 !important;
+        border-color: #C89B2C !important;
+    }
+    [data-testid="collapsedControl"] svg,
+    [data-testid="collapsedControl"] svg *,
+    [data-testid="stSidebarCollapsedControl"] svg,
+    [data-testid="stSidebarCollapsedControl"] svg * {
+        stroke: #FFFFFF !important;
+        color: #FFFFFF !important;
+        fill: #FFFFFF !important;
+    }
+
+    /* Tombol penutup sidebar saat sidebar sedang terbuka */
+    section[data-testid="stSidebar"] button[data-testid="stSidebarCollapseButton"],
+    section[data-testid="stSidebar"] [data-testid="stSidebarHeader"] button {
+        background-color: #FFFFFF !important;
+        border: 1.5px solid #D9E5F2 !important;
+        border-radius: 8px !important;
+    }
+    section[data-testid="stSidebar"] button[data-testid="stSidebarCollapseButton"] svg,
+    section[data-testid="stSidebar"] button[data-testid="stSidebarCollapseButton"] svg *,
+    section[data-testid="stSidebar"] [data-testid="stSidebarHeader"] button svg,
+    section[data-testid="stSidebar"] [data-testid="stSidebarHeader"] button svg * {
+        stroke: #192C4D !important;
+        color: #192C4D !important;
         fill: #192C4D !important;
     }
 
