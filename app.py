@@ -48,8 +48,8 @@ st.markdown(
         color: #192C4D !important;
     }
 
-    /* Memastikan semua teks markdown, paragraf, list, span memiliki warna gelap solid */
-    .stApp p, .stApp span, .stApp label, .stApp li, .stMarkdown p, .stMarkdown span, .stMarkdown div, .stText {
+    /* Memastikan semua teks markdown, paragraf, list memiliki warna gelap solid */
+    .stApp p, .stApp label, .stApp li, .stMarkdown p, .stMarkdown span, .stMarkdown div, .stText {
         color: #192C4D !important;
         font-weight: 450;
     }
@@ -375,7 +375,7 @@ st.markdown(
     }
 
     /* =========================================================================
-       MULTISELECT TAG PILLS (SIDEBAR & HALAMAN UTAMA) - TEKS PUTIH KONTRAS TINGGI
+       MULTISELECT TAG PILLS (SIDEBAR & HALAMAN UTAMA) - ICE BLUE & NAVY BOLD
        ========================================================================= */
     [data-testid="stMultiSelect"] [data-baseweb="tag"],
     section[data-testid="stSidebar"] [data-testid="stMultiSelect"] [data-baseweb="tag"],
@@ -383,31 +383,46 @@ st.markdown(
     div[data-baseweb="select"] [data-baseweb="tag"],
     span[data-baseweb="tag"],
     div[data-baseweb="tag"] {
-        background-color: #192C4D !important;
-        background: #192C4D !important;
-        border: 1px solid #192C4D !important;
+        background-color: #EBF2FA !important;
+        background: #EBF2FA !important;
+        border: 1.5px solid #BACFE8 !important;
         border-radius: 6px !important;
     }
 
+    [data-testid="stMultiSelect"] [data-baseweb="tag"] span,
+    [data-testid="stMultiSelect"] [data-baseweb="tag"] div,
+    [data-testid="stMultiSelect"] [data-baseweb="tag"] p,
     [data-testid="stMultiSelect"] [data-baseweb="tag"] *,
+    section[data-testid="stSidebar"] [data-testid="stMultiSelect"] [data-baseweb="tag"] span,
+    section[data-testid="stSidebar"] [data-testid="stMultiSelect"] [data-baseweb="tag"] div,
     section[data-testid="stSidebar"] [data-testid="stMultiSelect"] [data-baseweb="tag"] *,
+    section[data-testid="stSidebar"] [data-baseweb="tag"] span,
+    section[data-testid="stSidebar"] [data-baseweb="tag"] div,
     section[data-testid="stSidebar"] [data-baseweb="tag"] *,
+    div[data-baseweb="select"] [data-baseweb="tag"] span,
     div[data-baseweb="select"] [data-baseweb="tag"] *,
+    span[data-baseweb="tag"] span,
     span[data-baseweb="tag"] *,
+    div[data-baseweb="tag"] span,
     div[data-baseweb="tag"] * {
-        color: #FFFFFF !important;
-        fill: #FFFFFF !important;
-        stroke: #FFFFFF !important;
+        color: #192C4D !important;
+        -webkit-text-fill-color: #192C4D !important;
         font-weight: 700 !important;
-        font-size: 0.85rem !important;
+        font-size: 0.88rem !important;
+        opacity: 1 !important;
+        visibility: visible !important;
     }
 
     [data-testid="stMultiSelect"] [data-baseweb="tag"] svg,
+    [data-testid="stMultiSelect"] [data-baseweb="tag"] svg *,
     section[data-testid="stSidebar"] [data-baseweb="tag"] svg,
-    div[data-baseweb="select"] [data-baseweb="tag"] svg {
-        fill: #FFFFFF !important;
-        stroke: #FFFFFF !important;
-        color: #FFFFFF !important;
+    section[data-testid="stSidebar"] [data-baseweb="tag"] svg *,
+    div[data-baseweb="select"] [data-baseweb="tag"] svg,
+    div[data-baseweb="select"] [data-baseweb="tag"] svg * {
+        fill: #192C4D !important;
+        stroke: #192C4D !important;
+        color: #192C4D !important;
+        opacity: 0.85 !important;
     }
     </style>
     """,
