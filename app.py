@@ -49,7 +49,7 @@ st.markdown(
     }
 
     /* Memastikan semua teks markdown, paragraf, list, span memiliki warna gelap solid */
-    p, span, label, li, .stMarkdown p, .stMarkdown span, .stMarkdown div, .stText {
+    .stApp p, .stApp span, .stApp label, .stApp li, .stMarkdown p, .stMarkdown span, .stMarkdown div, .stText {
         color: #192C4D !important;
         font-weight: 450;
     }
@@ -171,14 +171,94 @@ st.markdown(
         font-size: 0.9rem !important;
     }
 
-    /* Multiselect tag badges */
+    /* Kotak input Selectbox & Multiselect kondisi tertutup */
+    div[data-baseweb="select"] > div {
+        background-color: #FFFFFF !important;
+        border: 1.5px solid #D9E5F2 !important;
+        border-radius: 8px !important;
+    }
+    div[data-baseweb="select"] div,
+    div[data-baseweb="select"] span,
+    div[data-baseweb="select"] input {
+        color: #192C4D !important;
+    }
+
+    /* Multiselect tag badges (pilihan yang aktif di dalam kotak) */
     span[data-baseweb="tag"] {
         background-color: #EBF2FA !important;
         border: 1px solid #BACFE8 !important;
+        border-radius: 6px !important;
     }
     span[data-baseweb="tag"] span {
         color: #192C4D !important;
         font-weight: 600 !important;
+    }
+    span[data-baseweb="tag"] svg {
+        fill: #192C4D !important;
+        color: #192C4D !important;
+    }
+
+    /* Popover Menu Dropdown (Selectbox & Multiselect saat diklik/dibuka) */
+    div[data-baseweb="popover"],
+    div[data-baseweb="popover"] > div,
+    div[data-baseweb="popover"] ul,
+    ul[data-baseweb="menu"] {
+        background-color: #192C4D !important;
+        border: 1.5px solid #334E78 !important;
+        border-radius: 8px !important;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35) !important;
+    }
+
+    /* Opsi daftar pilihan di dalam menu dropdown popover */
+    li[data-baseweb="menu-item"],
+    li[role="option"],
+    div[data-baseweb="popover"] li,
+    div[data-baseweb="popover"] [role="option"],
+    div[data-baseweb="popover"] ul li {
+        background-color: #192C4D !important;
+        color: #FFFFFF !important;
+        font-weight: 600 !important;
+        font-size: 0.92rem !important;
+        padding: 8px 14px !important;
+    }
+
+    /* Teks seluruh elemen di dalam opsi dropdown (teks putih terang) */
+    li[data-baseweb="menu-item"] *,
+    li[role="option"] *,
+    div[data-baseweb="popover"] li *,
+    div[data-baseweb="popover"] [role="option"] *,
+    div[data-baseweb="popover"] ul li * {
+        color: #FFFFFF !important;
+        fill: #FFFFFF !important;
+    }
+
+    /* Efek hover ketika kursor menyorot opsi */
+    li[data-baseweb="menu-item"]:hover,
+    li[role="option"]:hover,
+    div[data-baseweb="popover"] li:hover,
+    div[data-baseweb="popover"] [role="option"]:hover {
+        background-color: #274370 !important;
+    }
+
+    li[data-baseweb="menu-item"]:hover *,
+    li[role="option"]:hover *,
+    div[data-baseweb="popover"] li:hover *,
+    div[data-baseweb="popover"] [role="option"]:hover * {
+        color: #FFFFFF !important;
+    }
+
+    /* Status opsi yang sedang terpilih */
+    li[data-baseweb="menu-item"][aria-selected="true"],
+    li[role="option"][aria-selected="true"],
+    div[data-baseweb="popover"] [aria-selected="true"] {
+        background-color: #243B61 !important;
+    }
+
+    li[data-baseweb="menu-item"][aria-selected="true"] *,
+    li[role="option"][aria-selected="true"] *,
+    div[data-baseweb="popover"] [aria-selected="true"] * {
+        color: #FFFFFF !important;
+        font-weight: 700 !important;
     }
 
     /* Tab navigasi */
