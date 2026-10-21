@@ -1,6 +1,6 @@
 """
 Plotly Visualizations & Dashboard Analytics Components for PAYDI Persistency App.
-Themed with MNC Life Design System (DESIGN.md).
+Themed with MNC Life Design System (DESIGN.md) and High-Contrast Typography.
 """
 
 from __future__ import annotations
@@ -14,14 +14,15 @@ import plotly.graph_objects as go
 
 
 # MNC Life Design Tokens
-MNC_PRIMARY = "#192C4D"       # Deep Navy
-MNC_SECONDARY = "#666666"     # Neutral Gray
+MNC_PRIMARY = "#192C4D"       # Deep Navy (Utama)
+MNC_SECONDARY = "#475569"     # Dark Slate Neutral (Teks Keterangan Terbaca)
 MNC_TERTIARY = "#C89B2C"      # Warm Gold
+MNC_TERTIARY_TEXT = "#8C6615" # Darker Gold for high text contrast on white
 MNC_NEUTRAL = "#FFFFFF"       # Clean White
-MNC_SURFACE = "#F5F8FC"       # Atmospheric Surface
-MNC_ERROR = "#D94B4B"         # Clear Red
-MNC_BORDER = "#EEEEFF"        # Light Border
-MNC_MUTED = "#D9E5F2"         # Soft Blue-Gray
+MNC_SURFACE = "#F5F8FC"       # Pale Blue-White
+MNC_ERROR = "#D94B4B"         # Clear Red Alert
+MNC_BORDER = "#D9E5F2"        # Crisp Light Border
+MNC_FONT_FAMILY = "Plus Jakarta Sans, sans-serif"
 
 
 def calculate_dashboard_kpis(
@@ -63,7 +64,7 @@ def create_cohort_heatmap(
     zmin: float = 40.0,
     zmax: float = 100.0,
 ) -> go.Figure:
-    """Generate interactive 2D cohort retention heatmap (M1-M24)."""
+    """Generate interactive 2D cohort retention heatmap with high-contrast text."""
     fig = go.Figure(
         data=go.Heatmap(
             z=matrix_df.values,
@@ -72,12 +73,16 @@ def create_cohort_heatmap(
             colorscale=colorscale,
             zmin=zmin,
             zmax=zmax,
-            colorbar=dict(title="Retention %", ticksuffix="%"),
+            colorbar=dict(
+                title=dict(text="Retensi %", font=dict(color=MNC_PRIMARY, size=12, family=MNC_FONT_FAMILY)),
+                tickfont=dict(color=MNC_PRIMARY, size=11, family=MNC_FONT_FAMILY),
+                ticksuffix="%",
+            ),
             hoverongaps=False,
             hovertemplate=(
-                "<b>Cohort:</b> %{y}<br>"
-                "<b>Policy Month:</b> %{x}<br>"
-                "<b>Retention Rate:</b> %{z:.1f}%<extra></extra>"
+                "<b>Kohort:</b> %{y}<br>"
+                "<b>Bulan Polis:</b> %{x}<br>"
+                "<b>Tingkat Retensi:</b> %{z:.1f}%<extra></extra>"
             ),
         )
     )
@@ -90,25 +95,35 @@ def create_cohort_heatmap(
             y0=0,
             y1=1,
             yref="paper",
-            line=dict(color=MNC_ERROR, width=2, dash="dash"),
+            line=dict(color=MNC_ERROR, width=2.5, dash="dash"),
         )
         fig.add_annotation(
             x="M13",
-            y=1.03,
+            y=1.04,
             yref="paper",
-            text="M13 Cutoff",
+            text="Batas M13",
             showarrow=False,
-            font=dict(size=11, color=MNC_ERROR, family="Plus Jakarta Sans, sans-serif"),
+            font=dict(size=12, color=MNC_ERROR, family=MNC_FONT_FAMILY),
         )
 
     fig.update_layout(
-        title=dict(text=title, font=dict(size=14, color=MNC_PRIMARY, family="Plus Jakarta Sans, sans-serif")),
-        font=dict(family="Plus Jakarta Sans, sans-serif", color=MNC_PRIMARY),
+        title=dict(text=title, font=dict(size=14, color=MNC_PRIMARY, family=MNC_FONT_FAMILY)),
+        font=dict(family=MNC_FONT_FAMILY, color=MNC_PRIMARY),
         plot_bgcolor=MNC_NEUTRAL,
         paper_bgcolor=MNC_NEUTRAL,
-        xaxis=dict(title="Policy Month Index (M1 - M24)", tickangle=-45, gridcolor=MNC_BORDER),
-        yaxis=dict(title="Cohort Month (Issue Date)", autorange="reversed", gridcolor=MNC_BORDER),
-        margin=dict(l=40, r=40, t=50, b=40),
+        xaxis=dict(
+            title=dict(text="Bulan Polis (M1 - M24)", font=dict(color=MNC_PRIMARY, size=12, family=MNC_FONT_FAMILY)),
+            tickfont=dict(color=MNC_PRIMARY, size=11, family=MNC_FONT_FAMILY),
+            tickangle=-45,
+            gridcolor=MNC_BORDER,
+        ),
+        yaxis=dict(
+            title=dict(text="Bulan Kohort (Issue Date)", font=dict(color=MNC_PRIMARY, size=12, family=MNC_FONT_FAMILY)),
+            tickfont=dict(color=MNC_PRIMARY, size=11, family=MNC_FONT_FAMILY),
+            autorange="reversed",
+            gridcolor=MNC_BORDER,
+        ),
+        margin=dict(l=40, r=40, t=55, b=40),
         height=480,
     )
     return fig
@@ -116,22 +131,37 @@ def create_cohort_heatmap(
 
 def create_discrepancy_heatmap(
     discrepancy_df: pd.DataFrame,
-    title: str = "Premium Leakage Matrix: Volume % − APE %",
+    title: str = "Selisih Kebocoran Premi: Volume % − APE %",
 ) -> go.Figure:
-    """Generate heatmap highlighting premium leakage (Volume % minus APE %)."""
+    """
+    Generate heatmap highlighting premium leakage.
+    Uses custom MNC Life theme gradient (MNC White -> Pale Blue -> Warm Gold -> Red Alert).
+    """
+    mnc_leakage_palette = [
+        [0.0, "#FFFFFF"],
+        [0.2, "#EBF2FA"],
+        [0.5, "#F7E6BD"],
+        [0.75, "#E29A16"],
+        [1.0, MNC_ERROR],
+    ]
+
     fig = go.Figure(
         data=go.Heatmap(
             z=discrepancy_df.values,
             x=list(discrepancy_df.columns),
             y=list(discrepancy_df.index),
-            colorscale="YlOrRd",
+            colorscale=mnc_leakage_palette,
             zmin=0.0,
             zmax=40.0,
-            colorbar=dict(title="Gap %", ticksuffix="%"),
+            colorbar=dict(
+                title=dict(text="Selisih Gap %", font=dict(color=MNC_PRIMARY, size=12, family=MNC_FONT_FAMILY)),
+                tickfont=dict(color=MNC_PRIMARY, size=11, family=MNC_FONT_FAMILY),
+                ticksuffix="%",
+            ),
             hovertemplate=(
-                "<b>Cohort:</b> %{y}<br>"
-                "<b>Month:</b> %{x}<br>"
-                "<b>Leakage Gap:</b> %{z:.1f}%<extra></extra>"
+                "<b>Kohort:</b> %{y}<br>"
+                "<b>Bulan:</b> %{x}<br>"
+                "<b>Selisih Gap:</b> %{z:.1f}%<extra></extra>"
             ),
         )
     )
@@ -144,25 +174,35 @@ def create_discrepancy_heatmap(
             y0=0,
             y1=1,
             yref="paper",
-            line=dict(color=MNC_PRIMARY, width=2, dash="dash"),
+            line=dict(color=MNC_PRIMARY, width=2.5, dash="dash"),
         )
         fig.add_annotation(
             x="M13",
-            y=1.03,
+            y=1.04,
             yref="paper",
-            text="M13 Cutoff",
+            text="Batas M13",
             showarrow=False,
-            font=dict(size=11, color=MNC_PRIMARY, family="Plus Jakarta Sans, sans-serif"),
+            font=dict(size=12, color=MNC_PRIMARY, family=MNC_FONT_FAMILY),
         )
 
     fig.update_layout(
-        title=dict(text=title, font=dict(size=14, color=MNC_PRIMARY, family="Plus Jakarta Sans, sans-serif")),
-        font=dict(family="Plus Jakarta Sans, sans-serif", color=MNC_PRIMARY),
+        title=dict(text=title, font=dict(size=14, color=MNC_PRIMARY, family=MNC_FONT_FAMILY)),
+        font=dict(family=MNC_FONT_FAMILY, color=MNC_PRIMARY),
         plot_bgcolor=MNC_NEUTRAL,
         paper_bgcolor=MNC_NEUTRAL,
-        xaxis=dict(title="Policy Month Index (M1 - M24)", tickangle=-45, gridcolor=MNC_BORDER),
-        yaxis=dict(title="Cohort Month (Issue Date)", autorange="reversed", gridcolor=MNC_BORDER),
-        margin=dict(l=40, r=40, t=50, b=40),
+        xaxis=dict(
+            title=dict(text="Bulan Polis (M1 - M24)", font=dict(color=MNC_PRIMARY, size=12, family=MNC_FONT_FAMILY)),
+            tickfont=dict(color=MNC_PRIMARY, size=11, family=MNC_FONT_FAMILY),
+            tickangle=-45,
+            gridcolor=MNC_BORDER,
+        ),
+        yaxis=dict(
+            title=dict(text="Bulan Kohort (Issue Date)", font=dict(color=MNC_PRIMARY, size=12, family=MNC_FONT_FAMILY)),
+            tickfont=dict(color=MNC_PRIMARY, size=11, family=MNC_FONT_FAMILY),
+            autorange="reversed",
+            gridcolor=MNC_BORDER,
+        ),
+        margin=dict(l=40, r=40, t=55, b=40),
         height=480,
     )
     return fig
@@ -170,13 +210,13 @@ def create_discrepancy_heatmap(
 
 def create_anomaly_scatter_plot(detected_df: pd.DataFrame) -> go.Figure:
     """
-    Generate multivariate scatter plot with MNC Life design system tokens.
+    Generate multivariate scatter plot with high-contrast text and labels.
     """
     df = detected_df.copy()
     color_map = {
-        "Normal": "#1E6B52",                                    # Calm trustworthy green-teal
-        "Tier 1: Rule Violation (Hit-and-Run)": MNC_ERROR,       # MNC Error Red (#D94B4B)
-        "Tier 2: ML Anomaly (Cherry-Picking / Hidden Leakage)": MNC_TERTIARY, # MNC Gold (#C89B2C)
+        "Normal": "#1E6B52",                                    # Emerald
+        "Tier 1: Rule Violation (Hit-and-Run)": MNC_ERROR,       # Red (#D94B4B)
+        "Tier 2: ML Anomaly (Cherry-Picking / Hidden Leakage)": MNC_TERTIARY, # Gold (#C89B2C)
     }
 
     fig = px.scatter(
@@ -208,42 +248,76 @@ def create_anomaly_scatter_plot(detected_df: pd.DataFrame) -> go.Figure:
         title="Distribusi Anomali Perilaku Agen (Volume Shock vs APE Shock)",
     )
 
-    fig.add_vline(x=25.0, line_dash="dot", line_color=MNC_ERROR, annotation_text="Batas Tier 1 Vol (25%)")
-    fig.add_hline(y=20.0, line_dash="dot", line_color=MNC_TERTIARY, annotation_text="Peringatan APE Shock (20%)")
+    fig.add_vline(
+        x=25.0,
+        line_dash="dot",
+        line_color=MNC_ERROR,
+        line_width=2,
+        annotation_text="Batas Tier 1 Vol (25%)",
+        annotation_font=dict(color=MNC_ERROR, size=11, family=MNC_FONT_FAMILY),
+        annotation_position="top left",
+    )
+    fig.add_hline(
+        y=20.0,
+        line_dash="dot",
+        line_color=MNC_TERTIARY_TEXT,
+        line_width=2,
+        annotation_text="Peringatan APE Shock (20%)",
+        annotation_font=dict(color=MNC_TERTIARY_TEXT, size=11, family=MNC_FONT_FAMILY),
+        annotation_position="bottom right",
+    )
 
     fig.add_annotation(
         x=50, y=10,
-        text="Zona: Hit-and-Run<br>(Volume & APE Anjlok)",
+        text="<b>Zona: Hit-and-Run</b><br>Volume & APE Anjlok",
         showarrow=False,
-        font=dict(size=10, color=MNC_ERROR, family="Plus Jakarta Sans, sans-serif"),
+        font=dict(size=11, color=MNC_ERROR, family=MNC_FONT_FAMILY),
         bgcolor="rgba(217, 75, 75, 0.08)",
-        bordercolor="rgba(217, 75, 75, 0.2)",
+        bordercolor="rgba(217, 75, 75, 0.3)",
+        borderwidth=1,
     )
     fig.add_annotation(
         x=8, y=55,
-        text="Zona: Cherry-Picking<br>(Volume Aman, APE Anjlok)",
+        text="<b>Zona: Cherry-Picking</b><br>Volume Aman, APE Anjlok",
         showarrow=False,
-        font=dict(size=10, color=MNC_TERTIARY, family="Plus Jakarta Sans, sans-serif"),
-        bgcolor="rgba(200, 155, 44, 0.08)",
-        bordercolor="rgba(200, 155, 44, 0.2)",
+        font=dict(size=11, color=MNC_TERTIARY_TEXT, family=MNC_FONT_FAMILY),
+        bgcolor="rgba(200, 155, 44, 0.10)",
+        bordercolor="rgba(200, 155, 44, 0.3)",
+        borderwidth=1,
     )
     fig.add_annotation(
         x=5, y=5,
-        text="Zona: Kepatuhan Normal",
+        text="<b>Zona: Kepatuhan Normal</b>",
         showarrow=False,
-        font=dict(size=10, color="#1E6B52", family="Plus Jakarta Sans, sans-serif"),
+        font=dict(size=11, color="#10573F", family=MNC_FONT_FAMILY),
         bgcolor="rgba(30, 107, 82, 0.08)",
-        bordercolor="rgba(30, 107, 82, 0.2)",
+        bordercolor="rgba(30, 107, 82, 0.3)",
+        borderwidth=1,
     )
 
     fig.update_layout(
         height=520,
-        font=dict(family="Plus Jakarta Sans, sans-serif", color=MNC_PRIMARY),
+        font=dict(family=MNC_FONT_FAMILY, color=MNC_PRIMARY),
         plot_bgcolor=MNC_NEUTRAL,
         paper_bgcolor=MNC_NEUTRAL,
-        xaxis=dict(gridcolor=MNC_BORDER),
-        yaxis=dict(gridcolor=MNC_BORDER),
-        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+        xaxis=dict(
+            title=dict(font=dict(color=MNC_PRIMARY, size=12, family=MNC_FONT_FAMILY)),
+            tickfont=dict(color=MNC_PRIMARY, size=11, family=MNC_FONT_FAMILY),
+            gridcolor=MNC_BORDER,
+        ),
+        yaxis=dict(
+            title=dict(font=dict(color=MNC_PRIMARY, size=12, family=MNC_FONT_FAMILY)),
+            tickfont=dict(color=MNC_PRIMARY, size=11, family=MNC_FONT_FAMILY),
+            gridcolor=MNC_BORDER,
+        ),
+        legend=dict(
+            font=dict(color=MNC_PRIMARY, size=11, family=MNC_FONT_FAMILY),
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1,
+        ),
         margin=dict(l=40, r=40, t=70, b=40),
     )
     return fig
@@ -254,7 +328,7 @@ def create_agent_drilldown_curves(
     history_df: pd.DataFrame,
     agent_id: str,
 ) -> go.Figure:
-    """Generate M1-M24 retention curve for a single selected agent."""
+    """Generate M1-M24 retention curve for a single selected agent with crisp contrast."""
     agent_policies = policies_df[policies_df["agent_id"] == agent_id]
     if len(agent_policies) == 0:
         return go.Figure()
@@ -286,7 +360,7 @@ def create_agent_drilldown_curves(
             y=agg["vol_retention"],
             mode="lines+markers",
             name="Retensi Volume (%)",
-            line=dict(color=MNC_PRIMARY, width=2.5),
+            line=dict(color=MNC_PRIMARY, width=3),
         )
     )
     fig.add_trace(
@@ -295,7 +369,7 @@ def create_agent_drilldown_curves(
             y=agg["ape_retention"],
             mode="lines+markers",
             name="Retensi Premi APE (%)",
-            line=dict(color=MNC_TERTIARY, width=2.5, dash="dash"),
+            line=dict(color=MNC_TERTIARY, width=3, dash="dash"),
         )
     )
 
@@ -303,25 +377,50 @@ def create_agent_drilldown_curves(
         y=80.0,
         line_dash="dot",
         line_color=MNC_SECONDARY,
+        line_width=2,
         annotation_text="Standar OJK/AAJI 80%",
+        annotation_font=dict(color=MNC_PRIMARY, size=11, family=MNC_FONT_FAMILY),
         annotation_position="bottom right",
     )
     fig.add_vline(
         x=13,
         line_dash="dash",
         line_color=MNC_ERROR,
+        line_width=2,
         annotation_text="Batas M13",
+        annotation_font=dict(color=MNC_ERROR, size=11, family=MNC_FONT_FAMILY),
     )
 
     fig.update_layout(
-        title=f"Kurva Siklus Hidup Agen {agent_id} (Volume vs APE M1-M24)",
-        font=dict(family="Plus Jakarta Sans, sans-serif", color=MNC_PRIMARY),
+        title=dict(
+            text=f"Kurva Siklus Hidup Agen {agent_id} (Volume vs APE M1-M24)",
+            font=dict(color=MNC_PRIMARY, size=14, family=MNC_FONT_FAMILY),
+        ),
+        font=dict(family=MNC_FONT_FAMILY, color=MNC_PRIMARY),
         plot_bgcolor=MNC_NEUTRAL,
         paper_bgcolor=MNC_NEUTRAL,
-        xaxis=dict(title="Bulan Polis (M1 - M24)", tickmode="linear", dtick=1, gridcolor=MNC_BORDER),
-        yaxis=dict(title="Tingkat Retensi (%)", range=[0, 105], gridcolor=MNC_BORDER),
+        xaxis=dict(
+            title=dict(text="Bulan Polis (M1 - M24)", font=dict(color=MNC_PRIMARY, size=12, family=MNC_FONT_FAMILY)),
+            tickfont=dict(color=MNC_PRIMARY, size=11, family=MNC_FONT_FAMILY),
+            tickmode="linear",
+            dtick=1,
+            gridcolor=MNC_BORDER,
+        ),
+        yaxis=dict(
+            title=dict(text="Tingkat Retensi (%)", font=dict(color=MNC_PRIMARY, size=12, family=MNC_FONT_FAMILY)),
+            tickfont=dict(color=MNC_PRIMARY, size=11, family=MNC_FONT_FAMILY),
+            range=[0, 105],
+            gridcolor=MNC_BORDER,
+        ),
         height=380,
-        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+        legend=dict(
+            font=dict(color=MNC_PRIMARY, size=11, family=MNC_FONT_FAMILY),
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1,
+        ),
         margin=dict(l=40, r=40, t=60, b=40),
     )
     return fig

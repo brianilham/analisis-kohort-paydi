@@ -213,6 +213,16 @@ st.markdown(
         font-weight: 500 !important;
     }
 
+    /* Penyelarasan tabel dataframe agar menyatu rapi dengan background putih */
+    div[data-testid="stDataFrame"] {
+        background-color: #FFFFFF !important;
+        border: 1px solid #D9E5F2 !important;
+        border-radius: 8px !important;
+    }
+    div[data-testid="stDataFrame"] > div {
+        background-color: #FFFFFF !important;
+    }
+
     /* Tombol primer berpedoman DESIGN.md */
     div.stButton > button, div.stDownloadButton > button {
         background-color: #192C4D !important;
@@ -479,7 +489,7 @@ with tab_scatter:
         st.markdown(
             """
             <div style="background-color:#F5F8FC; border:1px solid #D9E5F2; border-radius:8px; padding:14px;">
-                <strong style="color:#1E6B52; font-size:0.95rem;">Agen Normal</strong>
+                <strong style="color:#10573F; font-size:0.95rem;">Agen Normal</strong>
                 <p style="font-size:0.88rem; color:#192C4D; font-weight:500; margin:6px 0 0 0; line-height:1.5;">
                     Penurunan wajar dan tetap memenuhi ambang batas persistensi AAJI (80% - 85%).
                 </p>
@@ -503,7 +513,7 @@ with tab_scatter:
         st.markdown(
             """
             <div style="background-color:#F5F8FC; border:1px solid #D9E5F2; border-radius:8px; padding:14px;">
-                <strong style="color:#C89B2C; font-size:0.95rem;">Tier 2: Cherry-Picking</strong>
+                <strong style="color:#8C6615; font-size:0.95rem;">Tier 2: Cherry-Picking</strong>
                 <p style="font-size:0.88rem; color:#192C4D; font-weight:500; margin:6px 0 0 0; line-height:1.5;">
                     Volume M13 dipertahankan aman, tetapi polis berpremi besar sengaja dimatikan.
                 </p>
@@ -530,23 +540,41 @@ with tab_grace:
 
             pm_dist = grace_df["payment_method"].value_counts(normalize=True) * 100.0
             st.write("**Metode Pembayaran:**")
-            st.dataframe(pm_dist.round(1).rename("Persentase (%)"), use_container_width=True)
+            st.markdown(
+                f"""
+                <div style="background-color:#FFFFFF; border:1px solid #D9E5F2; border-radius:8px; padding:14px 16px; margin-top:6px;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                        <span style="color:#192C4D; font-weight:600; font-size:0.9rem;">Auto-Debit:</span>
+                        <span style="color:#192C4D; font-weight:700; font-size:0.92rem;">{pm_dist.get('Auto-Debit', 0.0):.1f}%</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between;">
+                        <span style="color:#192C4D; font-weight:600; font-size:0.9rem;">Manual / Tunai:</span>
+                        <span style="color:#D94B4B; font-weight:700; font-size:0.92rem;">{pm_dist.get('Manual/Cash', 0.0):.1f}%</span>
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
 
         with g2:
             cols = ["policy_id", "agent_id", "cohort_month", "month_index", "ape", "payment_method"]
+            grace_display = grace_df[cols].copy().rename(
+                columns={
+                    "policy_id": "Nomor Polis",
+                    "agent_id": "Kode Agen",
+                    "cohort_month": "Bulan Kohort",
+                    "month_index": "Bulan Polis",
+                    "ape": "Nilai APE",
+                    "payment_method": "Metode Pembayaran",
+                }
+            )
+            grace_display["Nilai APE"] = grace_display["Nilai APE"].map(lambda x: f"Rp {x:,.0f}")
+
             st.dataframe(
-                grace_df[cols].rename(
-                    columns={
-                        "policy_id": "Nomor Polis",
-                        "agent_id": "Kode Agen",
-                        "cohort_month": "Bulan Kohort",
-                        "month_index": "Bulan Polis",
-                        "ape": "Nilai APE (IDR)",
-                        "payment_method": "Metode Pembayaran",
-                    }
-                ),
+                grace_display,
                 use_container_width=True,
                 height=320,
+                hide_index=True,
             )
     else:
         st.info("Tidak ada polis pada masa tenggang di bulan M11 atau M12.")
@@ -614,10 +642,36 @@ with tab_audit:
         "primary_risk_drivers",
     ]
 
+    watch_display = watchlist[display_cols].copy().rename(
+        columns={
+            "agent_id": "Kode Agen",
+            "agent_name": "Nama Agen",
+            "channel": "Kanal",
+            "branch_office": "Cabang",
+            "risk_category": "Status Risiko",
+            "anomaly_score": "Skor Anomali",
+            "m13_vol_persistency": "Vol M13",
+            "m13_ape_persistency": "APE M13",
+            "lapse_shock_vol": "Δ Vol",
+            "lapse_shock_ape": "Δ APE",
+            "ape_disparity_ratio": "Disparitas",
+            "cash_payment_ratio": "% Tunai",
+            "primary_risk_drivers": "Faktor Risiko Kuantitatif",
+        }
+    )
+    watch_display["Skor Anomali"] = watch_display["Skor Anomali"].map(lambda x: f"{x:.2f}")
+    watch_display["Vol M13"] = watch_display["Vol M13"].map(lambda x: f"{x:.1f}%")
+    watch_display["APE M13"] = watch_display["APE M13"].map(lambda x: f"{x:.1f}%")
+    watch_display["Δ Vol"] = watch_display["Δ Vol"].map(lambda x: f"{x:.1f}%")
+    watch_display["Δ APE"] = watch_display["Δ APE"].map(lambda x: f"{x:.1f}%")
+    watch_display["Disparitas"] = watch_display["Disparitas"].map(lambda x: f"{x:.2f}x")
+    watch_display["% Tunai"] = watch_display["% Tunai"].map(lambda x: f"{x:.1f}%")
+
     st.dataframe(
-        watchlist[display_cols],
+        watch_display,
         use_container_width=True,
-        height=300,
+        height=320,
+        hide_index=True,
     )
 
     st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
