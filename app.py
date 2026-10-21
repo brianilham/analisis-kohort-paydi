@@ -60,11 +60,27 @@ st.markdown(
         font-weight: 700 !important;
     }
 
-    /* Container utama serba putih */
+    /* Container utama serba putih dengan jarak napas lega di atas */
     .main .block-container {
         background-color: #FFFFFF !important;
-        padding-top: 1.2rem;
-        padding-bottom: 2.5rem;
+        padding-top: 3.5rem !important;
+        padding-bottom: 2.8rem !important;
+        max-width: 1350px !important;
+    }
+
+    /* Header bar atas Streamlit: selaraskan ke putih bersih agar tidak ada bar hitam */
+    header[data-testid="stHeader"] {
+        background-color: #FFFFFF !important;
+        border-bottom: 1.5px solid #D9E5F2 !important;
+    }
+    header[data-testid="stHeader"] * {
+        color: #192C4D !important;
+        fill: #192C4D !important;
+    }
+
+    /* Hilangkan ikon zoom/fullscreen bawaan pada logo */
+    button[title="View fullscreen"], div[data-testid="StyledFullScreenButton"] {
+        display: none !important;
     }
 
     /* Header atas utama */
@@ -84,7 +100,7 @@ st.markdown(
         flex-direction: column;
     }
     .mnc-title-text {
-        font-size: 1.55rem;
+        font-size: 1.65rem;
         font-weight: 800;
         color: #192C4D !important;
         margin: 0;
@@ -341,19 +357,16 @@ col_logo, col_title = st.columns([1, 4])
 with col_logo:
     logo_path = Path("mnc_life_logo.svg")
     if logo_path.exists():
-        st.image(str(logo_path), width=180)
+        st.image(str(logo_path), width=185)
     else:
         st.markdown("<h3 style='color:#192C4D; margin:0;'>MNC Life</h3>", unsafe_allow_html=True)
 
 with col_title:
     st.markdown(
         """
-        <div class="mnc-header-titles">
-            <h1 class="mnc-title-text">PT MNC Life Assurance</h1>
-            <div class="mnc-subtitle-text">
-                Dashboard Persistensi Polis PAYDI dan Deteksi Churn Agen
-            </div>
-            <div>
+        <div class="mnc-header-titles" style="padding-top: 2px;">
+            <h1 class="mnc-title-text">Dashboard Persistensi Polis PAYDI & Deteksi Churn Agen</h1>
+            <div style="margin-top: 8px;">
                 <span class="mnc-badge-pill badge-tertiary">SEOJK No. 5/SEOJK.05/2022</span>
                 <span class="mnc-badge-pill badge-subtle">Standar AAJI M13: 80% - 85%</span>
             </div>
