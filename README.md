@@ -4,6 +4,9 @@ Aplikasi analitik aktuaria dan sistem deteksi anomali perilaku agen asuransi unt
 
 Desain visual dan tata letak dashboard dirancang mengikuti standar identitas visual PT MNC Life Assurance serta selaras dengan regulasi Surat Edaran Otoritas Jasa Keuangan (SEOJK No. 5/SEOJK.05/2022) dan standar persistensi Asosiasi Asuransi Jiwa Indonesia (AAJI).
 
+> 🔒 **Catatan Kerahasiaan Data (Data Confidentiality Disclaimer):**  
+> Seluruh data yang digunakan dalam proyek, repositori, dan dashboard ini merupakan **data sintetis (dummy)** yang dihasilkan secara terprogram menggunakan generator data aktuaria. Hal ini dilakukan demi mematuhi prinsip kerahasiaan data perusahaan (*corporate data confidentiality*). Struktur atribut, distribusi aktuaria premi, dan pola kecurangan agen disimulasikan secara realistis tanpa menggunakan atau mengekspos data nasabah riil.
+
 ---
 
 ## 📌 Latar Belakang Masalah Bisnis
@@ -169,11 +172,3 @@ Hasil pengujian mencakup 21 test case yang lulus 100%:
 - **Invarian Generator Data** (`tests/test_generate_data.py`): Memastikan volume 12.000 polis, 200 agen, kepatuhan batas OJK populasi normal, serta validitas aturan transisi satu arah (polis yang lapse tidak hidup kembali secara ilegal).
 - **Kalkulasi Kohort & Evaluasi Model** (`tests/test_detector.py`): Memverifikasi keakuratan formula persistensi volume dan APE, sifat monotonik kurva retensi, serta target recall deteksi anomali di atas 85%.
 - **Komponen Visual Dashboard** (`tests/test_app_components.py`): Memastikan heatmap, scatter plot, dan kalkulator ringkasan KPI eksekutif menghasilkan visual bebas error.
-
----
-
-## 📈 Nilai Tambah bagi Manajemen & Portofolio
-
-- **Sinergi Domain Aktuaria & Data Science**: Menggabungkan pemahaman mendalam tentang siklus hidup polis asuransi unit link dengan teknik deteksi anomali modern.
-- **Penyelamatan Finansial Nyata**: Membantu tim audit dan retensi mendeteksi kebocoran premi miliaran rupiah sebelum masa pembukuan tahunan ditutup.
-- **Standar Rekayasa Perangkat Lunak Tinggi**: Kode terstruktur bersih (*clean code*), berorientasi fungsi, terdokumentasi rapi, dan dilindungi oleh 21 unit test otomatis.

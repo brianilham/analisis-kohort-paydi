@@ -181,6 +181,11 @@ st.markdown(
         color: #0E203C !important;
         border: 1px solid #BACFE8;
     }
+    .badge-dummy {
+        background-color: #F8FAFC;
+        color: #475569 !important;
+        border: 1px dashed #94A3B8;
+    }
 
     /* Kartu metrik dengan kontras tajam */
     div[data-testid="stMetric"] {
@@ -430,6 +435,9 @@ with st.sidebar:
         default=all_branches,
     )
 
+    st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
+    st.caption("🔒 **Kerahasiaan Data:** Seluruh data yang ditampilkan adalah data sintetis (dummy) portofolio.")
+
 
 # Pemfilteran data
 filtered_data = filter_dataset(
@@ -499,13 +507,21 @@ with col_title:
             <div style="margin-top: 8px;">
                 <span class="mnc-badge-pill badge-tertiary">SEOJK No. 5/SEOJK.05/2022</span>
                 <span class="mnc-badge-pill badge-subtle">Standar AAJI M13: 80% - 85%</span>
+                <span class="mnc-badge-pill badge-dummy">🔒 Data Portofolio: Dummy / Confidential</span>
             </div>
         </div>
         """,
         unsafe_allow_html=True,
     )
 
-st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
+st.markdown(
+    """
+    <div style="background-color:#F5F8FC; border:1px solid #D9E5F2; border-left:4px solid #192C4D; border-radius:6px; padding:8px 14px; margin-top:10px; margin-bottom:12px; font-size:0.84rem; color:#334155;">
+        <strong>Catatan Kerahasiaan Data:</strong> Seluruh data pada dashboard ini merupakan data sintetis (dummy) untuk keperluan portofolio teknis dan menjaga kerahasiaan data perusahaan (<em>corporate data confidentiality</em>). Pola aktuaria dan skenario anomali disimulasikan sesuai karakteristik riil produk PAYDI.
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 
 
 # ==============================================================================
