@@ -1,7 +1,7 @@
 """
 Dashboard Analisis Kohort Persistensi Polis dan Deteksi Churn Agen (PAYDI).
 PT MNC Life Assurance.
-Mengacu pada panduan desain mnclife.com-design.md.
+Mengacu pada panduan desain mnclife.com-design.md dengan kontras tinggi (High Legibility).
 """
 
 from pathlib import Path
@@ -35,17 +35,29 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# Injeksi CSS berpedoman pada DESIGN.md (MNC Life Brand Design System)
-# Warna: primary #192C4D, secondary #666666, tertiary #C89B2C, surface #F5F8FC, border #EEEEFF
+# CSS berpedoman pada DESIGN.md dengan penegasan kontras tinggi (Anti-Nyaru)
 st.markdown(
     """
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
+    /* Global Typography & Background */
     html, body, [class*="css"], .stApp {
-        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
         background-color: #FFFFFF !important;
-        color: #192C4D;
+        color: #192C4D !important;
+    }
+
+    /* Memastikan semua teks markdown, paragraf, list, span memiliki warna gelap solid */
+    p, span, label, li, .stMarkdown p, .stMarkdown span, .stMarkdown div, .stText {
+        color: #192C4D !important;
+        font-weight: 450;
+    }
+
+    /* Heading tebal dan kontras */
+    h1, h2, h3, h4, h5, h6, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
+        color: #192C4D !important;
+        font-weight: 700 !important;
     }
 
     /* Container utama serba putih */
@@ -62,7 +74,7 @@ st.markdown(
         justify-content: space-between;
         padding-bottom: 16px;
         margin-bottom: 20px;
-        border-bottom: 1px solid #EEEEFF;
+        border-bottom: 1.5px solid #D9E5F2;
         background-color: #FFFFFF;
         gap: 20px;
         flex-wrap: wrap;
@@ -72,102 +84,150 @@ st.markdown(
         flex-direction: column;
     }
     .mnc-title-text {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: #192C4D;
+        font-size: 1.55rem;
+        font-weight: 800;
+        color: #192C4D !important;
         margin: 0;
         line-height: 1.25;
     }
     .mnc-subtitle-text {
-        font-size: 0.92rem;
-        color: #666666;
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: #334155 !important;
         margin-top: 4px;
         margin-bottom: 8px;
         line-height: 1.4;
     }
     .mnc-badge-pill {
         display: inline-block;
-        padding: 4px 10px;
+        padding: 4px 12px;
         border-radius: 9999px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        margin-right: 6px;
+        font-size: 0.78rem;
+        font-weight: 700;
+        margin-right: 8px;
     }
     .badge-tertiary {
         background-color: #C89B2C;
-        color: #FFFFFF;
+        color: #FFFFFF !important;
     }
     .badge-subtle {
-        background-color: #F5F8FC;
-        color: #192C4D;
-        border: 1px solid #D9E5F2;
+        background-color: #EBF2FA;
+        color: #0E203C !important;
+        border: 1px solid #BACFE8;
     }
 
-    /* Kartu metrik berdesain datar (flat) sesuai DESIGN.md */
+    /* Kartu metrik dengan kontras tajam */
     div[data-testid="stMetric"] {
-        background-color: #FFFFFF;
-        border: 1px solid #EEEEFF;
-        border-radius: 8px;
-        padding: 14px 16px;
-        box-shadow: none;
+        background-color: #FFFFFF !important;
+        border: 1.5px solid #D9E5F2 !important;
+        border-radius: 8px !important;
+        padding: 14px 16px !important;
+        box-shadow: none !important;
     }
-    div[data-testid="stMetric"] label {
-        color: #666666 !important;
-        font-size: 0.85rem !important;
-        font-weight: 500;
+    div[data-testid="stMetric"] label, div[data-testid="stMetric"] [data-testid="stMetricLabel"] p {
+        color: #334155 !important;
+        font-size: 0.88rem !important;
+        font-weight: 600 !important;
     }
-    div[data-testid="stMetric"] [data-testid="stMetricValue"] {
+    div[data-testid="stMetric"] [data-testid="stMetricValue"] div {
         color: #192C4D !important;
-        font-size: 1.55rem !important;
-        font-weight: 700;
+        font-size: 1.6rem !important;
+        font-weight: 800 !important;
+    }
+
+    /* Caption agar tidak abu-abu pudar */
+    .stCaption, [data-testid="stCaptionContainer"] p, [data-testid="stCaptionContainer"] {
+        color: #334155 !important;
+        font-weight: 500 !important;
+        font-size: 0.85rem !important;
+    }
+
+    /* Radio buttons & text kontras */
+    div[data-testid="stRadio"] label, div[data-testid="stRadio"] div[role="radiogroup"] label p {
+        color: #192C4D !important;
+        font-weight: 600 !important;
+    }
+
+    /* Form inputs, Multiselect, Selectbox labels */
+    div[data-testid="stSelectbox"] label p, div[data-testid="stMultiSelect"] label p, div[data-testid="stTextInput"] label p {
+        color: #192C4D !important;
+        font-weight: 700 !important;
+        font-size: 0.9rem !important;
+    }
+
+    /* Multiselect tag badges */
+    span[data-baseweb="tag"] {
+        background-color: #EBF2FA !important;
+        border: 1px solid #BACFE8 !important;
+    }
+    span[data-baseweb="tag"] span {
+        color: #192C4D !important;
+        font-weight: 600 !important;
     }
 
     /* Tab navigasi */
     .stTabs [data-baseweb="tab-list"] {
         gap: 6px;
-        border-bottom: 1px solid #EEEEFF;
+        border-bottom: 2px solid #D9E5F2;
         background-color: #FFFFFF;
     }
     .stTabs [data-baseweb="tab"] {
-        padding: 8px 18px;
+        padding: 10px 20px;
         font-weight: 600;
-        font-size: 0.92rem;
-        color: #666666;
-        background-color: #FFFFFF;
+        font-size: 0.95rem;
+        color: #334155 !important;
+        background-color: #FFFFFF !important;
         border-radius: 8px 8px 0 0;
     }
     .stTabs [aria-selected="true"] {
         color: #192C4D !important;
+        font-weight: 700 !important;
         border-bottom: 3px solid #C89B2C !important;
-        background-color: #FFFFFF !important;
+        background-color: #F5F8FC !important;
+    }
+    .stTabs [data-baseweb="tab"] p {
+        color: inherit !important;
     }
 
-    /* Sidebar bersih (surface #F5F8FC) */
+    /* Sidebar bersih dan terbaca (surface #F5F8FC) */
     section[data-testid="stSidebar"] {
         background-color: #F5F8FC !important;
-        border-right: 1px solid #D9E5F2 !important;
+        border-right: 1.5px solid #D9E5F2 !important;
     }
     section[data-testid="stSidebar"] h2, section[data-testid="stSidebar"] h3 {
-        color: #192C4D;
-        font-size: 1.05rem;
-        font-weight: 700;
-        margin-bottom: 12px;
+        color: #192C4D !important;
+        font-size: 1.1rem !important;
+        font-weight: 800 !important;
+        margin-bottom: 14px !important;
+    }
+    section[data-testid="stSidebar"] p, section[data-testid="stSidebar"] span, section[data-testid="stSidebar"] label {
+        color: #192C4D !important;
+    }
+
+    /* Kotak Alert (st.info, st.warning, st.success) teks solid */
+    div[data-testid="stAlert"] {
+        border-radius: 8px !important;
+    }
+    div[data-testid="stAlert"] p, div[data-testid="stAlert"] div {
+        color: #0F172A !important;
+        font-weight: 500 !important;
     }
 
     /* Tombol primer berpedoman DESIGN.md */
     div.stButton > button, div.stDownloadButton > button {
-        background-color: #192C4D;
-        color: #FFFFFF;
-        border-radius: 8px;
-        border: 1px solid #192C4D;
-        font-weight: 600;
-        padding: 8px 16px;
-        transition: background-color 0.15s ease;
+        background-color: #192C4D !important;
+        color: #FFFFFF !important;
+        border-radius: 8px !important;
+        border: 1px solid #192C4D !important;
+        font-weight: 700 !important;
+        padding: 10px 18px !important;
     }
     div.stButton > button:hover, div.stDownloadButton > button:hover {
-        background-color: #0E1B31;
-        color: #FFFFFF;
-        border-color: #0E1B31;
+        background-color: #0E1B31 !important;
+        color: #FFFFFF !important;
+    }
+    div.stButton > button p, div.stDownloadButton > button p {
+        color: #FFFFFF !important;
     }
     </style>
     """,
@@ -194,7 +254,7 @@ def load_dataset() -> Dict[str, pd.DataFrame]:
 raw_data = load_dataset()
 
 # ==============================================================================
-# SIDEBAR: HANYA MENYISAKAN FILTER UTAMA
+# SIDEBAR: FILTER PORTOFOLIO
 # ==============================================================================
 
 with st.sidebar:
@@ -233,7 +293,6 @@ if len(filtered_data["agents"]) == 0 or len(filtered_data["policies"]) == 0:
 # PERHITUNGAN ANALITIK KOHORT & DETEKSI DUA TIER
 # ==============================================================================
 
-# Ambang batas standar regulasi OJK & AAJI
 DEFAULT_VOL_SHOCK_THRESH = 25.0
 DEFAULT_M13_MIN_PERSISTENCY = 75.0
 DEFAULT_CONTAMINATION = 0.08
@@ -265,7 +324,7 @@ kpis = calculate_dashboard_kpis(matrices, detected_agents, grace_df)
 
 
 # ==============================================================================
-# HEADER DASHBOARD UTAMA: ELEMEN MNC LIFE & IDENTITAS
+# HEADER DASHBOARD UTAMA
 # ==============================================================================
 
 col_logo, col_title = st.columns([1, 4])
@@ -297,7 +356,7 @@ st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
 
 
 # ==============================================================================
-# RINGKASAN METRIK KUNCI (FLAT CARDS)
+# RINGKASAN METRIK KUNCI
 # ==============================================================================
 
 c_kpi1, c_kpi2, c_kpi3, c_kpi4 = st.columns(4)
@@ -419,9 +478,9 @@ with tab_scatter:
     with c_norm:
         st.markdown(
             """
-            <div style="background-color:#F5F8FC; border:1px solid #EEEEFF; border-radius:8px; padding:12px;">
-                <strong style="color:#1E6B52;">Agen Normal</strong>
-                <p style="font-size:0.85rem; color:#666666; margin:4px 0 0 0;">
+            <div style="background-color:#F5F8FC; border:1px solid #D9E5F2; border-radius:8px; padding:14px;">
+                <strong style="color:#1E6B52; font-size:0.95rem;">Agen Normal</strong>
+                <p style="font-size:0.88rem; color:#192C4D; font-weight:500; margin:6px 0 0 0; line-height:1.5;">
                     Penurunan wajar dan tetap memenuhi ambang batas persistensi AAJI (80% - 85%).
                 </p>
             </div>
@@ -431,9 +490,9 @@ with tab_scatter:
     with c_t1:
         st.markdown(
             """
-            <div style="background-color:#F5F8FC; border:1px solid #EEEEFF; border-radius:8px; padding:12px;">
-                <strong style="color:#D94B4B;">Tier 1: Hit-and-Run</strong>
-                <p style="font-size:0.85rem; color:#666666; margin:4px 0 0 0;">
+            <div style="background-color:#F5F8FC; border:1px solid #D9E5F2; border-radius:8px; padding:14px;">
+                <strong style="color:#D94B4B; font-size:0.95rem;">Tier 1: Hit-and-Run</strong>
+                <p style="font-size:0.88rem; color:#192C4D; font-weight:500; margin:6px 0 0 0; line-height:1.5;">
                     Persistensi M1-M12 tinggi, lalu anjlok serempak lebih dari 25% di bulan ke-13.
                 </p>
             </div>
@@ -443,9 +502,9 @@ with tab_scatter:
     with c_t2:
         st.markdown(
             """
-            <div style="background-color:#F5F8FC; border:1px solid #EEEEFF; border-radius:8px; padding:12px;">
-                <strong style="color:#C89B2C;">Tier 2: Cherry-Picking</strong>
-                <p style="font-size:0.85rem; color:#666666; margin:4px 0 0 0;">
+            <div style="background-color:#F5F8FC; border:1px solid #D9E5F2; border-radius:8px; padding:14px;">
+                <strong style="color:#C89B2C; font-size:0.95rem;">Tier 2: Cherry-Picking</strong>
+                <p style="font-size:0.88rem; color:#192C4D; font-weight:500; margin:6px 0 0 0; line-height:1.5;">
                     Volume M13 dipertahankan aman, tetapi polis berpremi besar sengaja dimatikan.
                 </p>
             </div>
