@@ -64,7 +64,7 @@ def create_cohort_heatmap(
     zmin: float = 40.0,
     zmax: float = 100.0,
 ) -> go.Figure:
-    """Generate interactive 2D cohort retention heatmap with high-contrast text."""
+    """Generate interactive 2D cohort retention heatmap with high-contrast text and crisp cell borders."""
     fig = go.Figure(
         data=go.Heatmap(
             z=matrix_df.values,
@@ -73,6 +73,8 @@ def create_cohort_heatmap(
             colorscale=colorscale,
             zmin=zmin,
             zmax=zmax,
+            xgap=1.5,
+            ygap=1.5,
             colorbar=dict(
                 title=dict(text="Retensi %", font=dict(color=MNC_PRIMARY, size=12, family=MNC_FONT_FAMILY)),
                 tickfont=dict(color=MNC_PRIMARY, size=11, family=MNC_FONT_FAMILY),
@@ -109,7 +111,7 @@ def create_cohort_heatmap(
     fig.update_layout(
         title=dict(text=title, font=dict(size=14, color=MNC_PRIMARY, family=MNC_FONT_FAMILY)),
         font=dict(family=MNC_FONT_FAMILY, color=MNC_PRIMARY),
-        plot_bgcolor=MNC_NEUTRAL,
+        plot_bgcolor="#CAD7E6",
         paper_bgcolor=MNC_NEUTRAL,
         xaxis=dict(
             title=dict(text="Bulan Polis (M1 - M24)", font=dict(color=MNC_PRIMARY, size=12, family=MNC_FONT_FAMILY)),
@@ -135,14 +137,15 @@ def create_discrepancy_heatmap(
 ) -> go.Figure:
     """
     Generate heatmap highlighting premium leakage.
-    Uses custom MNC Life theme gradient (MNC White -> Pale Blue -> Warm Gold -> Red Alert).
+    Uses custom MNC Life theme gradient with clearly visible non-white base for M1-M12
+    (Pale Slate Blue -> Light Sky Blue -> Warm Gold -> Rich Amber -> Red Alert).
     """
     mnc_leakage_palette = [
-        [0.0, "#FFFFFF"],
-        [0.2, "#EBF2FA"],
-        [0.5, "#F7E6BD"],
-        [0.75, "#E29A16"],
-        [1.0, MNC_ERROR],
+        [0.0, "#E6EFF9"],    # Selisih <= 0% (Seimbang / Tidak ada kebocoran) - Soft Pastel Blue
+        [0.15, "#D0E2F6"],   # Selisih ~3-5% (Variasi wajar) - Light Sky Blue
+        [0.35, "#FCEEC7"],   # Selisih ~10-12% (Peringatan Dini) - Warm Pale Gold
+        [0.65, "#EAA827"],   # Selisih ~20-25% (Kebocoran Signifikan) - MNC Amber Gold
+        [1.0, MNC_ERROR],    # Selisih >= 35% (Kebocoran Kritis / Cherry-Picking) - MNC Red (#D94B4B)
     ]
 
     fig = go.Figure(
@@ -151,8 +154,10 @@ def create_discrepancy_heatmap(
             x=list(discrepancy_df.columns),
             y=list(discrepancy_df.index),
             colorscale=mnc_leakage_palette,
-            zmin=0.0,
-            zmax=40.0,
+            zmin=-2.0,
+            zmax=35.0,
+            xgap=1.5,
+            ygap=1.5,
             colorbar=dict(
                 title=dict(text="Selisih Gap %", font=dict(color=MNC_PRIMARY, size=12, family=MNC_FONT_FAMILY)),
                 tickfont=dict(color=MNC_PRIMARY, size=11, family=MNC_FONT_FAMILY),
@@ -188,7 +193,7 @@ def create_discrepancy_heatmap(
     fig.update_layout(
         title=dict(text=title, font=dict(size=14, color=MNC_PRIMARY, family=MNC_FONT_FAMILY)),
         font=dict(family=MNC_FONT_FAMILY, color=MNC_PRIMARY),
-        plot_bgcolor=MNC_NEUTRAL,
+        plot_bgcolor="#CAD7E6",
         paper_bgcolor=MNC_NEUTRAL,
         xaxis=dict(
             title=dict(text="Bulan Polis (M1 - M24)", font=dict(color=MNC_PRIMARY, size=12, family=MNC_FONT_FAMILY)),
@@ -210,7 +215,7 @@ def create_discrepancy_heatmap(
 
 def create_anomaly_scatter_plot(detected_df: pd.DataFrame) -> go.Figure:
     """
-    Generate multivariate scatter plot with high-contrast text and labels.
+    Generate multivariate scatter plot with high-contrast bold typography and dedicated legend styling.
     """
     df = detected_df.copy()
     color_map = {
@@ -245,7 +250,6 @@ def create_anomaly_scatter_plot(detected_df: pd.DataFrame) -> go.Figure:
             "risk_category": "Status Deteksi",
             "ape_disparity_ratio": "Disparitas Premi",
         },
-        title="Distribusi Anomali Perilaku Agen (Volume Shock vs APE Shock)",
     )
 
     fig.add_vline(
@@ -296,29 +300,50 @@ def create_anomaly_scatter_plot(detected_df: pd.DataFrame) -> go.Figure:
     )
 
     fig.update_layout(
-        height=520,
+        height=540,
         font=dict(family=MNC_FONT_FAMILY, color=MNC_PRIMARY),
         plot_bgcolor=MNC_NEUTRAL,
         paper_bgcolor=MNC_NEUTRAL,
+        title=dict(
+            text="<b>Distribusi Anomali Perilaku Agen (Volume Shock vs APE Shock)</b>",
+            font=dict(color=MNC_PRIMARY, size=15, family=MNC_FONT_FAMILY),
+            x=0.01,
+            y=0.98,
+            xanchor="left",
+            yanchor="top",
+        ),
         xaxis=dict(
-            title=dict(font=dict(color=MNC_PRIMARY, size=12, family=MNC_FONT_FAMILY)),
+            title=dict(
+                text="Δ Persistensi Volume M12→M13 (%)",
+                font=dict(color=MNC_PRIMARY, size=12, family=MNC_FONT_FAMILY),
+            ),
             tickfont=dict(color=MNC_PRIMARY, size=11, family=MNC_FONT_FAMILY),
             gridcolor=MNC_BORDER,
         ),
         yaxis=dict(
-            title=dict(font=dict(color=MNC_PRIMARY, size=12, family=MNC_FONT_FAMILY)),
+            title=dict(
+                text="Δ Persistensi Premi APE M12→M13 (%)",
+                font=dict(color=MNC_PRIMARY, size=12, family=MNC_FONT_FAMILY),
+            ),
             tickfont=dict(color=MNC_PRIMARY, size=11, family=MNC_FONT_FAMILY),
             gridcolor=MNC_BORDER,
         ),
         legend=dict(
+            title=dict(
+                text="<b>Status Deteksi:</b>",
+                font=dict(color=MNC_PRIMARY, size=12, family=MNC_FONT_FAMILY),
+            ),
             font=dict(color=MNC_PRIMARY, size=11, family=MNC_FONT_FAMILY),
             orientation="h",
-            yanchor="bottom",
-            y=1.02,
-            xanchor="right",
-            x=1,
+            yanchor="top",
+            y=-0.18,
+            xanchor="center",
+            x=0.5,
+            bgcolor="rgba(245, 248, 252, 0.95)",
+            bordercolor=MNC_BORDER,
+            borderwidth=1,
         ),
-        margin=dict(l=40, r=40, t=70, b=40),
+        margin=dict(l=45, r=40, t=60, b=90),
     )
     return fig
 
