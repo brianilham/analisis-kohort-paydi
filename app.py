@@ -488,7 +488,7 @@ with c_kpi3:
     st.metric(
         label="Agen Terindikasi Risiko",
         value=f"{kpis['total_flagged']} Agen",
-        delta=f"Tier 1: {kpis['tier1_count']} | Tier 2: {kpis['tier2_count']}",
+        delta=f"Hit and Run: {kpis['tier1_count']} | Cherry Picking: {kpis['tier2_count']}",
         delta_color="inverse" if kpis["total_flagged"] > 0 else "off",
     )
 
@@ -594,7 +594,7 @@ with tab_scatter:
         st.markdown(
             """
             <div style="background-color:#F5F8FC; border:1px solid #D9E5F2; border-radius:8px; padding:14px;">
-                <strong style="color:#D94B4B; font-size:0.95rem;">Tier 1: Hit-and-Run</strong>
+                <strong style="color:#D94B4B; font-size:0.95rem;">Hit and Run</strong>
                 <p style="font-size:0.88rem; color:#192C4D; font-weight:500; margin:6px 0 0 0; line-height:1.5;">
                     Persistensi M1-M12 tinggi, lalu anjlok serempak lebih dari 25% di bulan ke-13.
                 </p>
@@ -606,7 +606,7 @@ with tab_scatter:
         st.markdown(
             """
             <div style="background-color:#F5F8FC; border:1px solid #D9E5F2; border-radius:8px; padding:14px;">
-                <strong style="color:#8C6615; font-size:0.95rem;">Tier 2: Cherry-Picking</strong>
+                <strong style="color:#8C6615; font-size:0.95rem;">Cherry Picking</strong>
                 <p style="font-size:0.88rem; color:#192C4D; font-weight:500; margin:6px 0 0 0; line-height:1.5;">
                     Volume M13 dipertahankan aman, tetapi polis berpremi besar sengaja dimatikan.
                 </p>
@@ -683,7 +683,7 @@ with tab_audit:
     with w1:
         tier_filter = st.selectbox(
             "Filter Status:",
-            options=["Semua Status", "Hanya Terindikasi Anomali", "Tier 1: Hit-and-Run", "Tier 2: Cherry-Picking", "Normal"],
+            options=["Semua Status", "Hanya Terindikasi Anomali", "Hit and Run", "Cherry Picking", "Normal"],
         )
     with w2:
         min_score = st.slider("Skor Anomali Minimal:", min_value=0.0, max_value=1.0, value=0.0, step=0.05)
@@ -694,10 +694,10 @@ with tab_audit:
 
     if tier_filter == "Hanya Terindikasi Anomali":
         watchlist = watchlist[watchlist["risk_category"] != "Normal"]
-    elif tier_filter == "Tier 1: Hit-and-Run":
-        watchlist = watchlist[watchlist["risk_category"].str.contains("Tier 1")]
-    elif tier_filter == "Tier 2: Cherry-Picking":
-        watchlist = watchlist[watchlist["risk_category"].str.contains("Tier 2")]
+    elif tier_filter == "Hit and Run":
+        watchlist = watchlist[watchlist["risk_category"].str.contains("Hit and Run|Hit-and-Run")]
+    elif tier_filter == "Cherry Picking":
+        watchlist = watchlist[watchlist["risk_category"].str.contains("Cherry Picking|Cherry-Picking")]
     elif tier_filter == "Normal":
         watchlist = watchlist[watchlist["risk_category"] == "Normal"]
 

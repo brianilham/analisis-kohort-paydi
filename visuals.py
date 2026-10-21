@@ -219,9 +219,11 @@ def create_anomaly_scatter_plot(detected_df: pd.DataFrame) -> go.Figure:
     """
     df = detected_df.copy()
     color_map = {
-        "Normal": "#1E6B52",                                    # Emerald
-        "Tier 1: Rule Violation (Hit-and-Run)": MNC_ERROR,       # Red (#D94B4B)
-        "Tier 2: ML Anomaly (Cherry-Picking / Hidden Leakage)": MNC_TERTIARY, # Gold (#C89B2C)
+        "Normal": "#1E6B52",               # Emerald
+        "Hit and Run": MNC_ERROR,          # Red (#D94B4B)
+        "Cherry Picking": MNC_TERTIARY,    # Gold (#C89B2C)
+        "Hit-and-Run": MNC_ERROR,
+        "Cherry-Picking": MNC_TERTIARY,
     }
 
     fig = px.scatter(

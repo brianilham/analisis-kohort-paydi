@@ -205,8 +205,8 @@ def test_two_tier_detection_outputs_and_scores(dataset):
     # Risk categories check
     allowed_categories = {
         "Normal",
-        "Tier 1: Rule Violation (Hit-and-Run)",
-        "Tier 2: ML Anomaly (Cherry-Picking / Hidden Leakage)",
+        "Hit and Run",
+        "Cherry Picking",
     }
     assert set(detected_df["risk_category"]).issubset(allowed_categories)
 

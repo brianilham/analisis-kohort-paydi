@@ -376,9 +376,9 @@ def run_two_tier_detection(
     risk_categories = []
     for _, row in df.iterrows():
         if row["tier1_violation"]:
-            risk_categories.append("Tier 1: Rule Violation (Hit-and-Run)")
+            risk_categories.append("Hit and Run")
         elif row["tier2_anomaly"]:
-            risk_categories.append("Tier 2: ML Anomaly (Cherry-Picking / Hidden Leakage)")
+            risk_categories.append("Cherry Picking")
         else:
             risk_categories.append("Normal")
 
