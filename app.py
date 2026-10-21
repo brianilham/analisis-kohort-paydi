@@ -232,40 +232,8 @@ st.markdown(
         border: 1.5px solid #D9E5F2 !important;
         border-radius: 8px !important;
     }
-    div[data-baseweb="select"] div,
-    div[data-baseweb="select"] span,
     div[data-baseweb="select"] input {
         color: #192C4D !important;
-    }
-
-    /* Multiselect tag badges (pilihan yang aktif di dalam kotak input) */
-    [data-baseweb="tag"],
-    span[data-baseweb="tag"],
-    div[data-baseweb="tag"] {
-        background-color: #192C4D !important;
-        background: #192C4D !important;
-        border: 1px solid #192C4D !important;
-        border-radius: 6px !important;
-    }
-
-    [data-baseweb="tag"] span,
-    span[data-baseweb="tag"] span,
-    div[data-baseweb="tag"] span,
-    [data-baseweb="tag"] div,
-    [data-baseweb="tag"] * {
-        color: #FFFFFF !important;
-        font-weight: 600 !important;
-        font-size: 0.85rem !important;
-    }
-
-    [data-baseweb="tag"] svg,
-    span[data-baseweb="tag"] svg,
-    div[data-baseweb="tag"] svg,
-    [data-baseweb="tag"] svg *,
-    span[data-baseweb="tag"] svg * {
-        fill: #FFFFFF !important;
-        stroke: #FFFFFF !important;
-        color: #FFFFFF !important;
     }
 
     /* Popover Menu Dropdown (Selectbox & Multiselect saat diklik/dibuka) */
@@ -366,7 +334,7 @@ st.markdown(
         font-weight: 800 !important;
         margin-bottom: 14px !important;
     }
-    section[data-testid="stSidebar"] p, section[data-testid="stSidebar"] span, section[data-testid="stSidebar"] label {
+    section[data-testid="stSidebar"] p, section[data-testid="stSidebar"] label, section[data-testid="stSidebar"] .stMarkdown span {
         color: #192C4D !important;
     }
 
@@ -403,6 +371,42 @@ st.markdown(
         color: #FFFFFF !important;
     }
     div.stButton > button p, div.stDownloadButton > button p {
+        color: #FFFFFF !important;
+    }
+
+    /* =========================================================================
+       MULTISELECT TAG PILLS (SIDEBAR & HALAMAN UTAMA) - TEKS PUTIH KONTRAS TINGGI
+       ========================================================================= */
+    [data-testid="stMultiSelect"] [data-baseweb="tag"],
+    section[data-testid="stSidebar"] [data-testid="stMultiSelect"] [data-baseweb="tag"],
+    section[data-testid="stSidebar"] [data-baseweb="tag"],
+    div[data-baseweb="select"] [data-baseweb="tag"],
+    span[data-baseweb="tag"],
+    div[data-baseweb="tag"] {
+        background-color: #192C4D !important;
+        background: #192C4D !important;
+        border: 1px solid #192C4D !important;
+        border-radius: 6px !important;
+    }
+
+    [data-testid="stMultiSelect"] [data-baseweb="tag"] *,
+    section[data-testid="stSidebar"] [data-testid="stMultiSelect"] [data-baseweb="tag"] *,
+    section[data-testid="stSidebar"] [data-baseweb="tag"] *,
+    div[data-baseweb="select"] [data-baseweb="tag"] *,
+    span[data-baseweb="tag"] *,
+    div[data-baseweb="tag"] * {
+        color: #FFFFFF !important;
+        fill: #FFFFFF !important;
+        stroke: #FFFFFF !important;
+        font-weight: 700 !important;
+        font-size: 0.85rem !important;
+    }
+
+    [data-testid="stMultiSelect"] [data-baseweb="tag"] svg,
+    section[data-testid="stSidebar"] [data-baseweb="tag"] svg,
+    div[data-baseweb="select"] [data-baseweb="tag"] svg {
+        fill: #FFFFFF !important;
+        stroke: #FFFFFF !important;
         color: #FFFFFF !important;
     }
     </style>
