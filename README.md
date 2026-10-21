@@ -1,174 +1,162 @@
-# Analisis Kohort Persistensi Polis & Deteksi Churn Agen (PAYDI)
+# Analisis kohort persistensi polis dan deteksi churn agen (PAYDI)
 
-Aplikasi analitik aktuaria dan sistem deteksi anomali perilaku agen asuransi untuk produk PAYDI (Produk Asuransi Yang Dikaitkan dengan Investasi / Unit Link). Proyek ini menggabungkan analisis kohort dua dimensi, rekayasa fitur multivariat, dan machine learning tanpa pengawasan (*unsupervised learning*) untuk mendeteksi kecurangan retensi polis (*Hit and Run* dan *Cherry Picking*) secara otomatis.
+Aplikasi analitik aktuaria dan sistem deteksi anomali perilaku agen asuransi untuk produk PAYDI (Produk Asuransi Yang Dikaitkan dengan Investasi atau Unit Link). Proyek ini menggabungkan analisis kohort dua dimensi, rekayasa fitur multivariat, dan machine learning tanpa pengawasan (Isolation Forest) untuk menemukan pola kecurangan retensi polis, khususnya Hit and Run dan Cherry Picking.
 
-Desain visual dan tata letak dashboard dirancang mengikuti standar identitas visual PT MNC Life Assurance serta selaras dengan regulasi Surat Edaran Otoritas Jasa Keuangan (SEOJK No. 5/SEOJK.05/2022) dan standar persistensi Asosiasi Asuransi Jiwa Indonesia (AAJI).
+Desain dashboard mengadopsi identitas visual PT MNC Life Assurance, dengan rujukan regulasi Surat Edaran Otoritas Jasa Keuangan (SEOJK No. 5/SEOJK.05/2022) serta standar persistensi Asosiasi Asuransi Jiwa Indonesia (AAJI).
 
-> 🔒 **Catatan Kerahasiaan Data (Data Confidentiality Disclaimer):**  
-> Seluruh data yang digunakan dalam proyek, repositori, dan dashboard ini merupakan **data sintetis (dummy)** yang dihasilkan secara terprogram menggunakan generator data aktuaria. Hal ini dilakukan demi mematuhi prinsip kerahasiaan data perusahaan (*corporate data confidentiality*). Struktur atribut, distribusi aktuaria premi, dan pola kecurangan agen disimulasikan secara realistis tanpa menggunakan atau mengekspos data nasabah riil.
+Live demo dashboard dapat diakses langsung pada tautan berikut:  
+👉 [https://brianilham-analisis-kohort-paydi-app-apv1xd.streamlit.app/](https://brianilham-analisis-kohort-paydi-app-apv1xd.streamlit.app/)
 
----
-
-## 📌 Latar Belakang Masalah Bisnis
-
-Pada industri asuransi jiwa di Indonesia, komisi tahun pertama (*First Year Commission* atau FYC) dan bonus persistensi M13 bernilai sangat besar. Hal ini menciptakan celah moral hazard dan kecurangan terstruktur:
-
-1. **Titik Buta Persistensi Volume Tradisional**:
-   Banyak perusahaan asuransi hanya mengukur persistensi dari jumlah lembar polis (Volume). Praktik ini mudah diakali melalui strategi *Cherry Picking*: agen sengaja mempertahankan polis bernilai premi kecil agar rasio volume M13 tetap berada di atas target 80%, sementara polis berpremi besar (*high-ticket*) dibiarkan lapse setelah komisi cair. Akibatnya, laporan audit terlihat hijau, namun nilai premi riil (APE) mengalami kebocoran parah.
-
-2. **Sindikat Hit and Run**:
-   Agen menjual polis dengan pembayaran tunai atau talangan pribadi, menjaga polis tetap aktif selama 12 bulan pertama agar komisi FYC cair penuh, lalu membiarkan polis gugur serempak pada bulan ke-13 (M13).
-
-Proyek ini dibangun untuk menutup kedua celah tersebut melalui pengawasan berbasis data yang objektif dan dapat dipertanggungjawabkan saat sidang komite audit.
+> Catatan kerahasiaan data: Seluruh data yang digunakan pada proyek dan dashboard ini merupakan data sintetis (dummy) terprogram. Langkah ini diambil karena data polis dan agen riil milik perusahaan bersifat rahasia (confidential). Struktur atribut, persebaran premi, dan skenario kecurangan disimulasikan mendekati kondisi industri sebenarnya.
 
 ---
 
-## 💡 Arsitektur Solusi & Metodologi
+## Masalah bisnis
 
-Sistem ini dibangun atas tiga pilar utama:
+Pada industri asuransi jiwa, komisi tahun pertama (First Year Commission atau FYC) dan bonus persistensi bulan ke-13 (M13) memiliki porsi nominal yang besar. Struktur insentif ini kerap menimbulkan celah moral hazard:
 
-### 1. Engine Analisis Kohort 2D (Volume vs APE M1 sampai M24)
-- **Matriks Retensi Volume**: Mengukur rasio polis aktif terhadap total polis awal kohort dari bulan M1 sampai M24.
-- **Matriks Retensi Premi (APE)**: Mengukur rasio nominal premi aktif terhadap total premi awal kohort.
-- **Matriks Selisih Kebocoran Premi (Discrepancy Matrix)**: Mengurangkan retensi Volume dengan retensi APE per sel kohort. Warna biru muda menandakan kondisi selaras (sehat), sementara warna kuning emas hingga merah pekat langsung menandai kebocoran premi akibat manipulasi seleksi polis.
-- **Early Warning Grace Period (M11 dan M12)**: Mengisolasi polis dan agen yang memasuki masa tenggang pembayaran tepat sebelum jatuh tempo M13, memberi waktu bagi tim retensi untuk melakukan intervensi penyelamatan premi.
+1. Titik buta persistensi volume: Sebagian besar pemantauan hanya melihat persentase jumlah lembar polis yang aktif. Celah ini dimanfaatkan lewat modus Cherry Picking. Agen menjaga polis bernilai kecil tetap aktif agar rasio volume M13 tetap di atas batas 80%, sementara polis berpremi besar dibiarkan mati (lapse) begitu komisi cair. Hasilnya, laporan volume tampak patuh, tetapi premi tahunan riil (APE) bocor dalam jumlah besar.
 
-### 2. Rekayasa Fitur Risiko Agen (4 Dimensi)
-Setiap agen dievaluasi menggunakan empat parameter kuantitatif:
-- `lapse_shock_vol`: Penurunan drastis persentase volume polis dari M12 ke M13.
-- `lapse_shock_ape`: Penurunan drastis persentase premi APE dari M12 ke M13.
-- `ape_disparity_ratio`: Rasio perbandingan rata-rata premi polis yang lapse dibanding polis yang tetap aktif (nilai di atas 1.5x menandakan indikasi kuat cherry-picking).
-- `cash_payment_ratio`: Proporsi transaksi premi yang menggunakan metode pembayaran tunai/manual dibanding auto-debit bank.
+2. Modus Hit and Run: Agen menjual polis dengan pembayaran tunai atau talangan premi sendiri, mempertahankan status aktif selama 12 bulan pertama agar komisi FYC cair penuh, lalu membiarkan polis gugur massal pada bulan ke-13.
 
-### 3. Arsitektur Deteksi Dua Tingkat (Two-Tier Anomaly Detection)
-- **Tier 1 (Penyaringan Berbasis Aturan Kepatuhan)**: Menangkap pelanggaran fatal yang jelas melanggar batas regulasi, yaitu penurunan volume M12 ke M13 lebih dari 25% atau persistensi M13 di bawah 75%. Agen yang masuk kategori ini dilabeli sebagai **Hit and Run**.
-- **Tier 2 (Isolation Forest Multivariat)**: Model machine learning tanpa pengawasan yang dilatih menggunakan keempat fitur risiko di atas. Model ini bertugas mendeteksi agen yang cerdik mengakali aturan Tier 1 (volume tetap aman di 80%, namun premi besar bocor). Agen yang terdeteksi di tier ini dilabeli sebagai **Cherry Picking**.
-- **Skor Anomali Kontinu (0.0 sampai 1.0)**: Menghasilkan peringkat prioritas investigasi bagi auditor, lengkap dengan ringkasan faktor pemicu risiko kuantitatif (*risk drivers*) sebagai alat bukti pemeriksaan.
+Sistem ini dirancang untuk memetakan kedua risiko tersebut secara transparan melalui bukti kuantitatif yang siap dipakai dalam evaluasi audit.
 
 ---
 
-## 🖥️ Tampilan & Fitur Dashboard
+## Metodologi dan arsitektur deteksi
 
-Dashboard interaktif dibangun menggunakan Streamlit dan Plotly dengan palet korporat MNC Life (Putih Bersih `#FFFFFF`, Deep Navy `#192C4D`, Warm Gold `#C89B2C`, dan Merah Peringatan `#D94B4B`):
+Sistem analisis ini menggunakan tiga komponen utama:
 
-1. **Filter Portofolio Cerdas**: Filter multi-pilih untuk Kanal Distribusi (Agency, Bancassurance, Worksite) dan Kantor Cabang dengan menu dropdown berkontras tinggi.
-2. **Kartu Ringkasan Eksekutif**: Menampilkan persistensi M13 volume terhadap standar AAJI (80% - 85%), selisih kebocoran APE, jumlah agen berisiko, serta estimasi nominal premi yang berada di masa tenggang.
-3. **Dual Heatmap Kohort**: Visualisasi matriks kohort berdampingan antara volume polis dan nilai premi APE, dilengkapi opsi melihat peta selisih kebocoran premi bergaris kisi rapi.
-4. **Peta Sebaran Perilaku Agen**: Grafik bubble multivariat yang memetakan agen ke dalam tiga zona jelas: Agen Normal, Hit and Run, dan Cherry Picking.
-5. **Daftar Pemantauan Masa Tenggang**: Rincian polis aktif di M11 dan M12 beserta rasio metode pembayaran (auto-debit vs tunai) untuk tindak lanjut cepat.
-6. **Watchlist Risiko Agen & Drill-down Bukti Audit**: Tabel interaktif berfitur pencarian dan unduh laporan audit dalam format CSV. Pengguna dapat memilih kode agen tertentu untuk melihat kurva siklus hidup M1 sampai M24 agen tersebut secara spesifik.
+### 1. Analisis kohort dua dimensi (M1 sampai M24)
+- Matriks retensi volume: Mengukur rasio jumlah polis aktif terhadap basis polis awal per bulan terbit (Issue Date).
+- Matriks retensi premi APE: Mengukur rasio nilai premi aktif terhadap basis premi awal kohort.
+- Matriks selisih kebocoran premi: Mengurangkan persentase retensi volume dengan persentase retensi APE pada setiap sel bulan. Warna biru menandai keselarasan retensi, sedangkan warna emas hingga merah pekat menandai kebocoran premi.
+- Pemantauan masa tenggang (Grace Period M11 dan M12): Menyaring polis yang menunggak tepat sebelum jatuh tempo M13, sehingga tim retensi dapat melakukan intervensi sebelum polis berstatus lapse permanen.
+
+### 2. Rekayasa fitur risiko agen
+Setiap agen diukur melalui empat metrik:
+- `lapse_shock_vol`: Penurunan persentase volume polis antara M12 dan M13.
+- `lapse_shock_ape`: Penurunan persentase premi APE antara M12 dan M13.
+- `ape_disparity_ratio`: Rasio perbandingan rata-rata premi polis yang lapse terhadap polis yang masih aktif. Nilai di atas 1.5x menandakan indikasi cherry picking.
+- `cash_payment_ratio`: Porsi polis yang menggunakan pembayaran manual atau tunai dibanding auto-debit perbankan.
+
+### 3. Deteksi anomali dua tingkat
+- Tier 1 (Penyaringan aturan): Menandai agen dengan penurunan volume M12 ke M13 melebihi 25% atau persistensi volume M13 di bawah 75%. Kategori ini dikelompokkan sebagai Hit and Run.
+- Tier 2 (Isolation Forest): Model machine learning multivariat yang memproses keempat fitur risiko secara serentak. Model ini menangkap anomali halus yang lolos dari saringan volume Tier 1. Kategori ini dikelompokkan sebagai Cherry Picking.
+- Skor risiko kontinu (0.0 sampai 1.0): Menghasilkan urutan prioritas pemeriksaan dan ringkasan pemicu risiko (risk drivers) otomatis untuk sidang komite kepatuhan.
 
 ---
 
-## 📁 Struktur Berkas Repositori
+## Tampilan dashboard
+
+Antarmuka dibangun dengan Streamlit dan Plotly menggunakan warna korporat MNC Life:
+
+- Filter portofolio: Pilihan kanal distribusi dan kantor cabang dengan dropdown kontras tinggi.
+- Ringkasan eksekutif: Kartu KPI untuk persistensi volume M13 terhadap standar AAJI (80% sampai 85%), selisih kebocoran APE, jumlah agen berisiko, dan total premi masa tenggang.
+- Heatmap kohort: Pilihan tampilan berdampingan (Volume vs APE) atau peta selisih kebocoran bergaris kisi.
+- Peta sebaran agen: Grafik bubble yang memisahkan kelompok Agen Normal, Hit and Run, dan Cherry Picking.
+- Daftar masa tenggang: Tabel polis rawan lapse pada M11 dan M12 beserta rasio metode pembayaran.
+- Daftar pengawasan agen: Tabel interaktif dengan filter skor, pencarian nama atau kode agen, tombol unduh laporan CSV, serta kurva siklus hidup M1 sampai M24 untuk agen yang dipilih.
+
+---
+
+## Struktur berkas
 
 ```text
-├── app.py                       # Aplikasi utama dashboard interaktif Streamlit
-├── detector.py                  # Logika matriks kohort, rekayasa fitur 4D, & model deteksi 2-tier
-├── visuals.py                   # Modul pembuat grafik Plotly & kalkulasi metrik visual
+├── app.py                       # Aplikasi dashboard Streamlit
+├── detector.py                  # Kalkulasi matriks kohort, fitur 4D, dan model deteksi
+├── visuals.py                   # Generator visualisasi Plotly dan kalkulasi KPI
 ├── generate_data.py             # Generator data sintetis aktuaria PAYDI
-├── requirements.txt             # Daftar dependensi pustaka Python
-├── pytest.ini                   # Konfigurasi pengujian otomatis pytest
-├── Dockerfile                   # Skrip containerization Docker untuk deployment
-├── .dockerignore                # Berkas pengecualian build Docker
+├── requirements.txt             # Dependensi pustaka Python
+├── pytest.ini                   # Konfigurasi pytest
+├── Dockerfile                   # Konfigurasi container Docker
+├── .dockerignore                # Pengecualian berkas Docker
 ├── .streamlit/
-│   └── config.toml              # Konfigurasi tema terang & server Streamlit
+│   └── config.toml              # Pengaturan tema dan server Streamlit
 ├── data/
-│   ├── agents.csv               # Data profil agen dan kanal distribusi
-│   ├── policies.csv             # Data master polis dan nilai APE
-│   └── policy_monthly_status.csv# Data log riwayat status bulanan polis (M1-M24)
+│   ├── agents.csv               # Data profil agen
+│   ├── policies.csv             # Data master polis dan premi APE
+│   └── policy_monthly_status.csv# Riwayat status bulanan polis (M1-M24)
 ├── tests/
-│   ├── test_generate_data.py    # Pengujian invarian integritas data generator
-│   ├── test_detector.py         # Pengujian kalkulasi kohort & recall model
-│   └── test_app_components.py   # Pengujian komponen visual dan KPI dashboard
+│   ├── test_generate_data.py    # Pengujian generator data
+│   ├── test_detector.py         # Pengujian logika kohort dan evaluasi model
+│   └── test_app_components.py   # Pengujian visualisasi dan kartu KPI
 ├── mnc_life_logo.svg            # Berkas logo resmi MNC Life Assurance
-├── DESIGN.md                    # Dokumentasi spesifikasi sistem desain visual
-├── SPEC.md                      # Spesifikasi teknis kebutuhan proyek
-└── TICKETS.md                   # Work breakdown structure pengerjaan tiket
+├── DESIGN.md                    # Dokumentasi spesifikasi visual
+├── SPEC.md                      # Dokumen spesifikasi teknis
+└── TICKETS.md                   # Rincian tiket pengerjaan
 ```
 
 ---
 
-## ⚙️ Panduan Instalasi & Menjalankan Lokal
+## Menjalankan proyek secara lokal
 
-### 1. Kloning Repositori
+### 1. Kloning repositori
 ```bash
 git clone https://github.com/brianilham/analisis-kohort-paydi.git
 cd analisis-kohort-paydi
 ```
 
-### 2. Buat Virtual Environment (Disarankan)
+### 2. Pasang environment dan dependensi
 ```bash
 python -m venv venv
 
-# Di Windows:
+# Windows:
 venv\Scripts\activate
 
-# Di macOS/Linux:
+# macOS / Linux:
 source venv/bin/activate
-```
 
-### 3. Instal Dependensi
-```bash
 pip install -r requirements.txt
 ```
 
-### 4. Buat Dataset Sintetis (Opsional)
-Dataset bawaan sudah tersedia di dalam folder `data/`. Jika ingin meregenerasi dataset dengan data acak baru:
+### 3. Buat dataset sintetis (opsional)
+Dataset awal sudah disertakan pada folder `data/`. Untuk memperbarui data secara acak:
 ```bash
 python generate_data.py
 ```
 
-### 5. Jalankan Aplikasi
+### 4. Buka dashboard
 ```bash
 streamlit run app.py
 ```
-Aplikasi akan langsung terbuka di browser Anda pada alamat `http://localhost:8501`.
+Aplikasi akan berjalan pada `http://localhost:8501`.
 
 ---
 
-## 🚀 Panduan Deployment
+## Deployment
 
-### Opsi A: Deployment ke Streamlit Community Cloud (Paling Mudah)
-Proyek ini sudah dilengkapi konfigurasi `.streamlit/config.toml` yang kompatibel langsung dengan Streamlit Cloud:
-1. Unggah kode ke repositori GitHub Anda.
-2. Buka [share.streamlit.io](https://share.streamlit.io/) dan login dengan akun GitHub Anda.
-3. Klik **New app**, pilih repositori, branch `main` (atau `master`), dan arahkan Main file path ke `app.py`.
-4. Klik **Deploy!** Aplikasi akan aktif dan dapat diakses secara publik dalam beberapa menit.
+### Streamlit Community Cloud
+Aplikasi ini sudah dipublikasikan dan dapat diakses di:  
+[https://brianilham-analisis-kohort-paydi-app-apv1xd.streamlit.app/](https://brianilham-analisis-kohort-paydi-app-apv1xd.streamlit.app/)
 
-### Opsi B: Deployment Menggunakan Docker Container
-Berkas `Dockerfile` dan `.dockerignore` siap pakai sudah tersedia di repositori.
+Jika ingin memasang ulang pada akun Streamlit Cloud pribadi:
+1. Masuk ke [share.streamlit.io](https://share.streamlit.io/) dengan akun GitHub.
+2. Pilih repositori `brianilham/analisis-kohort-paydi`, branch `main`, dan file `app.py`.
+3. Klik tombol Deploy.
 
-1. **Build Docker Image**:
-   ```bash
-   docker build -t paydi-cohort-dashboard:latest .
-   ```
+### Docker container
+Berkas Dockerfile sudah siap digunakan di lingkungan produksi:
 
-2. **Jalankan Docker Container**:
-   ```bash
-   docker run -d -p 8501:8501 --name paydi-dashboard paydi-cohort-dashboard:latest
-   ```
-   Buka peramban di `http://localhost:8501`.
+```bash
+# Build image
+docker build -t paydi-cohort-dashboard:latest .
 
-3. **Deploy ke Cloud Container (Google Cloud Run / AWS ECS / Render)**:
-   - Tag image ke container registry cloud pilihan Anda:
-     ```bash
-     docker tag paydi-cohort-dashboard:latest gcr.io/PROJECT_ID/paydi-dashboard:latest
-     docker push gcr.io/PROJECT_ID/paydi-dashboard:latest
-     ```
-   - Deploy sebagai layanan serverless container dengan port `8501`.
+# Jalankan container
+docker run -d -p 8501:8501 --name paydi-dashboard paydi-cohort-dashboard:latest
+```
 
 ---
 
-## 🧪 Rangkaian Pengujian Otomatis (Test Suite)
+## Pengujian otomatis
 
-Keandalan seluruh formula aktuaria dan model deteksi diverifikasi menggunakan `pytest`. Jalankan seluruh pengujian dengan perintah:
+Seluruh logika aktuaria dan model diuji melalui pytest:
 
 ```bash
 pytest -v
 ```
 
-Hasil pengujian mencakup 21 test case yang lulus 100%:
-- **Invarian Generator Data** (`tests/test_generate_data.py`): Memastikan volume 12.000 polis, 200 agen, kepatuhan batas OJK populasi normal, serta validitas aturan transisi satu arah (polis yang lapse tidak hidup kembali secara ilegal).
-- **Kalkulasi Kohort & Evaluasi Model** (`tests/test_detector.py`): Memverifikasi keakuratan formula persistensi volume dan APE, sifat monotonik kurva retensi, serta target recall deteksi anomali di atas 85%.
-- **Komponen Visual Dashboard** (`tests/test_app_components.py`): Memastikan heatmap, scatter plot, dan kalkulator ringkasan KPI eksekutif menghasilkan visual bebas error.
+Rangkaian uji mencakup 21 skenario:
+- Invarian generator data: Volume 12.000 polis, 200 agen, dan transisi status satu arah tanpa pemulihan ilegal.
+- Seam kalkulasi kohort dan recall model: Pengujian konsistensi formula retensi dan target recall deteksi di atas 85%.
+- Komponen visual: Pengecekan stabilitas visual Plotly dan kalkulator KPI.
