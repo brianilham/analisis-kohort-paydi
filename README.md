@@ -93,7 +93,7 @@ Dashboard interaktif dibangun menggunakan Streamlit dan Plotly dengan palet korp
 
 ### 1. Kloning Repositori
 ```bash
-git clone https://github.com/username/analisis-kohort-paydi.git
+git clone https://github.com/brianilham/analisis-kohort-paydi.git
 cd analisis-kohort-paydi
 ```
 
