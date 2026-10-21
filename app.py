@@ -238,19 +238,34 @@ st.markdown(
         color: #192C4D !important;
     }
 
-    /* Multiselect tag badges (pilihan yang aktif di dalam kotak) */
-    span[data-baseweb="tag"] {
-        background-color: #EBF2FA !important;
-        border: 1px solid #BACFE8 !important;
+    /* Multiselect tag badges (pilihan yang aktif di dalam kotak input) */
+    [data-baseweb="tag"],
+    span[data-baseweb="tag"],
+    div[data-baseweb="tag"] {
+        background-color: #192C4D !important;
+        background: #192C4D !important;
+        border: 1px solid #192C4D !important;
         border-radius: 6px !important;
     }
-    span[data-baseweb="tag"] span {
-        color: #192C4D !important;
+
+    [data-baseweb="tag"] span,
+    span[data-baseweb="tag"] span,
+    div[data-baseweb="tag"] span,
+    [data-baseweb="tag"] div,
+    [data-baseweb="tag"] * {
+        color: #FFFFFF !important;
         font-weight: 600 !important;
+        font-size: 0.85rem !important;
     }
-    span[data-baseweb="tag"] svg {
-        fill: #192C4D !important;
-        color: #192C4D !important;
+
+    [data-baseweb="tag"] svg,
+    span[data-baseweb="tag"] svg,
+    div[data-baseweb="tag"] svg,
+    [data-baseweb="tag"] svg *,
+    span[data-baseweb="tag"] svg * {
+        fill: #FFFFFF !important;
+        stroke: #FFFFFF !important;
+        color: #FFFFFF !important;
     }
 
     /* Popover Menu Dropdown (Selectbox & Multiselect saat diklik/dibuka) */
