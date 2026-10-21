@@ -1,6 +1,7 @@
 """
 Dashboard Analisis Kohort Persistensi Polis dan Deteksi Churn Agen (PAYDI).
 PT MNC Life Assurance.
+Mengacu pada panduan desain mnclife.com-design.md.
 """
 
 from pathlib import Path
@@ -34,7 +35,8 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# Custom CSS: white background throughout, clean corporate typography
+# Injeksi CSS berpedoman pada DESIGN.md (MNC Life Brand Design System)
+# Warna: primary #192C4D, secondary #666666, tertiary #C89B2C, surface #F5F8FC, border #EEEEFF
 st.markdown(
     """
     <style>
@@ -43,88 +45,129 @@ st.markdown(
     html, body, [class*="css"], .stApp {
         font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
         background-color: #FFFFFF !important;
-        color: #1E293B;
+        color: #192C4D;
     }
 
-    /* Main container background */
+    /* Container utama serba putih */
     .main .block-container {
-        background-color: #FFFFFF;
-        padding-top: 1.5rem;
-        padding-bottom: 3rem;
+        background-color: #FFFFFF !important;
+        padding-top: 1.2rem;
+        padding-bottom: 2.5rem;
     }
 
-    /* Top Brand Header */
-    .main-header {
+    /* Header atas utama */
+    .mnc-main-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding-bottom: 18px;
+        padding-bottom: 16px;
         margin-bottom: 20px;
-        border-bottom: 1px solid #E2E8F0;
+        border-bottom: 1px solid #EEEEFF;
         background-color: #FFFFFF;
-        gap: 24px;
+        gap: 20px;
         flex-wrap: wrap;
     }
-    .main-header-title {
-        font-size: 1.35rem;
-        font-weight: 700;
-        color: #002554;
-        margin: 0;
+    .mnc-header-titles {
+        display: flex;
+        flex-direction: column;
     }
-    .main-header-sub {
-        font-size: 0.9rem;
-        color: #64748B;
+    .mnc-title-text {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #192C4D;
+        margin: 0;
+        line-height: 1.25;
+    }
+    .mnc-subtitle-text {
+        font-size: 0.92rem;
+        color: #666666;
         margin-top: 4px;
         margin-bottom: 8px;
+        line-height: 1.4;
     }
-    .badge-rule {
+    .mnc-badge-pill {
         display: inline-block;
+        padding: 4px 10px;
+        border-radius: 9999px;
         font-size: 0.75rem;
         font-weight: 600;
-        color: #002554;
-        background-color: #EEF4FF;
-        border: 1px solid #D0E1FD;
-        padding: 3px 8px;
-        border-radius: 4px;
         margin-right: 6px;
     }
-
-    /* Cards */
-    .metric-card-clean {
-        background-color: #FFFFFF;
-        border-radius: 8px;
-        padding: 16px;
-        border: 1px solid #E2E8F0;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    .badge-tertiary {
+        background-color: #C89B2C;
+        color: #FFFFFF;
+    }
+    .badge-subtle {
+        background-color: #F5F8FC;
+        color: #192C4D;
+        border: 1px solid #D9E5F2;
     }
 
-    /* Tabs */
+    /* Kartu metrik berdesain datar (flat) sesuai DESIGN.md */
+    div[data-testid="stMetric"] {
+        background-color: #FFFFFF;
+        border: 1px solid #EEEEFF;
+        border-radius: 8px;
+        padding: 14px 16px;
+        box-shadow: none;
+    }
+    div[data-testid="stMetric"] label {
+        color: #666666 !important;
+        font-size: 0.85rem !important;
+        font-weight: 500;
+    }
+    div[data-testid="stMetric"] [data-testid="stMetricValue"] {
+        color: #192C4D !important;
+        font-size: 1.55rem !important;
+        font-weight: 700;
+    }
+
+    /* Tab navigasi */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
-        border-bottom: 1px solid #E2E8F0;
+        gap: 6px;
+        border-bottom: 1px solid #EEEEFF;
         background-color: #FFFFFF;
     }
     .stTabs [data-baseweb="tab"] {
-        padding: 8px 16px;
+        padding: 8px 18px;
         font-weight: 600;
-        color: #475569;
+        font-size: 0.92rem;
+        color: #666666;
         background-color: #FFFFFF;
+        border-radius: 8px 8px 0 0;
     }
     .stTabs [aria-selected="true"] {
-        color: #002554 !important;
-        border-bottom: 3px solid #002554 !important;
+        color: #192C4D !important;
+        border-bottom: 3px solid #C89B2C !important;
         background-color: #FFFFFF !important;
     }
 
-    /* Clean Sidebar */
+    /* Sidebar bersih (surface #F5F8FC) */
     section[data-testid="stSidebar"] {
-        background-color: #FAFAFA;
-        border-right: 1px solid #EAEAEA;
+        background-color: #F5F8FC !important;
+        border-right: 1px solid #D9E5F2 !important;
     }
     section[data-testid="stSidebar"] h2, section[data-testid="stSidebar"] h3 {
-        color: #002554;
+        color: #192C4D;
         font-size: 1.05rem;
         font-weight: 700;
+        margin-bottom: 12px;
+    }
+
+    /* Tombol primer berpedoman DESIGN.md */
+    div.stButton > button, div.stDownloadButton > button {
+        background-color: #192C4D;
+        color: #FFFFFF;
+        border-radius: 8px;
+        border: 1px solid #192C4D;
+        font-weight: 600;
+        padding: 8px 16px;
+        transition: background-color 0.15s ease;
+    }
+    div.stButton > button:hover, div.stDownloadButton > button:hover {
+        background-color: #0E1B31;
+        color: #FFFFFF;
+        border-color: #0E1B31;
     }
     </style>
     """,
@@ -151,11 +194,11 @@ def load_dataset() -> Dict[str, pd.DataFrame]:
 raw_data = load_dataset()
 
 # ==============================================================================
-# SIDEBAR: HANYA FILTER DATA PENTING
+# SIDEBAR: HANYA MENYISAKAN FILTER UTAMA
 # ==============================================================================
 
 with st.sidebar:
-    st.subheader("Filter Data")
+    st.subheader("Filter Portofolio")
 
     all_channels = sorted(raw_data["agents"]["channel"].unique())
     selected_channels = st.multiselect(
@@ -172,7 +215,7 @@ with st.sidebar:
     )
 
 
-# Filter data
+# Pemfilteran data
 filtered_data = filter_dataset(
     raw_data["agents"],
     raw_data["policies"],
@@ -182,12 +225,12 @@ filtered_data = filter_dataset(
 )
 
 if len(filtered_data["agents"]) == 0 or len(filtered_data["policies"]) == 0:
-    st.warning("Data tidak ditemukan untuk kombinasi filter yang dipilih.")
+    st.warning("Data tidak ditemukan untuk pilihan filter yang sedang aktif.")
     st.stop()
 
 
 # ==============================================================================
-# PROSES ANALISIS & DETEKSI DENGAN AMBANG BATAS STANDAR
+# PERHITUNGAN ANALITIK KOHORT & DETEKSI DUA TIER
 # ==============================================================================
 
 # Ambang batas standar regulasi OJK & AAJI
@@ -222,46 +265,44 @@ kpis = calculate_dashboard_kpis(matrices, detected_agents, grace_df)
 
 
 # ==============================================================================
-# HEADER UTAMA: LOGO MNC LIFE & IDENTITAS
+# HEADER DASHBOARD UTAMA: ELEMEN MNC LIFE & IDENTITAS
 # ==============================================================================
 
-col_h1, col_h2 = st.columns([1, 4])
-with col_h1:
+col_logo, col_title = st.columns([1, 4])
+with col_logo:
     logo_path = Path("mnc_life_logo.svg")
     if logo_path.exists():
-        st.image(str(logo_path), width=190)
+        st.image(str(logo_path), width=180)
     else:
-        st.markdown("### MNC Life")
+        st.markdown("<h3 style='color:#192C4D; margin:0;'>MNC Life</h3>", unsafe_allow_html=True)
 
-with col_h2:
+with col_title:
     st.markdown(
         """
-        <div>
-            <h2 style='color:#002554; margin:0; font-size:1.35rem; font-weight:700;'>
-                PT MNC Life Assurance
-            </h2>
-            <div style='color:#64748B; font-size:0.92rem; margin-top:2px; margin-bottom:8px;'>
-                Monitoring Persistensi Polis PAYDI dan Deteksi Churn Agen
+        <div class="mnc-header-titles">
+            <h1 class="mnc-title-text">PT MNC Life Assurance</h1>
+            <div class="mnc-subtitle-text">
+                Dashboard Persistensi Polis PAYDI dan Deteksi Churn Agen
             </div>
             <div>
-                <span class='badge-rule'>SEOJK No. 5/SEOJK.05/2022</span>
-                <span class='badge-rule'>Standar AAJI M13 (80%-85%)</span>
+                <span class="mnc-badge-pill badge-tertiary">SEOJK No. 5/SEOJK.05/2022</span>
+                <span class="mnc-badge-pill badge-subtle">Standar AAJI M13: 80% - 85%</span>
             </div>
         </div>
         """,
         unsafe_allow_html=True,
     )
 
-st.markdown("<hr style='margin-top:10px; margin-bottom:20px; border:0; border-top:1px solid #E2E8F0;'>", unsafe_allow_html=True)
+st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
 
 
 # ==============================================================================
-# RINGKASAN METRIK UTAMA
+# RINGKASAN METRIK KUNCI (FLAT CARDS)
 # ==============================================================================
 
-col1, col2, col3, col4 = st.columns(4)
+c_kpi1, c_kpi2, c_kpi3, c_kpi4 = st.columns(4)
 
-with col1:
+with c_kpi1:
     m13_v = kpis["m13_vol"]
     delta_ojk = m13_v - 80.0
     st.metric(
@@ -271,7 +312,7 @@ with col1:
         delta_color="normal" if delta_ojk >= 0 else "inverse",
     )
 
-with col2:
+with c_kpi2:
     m13_a = kpis["m13_ape"]
     gap = kpis["leakage_gap"]
     st.metric(
@@ -281,31 +322,31 @@ with col2:
         delta_color="inverse" if gap > 5.0 else "off",
     )
 
-with col3:
+with c_kpi3:
     st.metric(
-        label="Agen Berisiko Terindikasi",
+        label="Agen Terindikasi Risiko",
         value=f"{kpis['total_flagged']} Agen",
         delta=f"Tier 1: {kpis['tier1_count']} | Tier 2: {kpis['tier2_count']}",
         delta_color="inverse" if kpis["total_flagged"] > 0 else "off",
     )
 
-with col4:
+with c_kpi4:
     grace_ape_m = kpis["grace_total_ape"] / 1_000_000_000.0
     st.metric(
         label="Grace Period M11-M12",
         value=f"{kpis['grace_policy_count']:,} Polis",
-        delta=f"Rp {grace_ape_m:.2f} Miliar",
+        delta=f"Rp {grace_ape_m:.2f} Miliar Berisiko",
         delta_color="inverse" if kpis["grace_policy_count"] > 0 else "off",
     )
 
-st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 
 
 # ==============================================================================
-# TAB ANALISIS
+# TAB ANALISIS & INVESTIGASI
 # ==============================================================================
 
-tab1, tab2, tab3, tab4 = st.tabs(
+tab_cohort, tab_scatter, tab_grace, tab_audit = st.tabs(
     [
         "Matriks Kohort (Volume vs APE)",
         "Peta Sebaran Anomali Agen",
@@ -315,13 +356,13 @@ tab1, tab2, tab3, tab4 = st.tabs(
 )
 
 # ------------------------------------------------------------------------------
-# TAB 1: MATRIKS KOHORT DUA DIMENSI
+# TAB 1: MATRIKS KOHORT (VOLUME VS APE)
 # ------------------------------------------------------------------------------
-with tab1:
+with tab_cohort:
     st.subheader("Matriks Kohort: Volume Polis vs Nilai Premi (APE)")
     st.write(
         "Perbandingan retensi dari bulan pertama (M1) sampai bulan ke-24 (M24). "
-        "Garis putus-putus menandai batas bulan ke-13 setelah pencairan komisi tahun pertama."
+        "Garis putus-putus merah menandai batas bulan ke-13 setelah pencairan komisi tahun pertama."
     )
 
     view_mode = st.radio(
@@ -337,7 +378,7 @@ with tab1:
                 create_cohort_heatmap(
                     matrices["volume_matrix"],
                     title="Retensi Volume Polis (% Aktif)",
-                    colorscale="Tealrose",
+                    colorscale="Blues",
                 ),
                 use_container_width=True,
             )
@@ -346,7 +387,7 @@ with tab1:
                 create_cohort_heatmap(
                     matrices["ape_matrix"],
                     title="Retensi Premi APE (% Aktif)",
-                    colorscale="Tealrose",
+                    colorscale="Blues",
                 ),
                 use_container_width=True,
             )
@@ -356,13 +397,13 @@ with tab1:
             use_container_width=True,
         )
         st.caption(
-            "Warna merah pekat menunjukkan persentase volume terlihat aman tetapi nilai premi riil turun drastis (indikasi cherry-picking)."
+            "Warna oranye atau merah pekat menunjukkan persentase volume terlihat aman tetapi nilai premi riil turun drastis (indikasi cherry-picking)."
         )
 
 # ------------------------------------------------------------------------------
 # TAB 2: PETA SEBARAN ANOMALI
 # ------------------------------------------------------------------------------
-with tab2:
+with tab_scatter:
     st.subheader("Peta Sebaran Perilaku Agen")
     st.write(
         "Sumbu X menunjukkan penurunan volume pada M12 ke M13. Sumbu Y menunjukkan penurunan premi APE pada M12 ke M13. "
@@ -374,22 +415,52 @@ with tab2:
         use_container_width=True,
     )
 
-    c1, c2, c3 = st.columns(3)
-    with c1:
-        st.write("**Agen Normal**\n\nPenurunan wajar dan tetap memenuhi ambang batas persistensi.")
-    with c2:
-        st.write("**Tier 1: Hit-and-Run**\n\nPersistensi M1-M12 tinggi, lalu anjlok serempak lebih dari 25% di M13.")
-    with c3:
-        st.write("**Tier 2: Cherry-Picking**\n\nVolume M13 dipertahankan di batas aman, tetapi polis bernilai premi besar dibiarkan mati.")
+    c_norm, c_t1, c_t2 = st.columns(3)
+    with c_norm:
+        st.markdown(
+            """
+            <div style="background-color:#F5F8FC; border:1px solid #EEEEFF; border-radius:8px; padding:12px;">
+                <strong style="color:#1E6B52;">Agen Normal</strong>
+                <p style="font-size:0.85rem; color:#666666; margin:4px 0 0 0;">
+                    Penurunan wajar dan tetap memenuhi ambang batas persistensi AAJI (80% - 85%).
+                </p>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+    with c_t1:
+        st.markdown(
+            """
+            <div style="background-color:#F5F8FC; border:1px solid #EEEEFF; border-radius:8px; padding:12px;">
+                <strong style="color:#D94B4B;">Tier 1: Hit-and-Run</strong>
+                <p style="font-size:0.85rem; color:#666666; margin:4px 0 0 0;">
+                    Persistensi M1-M12 tinggi, lalu anjlok serempak lebih dari 25% di bulan ke-13.
+                </p>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+    with c_t2:
+        st.markdown(
+            """
+            <div style="background-color:#F5F8FC; border:1px solid #EEEEFF; border-radius:8px; padding:12px;">
+                <strong style="color:#C89B2C;">Tier 2: Cherry-Picking</strong>
+                <p style="font-size:0.85rem; color:#666666; margin:4px 0 0 0;">
+                    Volume M13 dipertahankan aman, tetapi polis berpremi besar sengaja dimatikan.
+                </p>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
 # ------------------------------------------------------------------------------
 # TAB 3: EARLY WARNING GRACE PERIOD
 # ------------------------------------------------------------------------------
-with tab3:
+with tab_grace:
     st.subheader("Daftar Polis Grace Period (M11 dan M12)")
     st.write(
         "Daftar polis yang sedang memasuki masa tenggang sebelum jatuh tempo M13. "
-        "Bagian ini dapat digunakan untuk tindak lanjut retensi sebelum polis resmi lapse."
+        "Data ini berguna untuk tindak lanjut retensi sebelum polis resmi lapse."
     )
 
     if len(grace_df) > 0:
@@ -400,7 +471,7 @@ with tab3:
 
             pm_dist = grace_df["payment_method"].value_counts(normalize=True) * 100.0
             st.write("**Metode Pembayaran:**")
-            st.dataframe(pm_dist.round(1).rename("Persentase (%)"))
+            st.dataframe(pm_dist.round(1).rename("Persentase (%)"), use_container_width=True)
 
         with g2:
             cols = ["policy_id", "agent_id", "cohort_month", "month_index", "ape", "payment_method"]
@@ -424,7 +495,7 @@ with tab3:
 # ------------------------------------------------------------------------------
 # TAB 4: DAFTAR PENGAWASAN AGEN & DETAIL BUKTI
 # ------------------------------------------------------------------------------
-with tab4:
+with tab_audit:
     st.subheader("Daftar Pengawasan Agen Berisiko")
     st.write("Daftar agen yang terindikasi anomali pada saringan aturan maupun model deteksi.")
 
