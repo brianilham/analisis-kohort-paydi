@@ -5,6 +5,4 @@ __pycache__/
 .coverage
 htmlcov/
 *.parquet
-*.csv
-data/*.csv
-data/*.parquet
+

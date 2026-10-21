@@ -1,0 +1,201 @@
+agent_id,agent_name,channel,branch_office,join_date,true_label,is_anomaly
+AGT-0001,Wahyu Halim,Worksite,Surabaya,2024-09-02,Normal,False
+AGT-0002,Eko Pratama,Bancassurance,Semarang,2024-03-02,Normal,False
+AGT-0003,Wahyu Halim,Bancassurance,Makassar,2024-09-23,Normal,False
+AGT-0004,Nadia Susanto,Bancassurance,Jakarta Selatan,2023-11-11,Normal,False
+AGT-0005,Nugroho Kusuma,Bancassurance,Surabaya,2022-06-16,Normal,False
+AGT-0006,Andi Nugraha,Worksite,Jakarta Pusat,2024-08-13,Normal,False
+AGT-0007,Yuni Wibowo,Agency,Jakarta Selatan,2025-01-13,Normal,False
+AGT-0008,Arif Hakim,Bancassurance,Medan,2024-10-27,Normal,False
+AGT-0009,Wahyu Gunawan,Agency,Surabaya,2023-07-04,Normal,False
+AGT-0010,Taufik Nasution,Bancassurance,Surabaya,2024-04-22,Normal,False
+AGT-0011,Rizky Hartono,Agency,Jakarta Selatan,2023-08-26,Normal,False
+AGT-0012,Nugroho Hakim,Bancassurance,Jakarta Selatan,2024-12-19,Normal,False
+AGT-0013,Putri Gunawan,Bancassurance,Denpasar,2024-02-12,Normal,False
+AGT-0014,Arif Pratama,Agency,Jakarta Selatan,2023-11-06,Normal,False
+AGT-0015,Kartika Rahmawati,Agency,Jakarta Pusat,2023-10-20,Normal,False
+AGT-0016,Sari Saputra,Bancassurance,Jakarta Pusat,2023-06-14,Cherry-Picking,True
+AGT-0017,Nadia Nugraha,Bancassurance,Surabaya,2022-09-06,Cherry-Picking,True
+AGT-0018,Rizky Nasution,Agency,Bandung,2023-09-11,Normal,False
+AGT-0019,Budi Permana,Bancassurance,Surabaya,2022-07-27,Normal,False
+AGT-0020,Fajar Saputra,Worksite,Jakarta Selatan,2023-06-09,Normal,False
+AGT-0021,Taufik Putra,Agency,Jakarta Pusat,2024-04-06,Normal,False
+AGT-0022,Budi Mahendra,Agency,Semarang,2024-05-20,Hit-and-Run,True
+AGT-0023,Dian Hartono,Agency,Bandung,2024-02-07,Normal,False
+AGT-0024,Arif Pratama,Bancassurance,Bandung,2023-04-26,Normal,False
+AGT-0025,Andi Permana,Agency,Bandung,2024-05-25,Hit-and-Run,True
+AGT-0026,Putri Wibowo,Bancassurance,Medan,2022-05-28,Normal,False
+AGT-0027,Arif Kusuma,Bancassurance,Jakarta Selatan,2023-08-26,Normal,False
+AGT-0028,Putri Pratama,Agency,Jakarta Pusat,2022-06-08,Cherry-Picking,True
+AGT-0029,Dewi Kusuma,Worksite,Surabaya,2023-01-07,Normal,False
+AGT-0030,Ratna Mahendra,Bancassurance,Jakarta Pusat,2024-01-11,Normal,False
+AGT-0031,Eko Firmansyah,Agency,Semarang,2024-05-14,Normal,False
+AGT-0032,Dewi Hartono,Agency,Surabaya,2022-11-25,Normal,False
+AGT-0033,Rizky Halim,Agency,Medan,2024-02-21,Normal,False
+AGT-0034,Maya Mahendra,Agency,Semarang,2024-05-19,Normal,False
+AGT-0035,Ratna Saputra,Agency,Surabaya,2022-04-25,Normal,False
+AGT-0036,Intan Suryani,Worksite,Denpasar,2023-08-19,Normal,False
+AGT-0037,Intan Wijaya,Agency,Bandung,2024-12-12,Normal,False
+AGT-0038,Nugroho Susanto,Agency,Semarang,2023-08-13,Normal,False
+AGT-0039,Ayu Gunawan,Bancassurance,Jakarta Pusat,2023-09-15,Normal,False
+AGT-0040,Putri Nugraha,Bancassurance,Surabaya,2022-06-04,Normal,False
+AGT-0041,Dewi Lestari,Worksite,Surabaya,2022-12-22,Hit-and-Run,True
+AGT-0042,Bayu Hidayat,Bancassurance,Jakarta Selatan,2024-07-19,Normal,False
+AGT-0043,Pratama Halim,Agency,Jakarta Pusat,2024-08-21,Normal,False
+AGT-0044,Wulan Setiawan,Agency,Denpasar,2023-04-16,Normal,False
+AGT-0045,Hendra Setiawan,Worksite,Bandung,2024-12-23,Normal,False
+AGT-0046,Maya Nasution,Bancassurance,Jakarta Selatan,2024-02-27,Normal,False
+AGT-0047,Siti Lestari,Worksite,Jakarta Pusat,2024-09-17,Normal,False
+AGT-0048,Andi Suryani,Agency,Jakarta Selatan,2025-01-13,Normal,False
+AGT-0049,Arif Nasution,Worksite,Jakarta Selatan,2022-04-04,Normal,False
+AGT-0050,Arif Gunawan,Bancassurance,Denpasar,2024-10-23,Normal,False
+AGT-0051,Lestari Lestari,Agency,Surabaya,2025-01-26,Normal,False
+AGT-0052,Putri Lestari,Bancassurance,Jakarta Pusat,2022-04-20,Normal,False
+AGT-0053,Taufik Pratama,Bancassurance,Bandung,2024-07-25,Normal,False
+AGT-0054,Nadia Siregar,Agency,Jakarta Selatan,2022-08-25,Normal,False
+AGT-0055,Taufik Lestari,Agency,Jakarta Pusat,2024-12-23,Normal,False
+AGT-0056,Nugroho Permana,Bancassurance,Medan,2024-08-15,Normal,False
+AGT-0057,Putri Saputra,Agency,Bandung,2024-10-04,Normal,False
+AGT-0058,Hendra Wibowo,Agency,Makassar,2022-12-02,Normal,False
+AGT-0059,Nugroho Santoso,Agency,Bandung,2023-03-07,Normal,False
+AGT-0060,Ratna Firmansyah,Agency,Surabaya,2023-08-13,Normal,False
+AGT-0061,Rizky Wijaya,Worksite,Medan,2024-05-22,Normal,False
+AGT-0062,Bayu Hidayat,Bancassurance,Denpasar,2024-10-14,Normal,False
+AGT-0063,Kartika Hidayat,Agency,Medan,2023-05-02,Normal,False
+AGT-0064,Pratama Halim,Worksite,Makassar,2024-05-07,Normal,False
+AGT-0065,Maya Wijaya,Worksite,Semarang,2023-04-28,Normal,False
+AGT-0066,Wulan Permana,Agency,Denpasar,2023-01-28,Normal,False
+AGT-0067,Nugroho Gunawan,Bancassurance,Jakarta Selatan,2022-07-12,Normal,False
+AGT-0068,Rina Wibowo,Agency,Medan,2023-08-23,Normal,False
+AGT-0069,Andi Utami,Worksite,Surabaya,2025-01-21,Normal,False
+AGT-0070,Kartika Halim,Bancassurance,Surabaya,2024-03-27,Normal,False
+AGT-0071,Siti Rahmawati,Bancassurance,Bandung,2022-07-25,Normal,False
+AGT-0072,Rizky Halim,Agency,Makassar,2023-06-18,Normal,False
+AGT-0073,Nadia Setiawan,Worksite,Makassar,2023-03-12,Normal,False
+AGT-0074,Wulan Mahendra,Agency,Jakarta Pusat,2023-09-18,Normal,False
+AGT-0075,Wulan Wibowo,Agency,Medan,2024-08-10,Normal,False
+AGT-0076,Andi Firmansyah,Agency,Medan,2022-05-11,Cherry-Picking,True
+AGT-0077,Dian Suryani,Bancassurance,Jakarta Pusat,2022-10-18,Normal,False
+AGT-0078,Agus Halim,Agency,Jakarta Selatan,2022-02-17,Normal,False
+AGT-0079,Reza Hartono,Worksite,Jakarta Selatan,2022-07-17,Normal,False
+AGT-0080,Sari Wibowo,Bancassurance,Medan,2024-03-12,Normal,False
+AGT-0081,Dian Wijaya,Agency,Surabaya,2024-04-13,Normal,False
+AGT-0082,Hendra Susanto,Agency,Makassar,2024-05-02,Normal,False
+AGT-0083,Dian Hidayat,Agency,Surabaya,2022-04-18,Normal,False
+AGT-0084,Dewi Suryani,Bancassurance,Makassar,2023-05-17,Hit-and-Run,True
+AGT-0085,Kartika Kusuma,Bancassurance,Surabaya,2023-09-27,Normal,False
+AGT-0086,Wahyu Kusuma,Agency,Semarang,2022-03-15,Normal,False
+AGT-0087,Putri Kusuma,Bancassurance,Jakarta Selatan,2023-04-14,Normal,False
+AGT-0088,Budi Putra,Agency,Surabaya,2022-05-03,Normal,False
+AGT-0089,Ayu Siregar,Bancassurance,Semarang,2022-02-07,Normal,False
+AGT-0090,Fajar Nasution,Worksite,Denpasar,2024-11-11,Normal,False
+AGT-0091,Ratna Rahmawati,Bancassurance,Semarang,2023-12-12,Normal,False
+AGT-0092,Dimas Pratama,Bancassurance,Jakarta Selatan,2022-11-11,Normal,False
+AGT-0093,Lestari Wijaya,Bancassurance,Jakarta Pusat,2022-08-12,Normal,False
+AGT-0094,Dian Santoso,Agency,Jakarta Selatan,2024-08-22,Normal,False
+AGT-0095,Agus Nugraha,Agency,Jakarta Selatan,2024-02-05,Normal,False
+AGT-0096,Reza Nasution,Agency,Bandung,2023-06-10,Cherry-Picking,True
+AGT-0097,Reza Wibowo,Agency,Medan,2022-09-06,Normal,False
+AGT-0098,Lestari Suryani,Bancassurance,Medan,2024-09-10,Normal,False
+AGT-0099,Maya Saputra,Bancassurance,Denpasar,2023-04-20,Normal,False
+AGT-0100,Budi Saputra,Worksite,Medan,2024-03-03,Normal,False
+AGT-0101,Nugroho Hartono,Agency,Semarang,2024-06-11,Cherry-Picking,True
+AGT-0102,Nugroho Saputra,Bancassurance,Jakarta Selatan,2023-07-02,Normal,False
+AGT-0103,Maya Wijaya,Agency,Jakarta Pusat,2023-11-27,Normal,False
+AGT-0104,Budi Rahmawati,Agency,Bandung,2023-03-21,Normal,False
+AGT-0105,Dewi Nasution,Bancassurance,Semarang,2024-02-08,Normal,False
+AGT-0106,Agus Utami,Worksite,Jakarta Selatan,2022-08-07,Normal,False
+AGT-0107,Taufik Saputra,Bancassurance,Surabaya,2024-11-04,Cherry-Picking,True
+AGT-0108,Dian Hartono,Agency,Bandung,2022-06-14,Normal,False
+AGT-0109,Andi Hartono,Bancassurance,Jakarta Selatan,2024-12-22,Normal,False
+AGT-0110,Reza Halim,Agency,Surabaya,2022-11-17,Normal,False
+AGT-0111,Rina Suryani,Worksite,Denpasar,2024-01-25,Normal,False
+AGT-0112,Lestari Kusuma,Bancassurance,Bandung,2023-12-11,Normal,False
+AGT-0113,Yuni Mahendra,Agency,Jakarta Pusat,2025-01-09,Cherry-Picking,True
+AGT-0114,Intan Setiawan,Agency,Semarang,2022-12-14,Normal,False
+AGT-0115,Dian Halim,Agency,Jakarta Pusat,2024-08-07,Normal,False
+AGT-0116,Siti Siregar,Worksite,Semarang,2023-02-28,Normal,False
+AGT-0117,Rina Hakim,Agency,Jakarta Pusat,2022-11-07,Normal,False
+AGT-0118,Rizky Putra,Bancassurance,Bandung,2022-07-14,Normal,False
+AGT-0119,Putri Putra,Bancassurance,Jakarta Pusat,2022-12-16,Normal,False
+AGT-0120,Wulan Gunawan,Bancassurance,Jakarta Pusat,2024-03-03,Normal,False
+AGT-0121,Ayu Hakim,Agency,Denpasar,2022-11-14,Normal,False
+AGT-0122,Putri Firmansyah,Worksite,Jakarta Selatan,2022-08-14,Normal,False
+AGT-0123,Wulan Lestari,Agency,Jakarta Selatan,2024-02-09,Normal,False
+AGT-0124,Wahyu Halim,Bancassurance,Jakarta Pusat,2024-09-05,Normal,False
+AGT-0125,Kartika Wibowo,Bancassurance,Medan,2022-05-03,Normal,False
+AGT-0126,Nadia Setiawan,Bancassurance,Semarang,2024-08-02,Normal,False
+AGT-0127,Andi Wibowo,Worksite,Makassar,2023-04-15,Normal,False
+AGT-0128,Nugroho Mahendra,Agency,Jakarta Pusat,2024-05-04,Normal,False
+AGT-0129,Budi Hartono,Agency,Surabaya,2024-09-27,Normal,False
+AGT-0130,Rina Hartono,Agency,Jakarta Selatan,2022-10-08,Normal,False
+AGT-0131,Hendra Susanto,Agency,Bandung,2024-08-19,Normal,False
+AGT-0132,Rizky Hakim,Agency,Makassar,2023-01-20,Normal,False
+AGT-0133,Dewi Rahmawati,Agency,Medan,2023-01-15,Hit-and-Run,True
+AGT-0134,Budi Utami,Agency,Bandung,2024-11-25,Normal,False
+AGT-0135,Eko Putra,Agency,Jakarta Pusat,2024-07-04,Normal,False
+AGT-0136,Wulan Kusuma,Agency,Denpasar,2022-09-08,Normal,False
+AGT-0137,Dewi Pratama,Bancassurance,Surabaya,2023-07-08,Normal,False
+AGT-0138,Rizky Wijaya,Bancassurance,Jakarta Selatan,2024-09-05,Normal,False
+AGT-0139,Kartika Lestari,Agency,Jakarta Pusat,2022-02-09,Normal,False
+AGT-0140,Pratama Permana,Agency,Jakarta Selatan,2024-04-10,Normal,False
+AGT-0141,Eko Susanto,Agency,Jakarta Selatan,2025-01-22,Normal,False
+AGT-0142,Reza Lestari,Bancassurance,Jakarta Selatan,2022-04-10,Normal,False
+AGT-0143,Yuni Permana,Agency,Surabaya,2025-01-25,Normal,False
+AGT-0144,Dimas Gunawan,Agency,Bandung,2023-06-22,Normal,False
+AGT-0145,Rina Kusuma,Agency,Jakarta Pusat,2022-02-26,Normal,False
+AGT-0146,Sari Nugraha,Agency,Surabaya,2023-05-04,Normal,False
+AGT-0147,Taufik Nugraha,Agency,Makassar,2023-04-28,Normal,False
+AGT-0148,Budi Wibowo,Bancassurance,Medan,2023-12-18,Normal,False
+AGT-0149,Intan Nugraha,Bancassurance,Surabaya,2024-09-28,Normal,False
+AGT-0150,Agus Firmansyah,Bancassurance,Jakarta Pusat,2023-05-11,Normal,False
+AGT-0151,Reza Setiawan,Bancassurance,Denpasar,2022-05-27,Normal,False
+AGT-0152,Taufik Permana,Bancassurance,Jakarta Pusat,2024-10-17,Normal,False
+AGT-0153,Dewi Rahmawati,Agency,Jakarta Pusat,2022-06-03,Normal,False
+AGT-0154,Nadia Hidayat,Bancassurance,Denpasar,2023-11-13,Normal,False
+AGT-0155,Dewi Utami,Agency,Surabaya,2023-06-05,Normal,False
+AGT-0156,Yuni Kusuma,Agency,Medan,2024-08-27,Normal,False
+AGT-0157,Pratama Setiawan,Bancassurance,Bandung,2023-03-10,Normal,False
+AGT-0158,Agus Halim,Agency,Bandung,2024-07-08,Normal,False
+AGT-0159,Lestari Nasution,Agency,Jakarta Pusat,2024-04-16,Normal,False
+AGT-0160,Wulan Utami,Bancassurance,Jakarta Pusat,2022-12-13,Normal,False
+AGT-0161,Putri Suryani,Worksite,Jakarta Pusat,2024-12-04,Normal,False
+AGT-0162,Dewi Hartono,Worksite,Jakarta Selatan,2023-09-24,Normal,False
+AGT-0163,Wahyu Susanto,Agency,Denpasar,2023-04-24,Normal,False
+AGT-0164,Kartika Hakim,Agency,Jakarta Pusat,2024-09-22,Normal,False
+AGT-0165,Ratna Setiawan,Bancassurance,Bandung,2024-03-18,Normal,False
+AGT-0166,Putri Susanto,Agency,Semarang,2024-01-12,Normal,False
+AGT-0167,Nugroho Wibowo,Bancassurance,Semarang,2023-02-16,Normal,False
+AGT-0168,Kartika Mahendra,Agency,Surabaya,2022-02-16,Normal,False
+AGT-0169,Rizky Hartono,Agency,Surabaya,2022-07-06,Normal,False
+AGT-0170,Nugroho Susanto,Agency,Makassar,2024-07-04,Normal,False
+AGT-0171,Pratama Putra,Bancassurance,Bandung,2025-01-08,Normal,False
+AGT-0172,Wahyu Hidayat,Agency,Semarang,2024-12-14,Hit-and-Run,True
+AGT-0173,Budi Halim,Agency,Denpasar,2023-04-06,Normal,False
+AGT-0174,Yuni Siregar,Agency,Semarang,2024-08-04,Normal,False
+AGT-0175,Arif Wibowo,Agency,Jakarta Selatan,2024-05-25,Normal,False
+AGT-0176,Andi Hakim,Agency,Bandung,2022-07-12,Normal,False
+AGT-0177,Ratna Putra,Bancassurance,Jakarta Selatan,2022-06-17,Normal,False
+AGT-0178,Sari Wijaya,Agency,Bandung,2022-07-16,Normal,False
+AGT-0179,Dewi Pratama,Bancassurance,Makassar,2024-04-21,Normal,False
+AGT-0180,Intan Hidayat,Worksite,Surabaya,2023-03-21,Normal,False
+AGT-0181,Andi Firmansyah,Agency,Surabaya,2023-04-09,Normal,False
+AGT-0182,Reza Santoso,Agency,Jakarta Selatan,2024-07-24,Normal,False
+AGT-0183,Dimas Hidayat,Bancassurance,Makassar,2023-06-12,Normal,False
+AGT-0184,Budi Gunawan,Agency,Jakarta Selatan,2023-07-24,Normal,False
+AGT-0185,Nugroho Utami,Agency,Jakarta Selatan,2023-11-12,Normal,False
+AGT-0186,Andi Wibowo,Worksite,Jakarta Pusat,2022-10-04,Normal,False
+AGT-0187,Yuni Hartono,Worksite,Jakarta Selatan,2023-01-22,Normal,False
+AGT-0188,Rina Nasution,Bancassurance,Surabaya,2023-06-02,Normal,False
+AGT-0189,Pratama Lestari,Agency,Surabaya,2022-11-22,Normal,False
+AGT-0190,Reza Nasution,Bancassurance,Jakarta Pusat,2022-10-03,Normal,False
+AGT-0191,Taufik Gunawan,Bancassurance,Jakarta Selatan,2023-05-07,Normal,False
+AGT-0192,Dimas Putra,Agency,Jakarta Selatan,2024-04-18,Normal,False
+AGT-0193,Wahyu Saputra,Bancassurance,Jakarta Pusat,2022-10-27,Normal,False
+AGT-0194,Ratna Gunawan,Agency,Jakarta Selatan,2022-12-13,Normal,False
+AGT-0195,Ayu Firmansyah,Agency,Medan,2022-02-05,Normal,False
+AGT-0196,Sari Siregar,Agency,Jakarta Selatan,2024-08-08,Cherry-Picking,True
+AGT-0197,Budi Saputra,Agency,Jakarta Pusat,2023-10-26,Normal,False
+AGT-0198,Ratna Wibowo,Agency,Jakarta Pusat,2022-04-21,Normal,False
+AGT-0199,Dewi Nasution,Bancassurance,Surabaya,2023-07-04,Cherry-Picking,True
+AGT-0200,Rizky Firmansyah,Worksite,Jakarta Selatan,2022-04-12,Normal,False

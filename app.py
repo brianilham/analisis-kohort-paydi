@@ -439,52 +439,72 @@ with st.sidebar:
     st.caption("🔒 **Kerahasiaan Data:** Seluruh data yang ditampilkan adalah data sintetis (dummy) portofolio.")
 
 
-# Pemfilteran data
-filtered_data = filter_dataset(
-    raw_data["agents"],
-    raw_data["policies"],
-    raw_data["history"],
-    channel=selected_channels,
-    branch_office=selected_branches,
-)
-
-if len(filtered_data["agents"]) == 0 or len(filtered_data["policies"]) == 0:
-    st.warning("Data tidak ditemukan untuk pilihan filter yang sedang aktif.")
-    st.stop()
-
-
 # ==============================================================================
-# PERHITUNGAN ANALITIK KOHORT & DETEKSI DUA TIER
+# PERHITUNGAN ANALITIK KOHORT & DETEKSI DUA TIER (CACHED UNTUK PERFORMA TINGGI)
 # ==============================================================================
 
 DEFAULT_VOL_SHOCK_THRESH = 25.0
 DEFAULT_M13_MIN_PERSISTENCY = 75.0
 DEFAULT_CONTAMINATION = 0.08
 
-matrices = calculate_cohort_matrices(filtered_data["policies"], filtered_data["history"])
-grace_df = extract_grace_period_watch(filtered_data["policies"], filtered_data["history"])
 
-agent_features = engineer_agent_features(
-    filtered_data["agents"],
-    filtered_data["policies"],
-    filtered_data["history"],
-)
+@st.cache_data(show_spinner="Memproses analitik kohort dan deteksi anomali...")
+def get_computed_analytics(channels: tuple, branches: tuple) -> Optional[Dict[str, Any]]:
+    f_data = filter_dataset(
+        raw_data["agents"],
+        raw_data["policies"],
+        raw_data["history"],
+        channel=list(channels),
+        branch_office=list(branches),
+    )
+    if len(f_data["agents"]) == 0 or len(f_data["policies"]) == 0:
+        return None
 
-detected_agents = run_two_tier_detection(
-    agent_features,
-    rule_lapse_vol_thresh=DEFAULT_VOL_SHOCK_THRESH,
-    rule_m13_vol_min=DEFAULT_M13_MIN_PERSISTENCY,
-    contamination=DEFAULT_CONTAMINATION,
-)
+    m = calculate_cohort_matrices(f_data["policies"], f_data["history"])
+    g = extract_grace_period_watch(f_data["policies"], f_data["history"])
 
-if "true_label" in filtered_data["agents"].columns:
-    detected_agents = detected_agents.merge(
-        filtered_data["agents"][["agent_id", "true_label"]],
-        on="agent_id",
-        how="left",
+    feat = engineer_agent_features(
+        f_data["agents"],
+        f_data["policies"],
+        f_data["history"],
     )
 
-kpis = calculate_dashboard_kpis(matrices, detected_agents, grace_df)
+    det = run_two_tier_detection(
+        feat,
+        rule_lapse_vol_thresh=DEFAULT_VOL_SHOCK_THRESH,
+        rule_m13_vol_min=DEFAULT_M13_MIN_PERSISTENCY,
+        contamination=DEFAULT_CONTAMINATION,
+    )
+
+    if "true_label" in f_data["agents"].columns:
+        det = det.merge(
+            f_data["agents"][["agent_id", "true_label"]],
+            on="agent_id",
+            how="left",
+        )
+
+    kpi = calculate_dashboard_kpis(m, det, g)
+
+    return {
+        "filtered_data": f_data,
+        "matrices": m,
+        "grace_df": g,
+        "detected_agents": det,
+        "kpis": kpi,
+    }
+
+
+analytics_results = get_computed_analytics(tuple(selected_channels), tuple(selected_branches))
+
+if analytics_results is None:
+    st.warning("Data tidak ditemukan untuk pilihan filter yang sedang aktif.")
+    st.stop()
+
+filtered_data = analytics_results["filtered_data"]
+matrices = analytics_results["matrices"]
+grace_df = analytics_results["grace_df"]
+detected_agents = analytics_results["detected_agents"]
+kpis = analytics_results["kpis"]
 
 
 # ==============================================================================
