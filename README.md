@@ -1,162 +1,207 @@
-# Analisis kohort persistensi polis dan deteksi churn agen (PAYDI)
+# Analisis Kohort Persistensi Polis PAYDI & Deteksi Churn Agen (Power BI Project)
 
-Aplikasi analitik aktuaria dan sistem deteksi anomali perilaku agen asuransi untuk produk PAYDI (Produk Asuransi Yang Dikaitkan dengan Investasi atau Unit Link). Proyek ini menggabungkan analisis kohort dua dimensi, rekayasa fitur multivariat, dan machine learning tanpa pengawasan (Isolation Forest) untuk menemukan pola kecurangan retensi polis, khususnya Hit and Run dan Cherry Picking.
+Proyek analitik aktuaria dan sistem deteksi anomali perilaku agen asuransi untuk produk **PAYDI (Produk Asuransi Yang Dikaitkan dengan Investasi / Unit Link)**. Sistem ini menyajikan visualisasi tingkat eksekutif menggunakan **Microsoft Power BI Project (`.pbip`)** dengan semantic model berbasis **TMDL (Tabular Model Definition Language)** dan format pelaporan **PBIR (Power BI Enhanced Report Format)**.
 
-Desain dashboard mengadopsi identitas visual PT MNC Life Assurance, dengan rujukan regulasi Surat Edaran Otoritas Jasa Keuangan (SEOJK No. 5/SEOJK.05/2022) serta standar persistensi Asosiasi Asuransi Jiwa Indonesia (AAJI).
+Pipeline analitik didukung oleh mesin Python untuk simulasi data aktuaria realistis, rekayasa fitur multivariat, kalibrasi deteksi dua tingkat (*Two-Tier Anomaly Detection*), serta dekomposisi 4 pilar risiko yang sepenuhnya *explainable* (dapat diaudit).
 
-Live demo dashboard dapat diakses langsung pada tautan berikut:  
-👉 [https://brianilham-analisis-kohort-paydi-app-apv1xd.streamlit.app/](https://brianilham-analisis-kohort-paydi-app-apv1xd.streamlit.app/)
+Visualisasi dan tata letak laporan dirancang sesuai identitas visual korporat **PT MNC Life Assurance**, dengan kepatuhan penuh terhadap regulasi **Surat Edaran Otoritas Jasa Keuangan (SEOJK No. 5/SEOJK.05/2022)** dan standar persistensi **Asosiasi Asuransi Jiwa Indonesia (AAJI)**.
 
-> Catatan kerahasiaan data: Seluruh data yang digunakan pada proyek dan dashboard ini merupakan data sintetis (dummy) terprogram. Langkah ini diambil karena data polis dan agen riil milik perusahaan bersifat rahasia (confidential). Struktur atribut, persebaran premi, dan skenario kecurangan disimulasikan mendekati kondisi industri sebenarnya.
-
----
-
-## Masalah bisnis
-
-Pada industri asuransi jiwa, komisi tahun pertama (First Year Commission atau FYC) dan bonus persistensi bulan ke-13 (M13) memiliki porsi nominal yang besar. Struktur insentif ini kerap menimbulkan celah moral hazard:
-
-1. Titik buta persistensi volume: Sebagian besar pemantauan hanya melihat persentase jumlah lembar polis yang aktif. Celah ini dimanfaatkan lewat modus Cherry Picking. Agen menjaga polis bernilai kecil tetap aktif agar rasio volume M13 tetap di atas batas 80%, sementara polis berpremi besar dibiarkan mati (lapse) begitu komisi cair. Hasilnya, laporan volume tampak patuh, tetapi premi tahunan riil (APE) bocor dalam jumlah besar.
-
-2. Modus Hit and Run: Agen menjual polis dengan pembayaran tunai atau talangan premi sendiri, mempertahankan status aktif selama 12 bulan pertama agar komisi FYC cair penuh, lalu membiarkan polis gugur massal pada bulan ke-13.
-
-Sistem ini dirancang untuk memetakan kedua risiko tersebut secara transparan melalui bukti kuantitatif yang siap dipakai dalam evaluasi audit.
+> **Catatan Kerahasiaan Data:** Seluruh data yang digunakan merupakan data sintetis terprogram yang dihasilkan oleh mesin aktuaria (`generate_data.py`). Tidak ada data rahasia nasabah riil yang diekspos. Distribusi premi, rasio persistensi, dan skenario kecurangan dirancang mendekati dinamika industri asuransi jiwa nasional.
 
 ---
 
-## Metodologi dan arsitektur deteksi
+## 1. Masalah Bisnis & Celah Moral Hazard
 
-Sistem analisis ini menggunakan tiga komponen utama:
+Dalam industri asuransi jiwa, struktur komisi tahun pertama (*First Year Commission* / FYC) dan bonus persistensi bulan ke-13 (M13) memiliki bobot finansial signifikan. Hal ini menimbulkan celah manipulasi:
 
-### 1. Analisis kohort dua dimensi (M1 sampai M24)
-- Matriks retensi volume: Mengukur rasio jumlah polis aktif terhadap basis polis awal per bulan terbit (Issue Date).
-- Matriks retensi premi APE: Mengukur rasio nilai premi aktif terhadap basis premi awal kohort.
-- Matriks selisih kebocoran premi: Mengurangkan persentase retensi volume dengan persentase retensi APE pada setiap sel bulan. Warna biru menandai keselarasan retensi, sedangkan warna emas hingga merah pekat menandai kebocoran premi.
-- Pemantauan masa tenggang (Grace Period M11 dan M12): Menyaring polis yang menunggak tepat sebelum jatuh tempo M13, sehingga tim retensi dapat melakukan intervensi sebelum polis berstatus lapse permanen.
+1. **Titik Buta Persistensi Volume (Modus Cherry-Picking):**
+   - Sebagian besar pemantauan regulasi hanya melihat rasio volume lembar polis aktif (Target AAJI $\ge 85\%$).
+   - Oknum agen mempertahankan polis tiket kecil (misal premi Rp 4–8.5 juta/tahun) agar rasio volume M13 tetap tinggi (>85%), namun membiarkan polis jumbo (Rp 70–160 juta/tahun) gugur (*lapse*) begitu komisi tahun pertama diterima.
+   - Dampak: Laporan volume terlihat patuh, namun terjadi kebocoran premi tahunan (*Annualized Premium Equivalent* / APE) dalam jumlah miliaran rupiah (*Leakage Gap*).
 
-### 2. Rekayasa fitur risiko agen
-Setiap agen diukur melalui empat metrik:
-- `lapse_shock_vol`: Penurunan persentase volume polis antara M12 dan M13.
-- `lapse_shock_ape`: Penurunan persentase premi APE antara M12 dan M13.
-- `ape_disparity_ratio`: Rasio perbandingan rata-rata premi polis yang lapse terhadap polis yang masih aktif. Nilai di atas 1.5x menandakan indikasi cherry picking.
-- `cash_payment_ratio`: Porsi polis yang menggunakan pembayaran manual atau tunai dibanding auto-debit perbankan.
-
-### 3. Deteksi anomali dua tingkat
-- Tier 1 (Penyaringan aturan): Menandai agen dengan penurunan volume M12 ke M13 melebihi 25% atau persistensi volume M13 di bawah 75%. Kategori ini dikelompokkan sebagai Hit and Run.
-- Tier 2 (Isolation Forest): Model machine learning multivariat yang memproses keempat fitur risiko secara serentak. Model ini menangkap anomali halus yang lolos dari saringan volume Tier 1. Kategori ini dikelompokkan sebagai Cherry Picking.
-- Skor risiko kontinu (0.0 sampai 1.0): Menghasilkan urutan prioritas pemeriksaan dan ringkasan pemicu risiko (risk drivers) otomatis untuk sidang komite kepatuhan.
+2. **Modus Hit and Run:**
+   - Agen menjual polis dengan pembayaran tunai (*cash/manual*) atau talangan premi sendiri, mempertahankan status aktif selama 12 bulan pertama agar komisi FYC cair penuh, lalu membiarkan polis gugur massal pada M13 (*Lapse Shock* volume > 25%).
 
 ---
 
-## Tampilan dashboard
+## 2. Metodologi Deteksi & 4 Pilar Risiko
 
-Antarmuka dibangun dengan Streamlit dan Plotly menggunakan warna korporat MNC Life:
+Sistem menggunakan pendekatan hibrida untuk mendeteksi dan mengkuantifikasi anomali agen:
 
-- Filter portofolio: Pilihan kanal distribusi dan kantor cabang dengan dropdown kontras tinggi.
-- Ringkasan eksekutif: Kartu KPI untuk persistensi volume M13 terhadap standar AAJI (80% sampai 85%), selisih kebocoran APE, jumlah agen berisiko, dan total premi masa tenggang.
-- Heatmap kohort: Pilihan tampilan berdampingan (Volume vs APE) atau peta selisih kebocoran bergaris kisi.
-- Peta sebaran agen: Grafik bubble yang memisahkan kelompok Agen Normal, Hit and Run, dan Cherry Picking.
-- Daftar masa tenggang: Tabel polis rawan lapse pada M11 dan M12 beserta rasio metode pembayaran.
-- Daftar pengawasan agen: Tabel interaktif dengan filter skor, pencarian nama atau kode agen, tombol unduh laporan CSV, serta kurva siklus hidup M1 sampai M24 untuk agen yang dipilih.
+### A. Kalibrasi Kohort Penuh (Seasoned Cohort)
+- Rentang kohort penerbitan: **2022-01 hingga 2023-12** (24 kohort bulanan, 12.000 polis, 200 agen).
+- Seluruh polis memiliki riwayat observasi lengkap dari M1 hingga M24, menjamin keandalan pengujian M12 $\rightarrow$ M13 tanpa distorsi *right-censoring*.
+
+### B. Deteksi Dua Tingkat (Two-Tier Detection)
+- **Tier 1 (Rule-Based Substandard & Shock Filter):**
+  Menangkap agen *Hit and Run* yang mengalami lonjakan lapse volume drastis ($Lapse\ Shock\ Vol > 25\%$) atau persistensi volume M13 di bawah $75\%$ dengan $Lapse\ Shock\ Vol \ge 15\%$. Bebas dari *false positive* pada agen normal yang mengalami penurunan alami secara gradual ($0\%-3\%$).
+- **Tier 2 (Isolation Forest Multivariate ML):**
+  Menangkap agen *Cherry-Picking* yang lolos dari filter volume Tier 1 karena persistensi volume tetap tinggi, namun memiliki disparitas premi ekstrem (*APE Disparity Ratio* tinggi) dan kebocoran APE tersembunyi.
+- **Performa Evaluasi:**
+  - **Top-20% Recall:** **100%** (16 dari 16 agen anomali ground-truth berada dalam peringkat 20% risiko teratas; melampaui target minimum spec $\ge 85\%$).
+  - **Overall Recall:** **100%** (16/16 anomali terdeteksi).
+  - **Normal False Positives in Tier 1:** **0 agen**.
+
+### C. Dekomposisi 4 Pilar Risiko (Explainable AI / XAI)
+Setiap agen diurai skor risikonya ke dalam 4 pilar yang dinormalisasi pada skala `0 - 100` beserta porsi kontribusinya (`%`):
+1. **Pilar 1 - Volume Shock M12-M13 (`score_vol_shock`):** Penurunan persentase volume polis aktif antara bulan ke-12 dan bulan ke-13.
+2. **Pilar 2 - APE Leakage Shock M12-M13 (`score_ape_shock`):** Penurunan persentase nilai premi APE antara bulan ke-12 dan bulan ke-13.
+3. **Pilar 3 - APE Ticket Disparity (`score_ape_disparity`):** Rasio nilai premi rata-rata polis lapse terhadap polis yang tetap aktif (disparitas $> 1.5\times$ menandakan indikasi *cherry-picking*).
+4. **Pilar 4 - Manual/Cash Concentration (`score_cash_ratio`):** Konsentrasi metode pembayaran manual/tunai dibandingkan auto-debit bank.
 
 ---
 
-## Struktur berkas
+## 3. Arsitektur Power BI Project (`.pbip`)
+
+Laporan dibangun dengan arsitektur modern Fabric/Power BI Desktop Developer Mode:
 
 ```text
-├── app.py                       # Aplikasi dashboard Streamlit
-├── detector.py                  # Kalkulasi matriks kohort, fitur 4D, dan model deteksi
-├── visuals.py                   # Generator visualisasi Plotly dan kalkulasi KPI
-├── generate_data.py             # Generator data sintetis aktuaria PAYDI
-├── requirements.txt             # Dependensi pustaka Python
-├── pytest.ini                   # Konfigurasi pytest
-├── Dockerfile                   # Konfigurasi container Docker
-├── .dockerignore                # Pengecualian berkas Docker
-├── .streamlit/
-│   └── config.toml              # Pengaturan tema dan server Streamlit
-├── data/
-│   ├── agents.csv               # Data profil agen
-│   ├── policies.csv             # Data master polis dan premi APE
-│   └── policy_monthly_status.csv# Riwayat status bulanan polis (M1-M24)
-├── tests/
-│   ├── test_generate_data.py    # Pengujian generator data
-│   ├── test_detector.py         # Pengujian logika kohort dan evaluasi model
-│   └── test_app_components.py   # Pengujian visualisasi dan kartu KPI
-├── mnc_life_logo.svg            # Berkas logo resmi MNC Life Assurance
-├── DESIGN.md                    # Dokumentasi spesifikasi visual
-├── SPEC.md                      # Dokumen spesifikasi teknis
-└── TICKETS.md                   # Rincian tiket pengerjaan
+powerbi/
+├── MNC_Life_PAYDI.pbip                      # File pembuka project Power BI Desktop
+├── assets/
+│   └── mnc_life_logo.png                    # Brand logo MNC Life resolusi tinggi
+├── MNC_Life_PAYDI.SemanticModel/            # Model Semantik (TMDL Formats)
+│   ├── definition.pbism
+│   └── definition/
+│       ├── database.tmdl                    # Compatibility level 1600
+│       ├── model.tmdl                       # Deklarasi tabel dan culture
+│       ├── expressions.tmdl                 # Parameter DataFolderPath (portabel)
+│       ├── relationships.tmdl               # Relasi skema bintang 1-to-many
+│       └── tables/
+│           ├── DimAgent.tmdl                # 200 agen, metrik risiko, KPI akurasi
+│           ├── DimPolicy.tmdl               # 12.000 polis, issue date, APE
+│           ├── FactPolicyMonthlyStatus.tmdl # 288.000 status bulanan, DAX persistensi
+│           └── FactAgentRiskPillars.tmdl    # 800 baris unpivoted 4-pilar risiko
+└── MNC_Life_PAYDI.Report/                   # Definisi Laporan PBIR (PBIR v2.0 / 4.0)
+    ├── .platform
+    ├── definition.pbir                      # Binding report ke model semantik lokal
+    ├── StaticResources/SharedResources/BaseThemes/
+    │   └── Fluent2-CY26SU10.json            # Tema korporat MNC Life
+    └── definition/
+        ├── version.json
+        ├── report.json
+        └── pages/
+            ├── pages.json                   # Urutan 5 halaman laporan
+            ├── ReportSection01/             # Hal 1: Matriks Kohort Persistensi
+            ├── ReportSection02/             # Hal 2: Peta Sebaran Anomali Agen
+            ├── ReportSection03/             # Hal 3: Early Warning Grace Period M11-M12
+            ├── ReportSection04/             # Hal 4: Watchlist & Pemeriksaan Detail Agen
+            └── ReportSection05/             # Hal 5: Validasi & Evaluasi Model
 ```
+
+### Formula DAX Utama (Portofolio Berbobot & Distinct)
+
+- **Active Policies:**
+  ```dax
+  CALCULATE(
+      DISTINCTCOUNT(FactPolicyMonthlyStatus[policy_id]),
+      FactPolicyMonthlyStatus[status] IN {"Active", "Grace Period"}
+  )
+  ```
+- **Active APE (Tertimbang):**
+  ```dax
+  CALCULATE(
+      SUM(DimPolicy[ape]),
+      TREATAS(
+          CALCULATETABLE(
+              VALUES(FactPolicyMonthlyStatus[policy_id]),
+              FactPolicyMonthlyStatus[status] IN {"Active", "Grace Period"}
+          ),
+          DimPolicy[policy_id]
+      )
+  )
+  ```
+- **Persistency Volume %:** `DIVIDE([Active Policies], [Initial Policies])`
+- **Persistency APE %:** `DIVIDE([Active APE], [Initial APE])`
+- **Leakage Gap %:** `[Persistency Volume %] - [Persistency APE %]`
+- **M13 Volume vs AAJI Benchmark:** `[M13 Volume Persistency %] - 0.85`
+- **Grace Period Policies (M11-M12):**
+  ```dax
+  CALCULATE(
+      DISTINCTCOUNT(FactPolicyMonthlyStatus[policy_id]),
+      FactPolicyMonthlyStatus[month_index] IN {11, 12},
+      FactPolicyMonthlyStatus[status] = "Grace Period"
+  )
+  ```
 
 ---
 
-## Menjalankan proyek secara lokal
+## 4. 5 Halaman Laporan Power BI
 
-### 1. Kloning repositori
-```bash
-git clone https://github.com/brianilham/analisis-kohort-paydi.git
-cd analisis-kohort-paydi
-```
-
-### 2. Pasang environment dan dependensi
-```bash
-python -m venv venv
-
-# Windows:
-venv\Scripts\activate
-
-# macOS / Linux:
-source venv/bin/activate
-
-pip install -r requirements.txt
-```
-
-### 3. Buat dataset sintetis (opsional)
-Dataset awal sudah disertakan pada folder `data/`. Untuk memperbarui data secara acak:
-```bash
-python generate_data.py
-```
-
-### 4. Buka dashboard
-```bash
-streamlit run app.py
-```
-Aplikasi akan berjalan pada `http://localhost:8501`.
+1. **Halaman 1: Matriks Kohort Persistensi**
+   - KPI Banner: Persistensi Volume M13 (vs AAJI 85%), Persistensi Premi APE M13, Jumlah Agen Terindikasi Anomali, Polis Kritis Masa Tenggang (M11-M12).
+   - Matriks Heatmap: Volume Persistency Matrix (M1–M24) dan APE Persistency Matrix (M1–M24).
+   - Grafik Tren: Rata-rata kurva retensi volume vs APE serta visualisasi *Leakage Gap*.
+2. **Halaman 2: Peta Sebaran Anomali Agen**
+   - Scatter Chart Klasterisasi: Sumbu X = `lapse_shock_vol`, Sumbu Y = `lapse_shock_ape`, Ukuran Titik = `ape_disparity_ratio`, Pewarnaan = `risk_category` (*Hit and Run*, *Cherry Picking*, *Normal*).
+   - Tabel Ringkasan Anomali: Menampilkan agen terindikasi beserta skor dan *primary risk drivers*.
+3. **Halaman 3: Early Warning Grace Period M11-M12**
+   - Panel KPI: Jumlah polis kritis, total APE berisiko (dalam Miliar Rupiah), dan rasio pembayaran tunai vs auto-debit.
+   - Donut Chart: Komposisi metode pembayaran polis kritis.
+   - Bar Chart: Sebaran premi kritis per kantor cabang.
+   - Action List Table: Daftar nomor polis prioritas penyelamatan untuk tim *Customer Retention*.
+4. **Halaman 4: Watchlist & Pemeriksaan Detail Agen**
+   - Top Risk Watchlist Table: Urutan peringkat risiko agen, pilar risiko dominan, dan pemicu anomali.
+   - Master-Detail Kiri (Line Chart): Kurva retensi M1–M24 spesifik agen yang dipilih.
+   - Master-Detail Kanan (Bar Chart): Skor dekomposisi 4 pilar risiko agen (skala 0–100) untuk sidang komite kepatuhan.
+5. **Halaman 5: Validasi & Evaluasi Model**
+   - KPI Metrik Evaluasi: Top-20% Recall (100%), Overall Recall (100%), Tingkat Presisi Deteksi, Total Ground Truth Anomali.
+   - Confusion Matrix (Pivot Table): Perbandingan silang antara *Ground Truth Label* dan *Model Risk Category*.
+   - Tabel Audit Lengkap: Validasi transparansi penilaian model terhadap setiap agen anomali.
 
 ---
 
-## Deployment
+## 5. Panduan Instalasi & Menjalankan Proyek
 
-### Streamlit Community Cloud
-Aplikasi ini sudah dipublikasikan dan dapat diakses di:  
-[https://brianilham-analisis-kohort-paydi-app-apv1xd.streamlit.app/](https://brianilham-analisis-kohort-paydi-app-apv1xd.streamlit.app/)
+### Prasyarat
+- **Python:** 3.10 atau 3.11
+- **Node.js:** v20+ (untuk `@microsoft/powerbi-report-authoring-cli`)
+- **Power BI Desktop:** Edisi terbaru (Mendukung Power BI Project / `.pbip`)
 
-Jika ingin memasang ulang pada akun Streamlit Cloud pribadi:
-1. Masuk ke [share.streamlit.io](https://share.streamlit.io/) dengan akun GitHub.
-2. Pilih repositori `brianilham/analisis-kohort-paydi`, branch `main`, dan file `app.py`.
-3. Klik tombol Deploy.
+### Langkah Eksekusi
 
-### Docker container
-Berkas Dockerfile sudah siap digunakan di lingkungan produksi:
+1. **Instalasi Dependensi Python:**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-```bash
-# Build image
-docker build -t paydi-cohort-dashboard:latest .
+2. **Jalankan Pengujian Unit Pytest:**
+   ```bash
+   pytest -v
+   ```
+   *Seluruh 20 tes unit pada logika bisnis aktuaria, deteksi anomali, dan integritas data ekspor akan diverifikasi.*
 
-# Jalankan container
-docker run -d -p 8501:8501 --name paydi-dashboard paydi-cohort-dashboard:latest
-```
+3. **Jalankan Pipeline ETL & Ekspor Data:**
+   ```bash
+   python export_powerbi_data.py
+   ```
+   *Perintah ini mengekspor 5 berkas data terstruktur ke folder `data/` dan mengekstrak logo MNC Life.*
+
+4. **Validasi Struktur Laporan PBIR:**
+   ```bash
+   npx @microsoft/powerbi-report-authoring-cli validate powerbi/MNC_Life_PAYDI.Report
+   ```
+   *Hasil: `succeeded` dengan 0 errors dan 0 warnings.*
+
+5. **Membuka Dashboard di Microsoft Power BI Desktop:**
+   Klik dua kali pada berkas:
+   ```text
+   powerbi/MNC_Life_PAYDI.pbip
+   ```
+   atau jalankan dari PowerShell:
+   ```powershell
+   & "C:\Program Files\Microsoft Power BI Desktop\bin\PBIDesktop.exe" "powerbi\MNC_Life_PAYDI.pbip"
+   ```
+   *Power BI Desktop akan memuat model semantik TMDL dan menampilkan seluruh 5 halaman laporan secara otomatis.*
 
 ---
 
-## Pengujian otomatis
+## 6. Identitas Visual & Standar Desain
 
-Seluruh logika aktuaria dan model diuji melalui pytest:
-
-```bash
-pytest -v
-```
-
-Rangkaian uji mencakup 21 skenario:
-- Invarian generator data: Volume 12.000 polis, 200 agen, dan transisi status satu arah tanpa pemulihan ilegal.
-- Seam kalkulasi kohort dan recall model: Pengujian konsistensi formula retensi dan target recall deteksi di atas 85%.
-- Komponen visual: Pengecekan stabilitas visual Plotly dan kalkulator KPI.
+Mengikuti panduan merek PT MNC Life Assurance:
+- **Primary Navy:** `#192C4D` (Header, Kartu Metrik Utama, Sumbu Utama)
+- **Accent Gold:** `#C89B2C` (Aksen, Sorotan Kepatuhan AAJI)
+- **Alert / Danger Red:** `#D94B4B` (Indikator Anomali, Hit and Run, Tingkat Kebocoran APE)
+- **Success Emerald:** `#1E6B52` (Polis Patuh, Normal Persistency)
+- **Background Slate:** `#F5F8FC`
+- **Tipografi:** Segoe UI / Plus Jakarta Sans
