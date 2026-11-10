@@ -1,0 +1,801 @@
+agent_id,pillar_order,pillar_name,agent_raw_value,normal_benchmark_value,unit_label,pillar_score_100,contribution_pct
+AGT-0001,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0001,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0001,3,APE Ticket Disparity,0.47,1.0,x,0.0,0.0
+AGT-0001,4,Manual/Cash Concentration,16.98,19.27,%,21.2,100.0
+AGT-0002,1,Volume Shock M12-M13,2.06,1.27,%,4.6,17.8
+AGT-0002,2,APE Leakage Shock M12-M13,1.96,1.2,%,3.3,12.7
+AGT-0002,3,APE Ticket Disparity,0.96,1.0,x,0.0,0.0
+AGT-0002,4,Manual/Cash Concentration,14.43,19.27,%,18.0,69.5
+AGT-0003,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0003,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0003,3,APE Ticket Disparity,1.33,1.0,x,8.3,26.8
+AGT-0003,4,Manual/Cash Concentration,18.18,19.27,%,22.7,73.2
+AGT-0004,1,Volume Shock M12-M13,1.59,1.27,%,3.5,12.1
+AGT-0004,2,APE Leakage Shock M12-M13,2.13,1.2,%,3.6,12.5
+AGT-0004,3,APE Ticket Disparity,0.83,1.0,x,0.0,0.0
+AGT-0004,4,Manual/Cash Concentration,17.46,19.27,%,21.8,75.4
+AGT-0005,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0005,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0005,3,APE Ticket Disparity,1.03,1.0,x,0.8,2.9
+AGT-0005,4,Manual/Cash Concentration,21.21,19.27,%,26.5,97.1
+AGT-0006,1,Volume Shock M12-M13,2.13,1.27,%,4.7,11.2
+AGT-0006,2,APE Leakage Shock M12-M13,1.61,1.2,%,2.7,6.5
+AGT-0006,3,APE Ticket Disparity,1.1,1.0,x,2.5,6.0
+AGT-0006,4,Manual/Cash Concentration,25.53,19.27,%,31.9,76.3
+AGT-0007,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0007,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0007,3,APE Ticket Disparity,1.19,1.0,x,4.7,24.6
+AGT-0007,4,Manual/Cash Concentration,11.54,19.27,%,14.4,75.4
+AGT-0008,1,Volume Shock M12-M13,2.74,1.27,%,6.1,15.6
+AGT-0008,2,APE Leakage Shock M12-M13,3.33,1.2,%,5.6,14.3
+AGT-0008,3,APE Ticket Disparity,0.92,1.0,x,0.0,0.0
+AGT-0008,4,Manual/Cash Concentration,21.92,19.27,%,27.4,70.1
+AGT-0009,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0009,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0009,3,APE Ticket Disparity,1.06,1.0,x,1.5,5.6
+AGT-0009,4,Manual/Cash Concentration,20.24,19.27,%,25.3,94.4
+AGT-0010,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0010,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0010,3,APE Ticket Disparity,1.29,1.0,x,7.3,21.9
+AGT-0010,4,Manual/Cash Concentration,20.83,19.27,%,26.0,78.1
+AGT-0011,1,Volume Shock M12-M13,0.88,1.27,%,2.0,6.1
+AGT-0011,2,APE Leakage Shock M12-M13,0.61,1.2,%,1.0,3.1
+AGT-0011,3,APE Ticket Disparity,0.93,1.0,x,0.0,0.0
+AGT-0011,4,Manual/Cash Concentration,23.68,19.27,%,29.6,90.8
+AGT-0012,1,Volume Shock M12-M13,4.76,1.27,%,10.6,34.2
+AGT-0012,2,APE Leakage Shock M12-M13,4.19,1.2,%,7.0,22.6
+AGT-0012,3,APE Ticket Disparity,1.18,1.0,x,4.5,14.5
+AGT-0012,4,Manual/Cash Concentration,7.14,19.27,%,8.9,28.7
+AGT-0013,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0013,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0013,3,APE Ticket Disparity,0.77,1.0,x,0.0,0.0
+AGT-0013,4,Manual/Cash Concentration,22.45,19.27,%,28.1,100.0
+AGT-0014,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0014,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0014,3,APE Ticket Disparity,0.98,1.0,x,0.0,0.0
+AGT-0014,4,Manual/Cash Concentration,24.32,19.27,%,30.4,100.0
+AGT-0015,1,Volume Shock M12-M13,5.77,1.27,%,12.8,24.8
+AGT-0015,2,APE Leakage Shock M12-M13,5.97,1.2,%,10.0,19.4
+AGT-0015,3,APE Ticket Disparity,0.92,1.0,x,0.0,0.0
+AGT-0015,4,Manual/Cash Concentration,23.08,19.27,%,28.8,55.8
+AGT-0016,1,Volume Shock M12-M13,21.43,1.27,%,47.6,17.1
+AGT-0016,2,APE Leakage Shock M12-M13,82.5,1.2,%,100.0,35.9
+AGT-0016,3,APE Ticket Disparity,13.02,1.0,x,100.0,35.9
+AGT-0016,4,Manual/Cash Concentration,25.0,19.27,%,31.2,11.1
+AGT-0017,1,Volume Shock M12-M13,7.81,1.27,%,17.4,7.1
+AGT-0017,2,APE Leakage Shock M12-M13,60.03,1.2,%,100.0,40.8
+AGT-0017,3,APE Ticket Disparity,8.64,1.0,x,100.0,40.8
+AGT-0017,4,Manual/Cash Concentration,21.88,19.27,%,27.4,11.3
+AGT-0018,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0018,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0018,3,APE Ticket Disparity,1.19,1.0,x,4.7,14.1
+AGT-0018,4,Manual/Cash Concentration,22.86,19.27,%,28.6,85.9
+AGT-0019,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0019,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0019,3,APE Ticket Disparity,2.07,1.0,x,26.7,52.9
+AGT-0019,4,Manual/Cash Concentration,19.05,19.27,%,23.8,47.1
+AGT-0020,1,Volume Shock M12-M13,1.01,1.27,%,2.2,9.2
+AGT-0020,2,APE Leakage Shock M12-M13,0.87,1.2,%,1.5,6.3
+AGT-0020,3,APE Ticket Disparity,0.99,1.0,x,0.0,0.0
+AGT-0020,4,Manual/Cash Concentration,16.16,19.27,%,20.2,84.5
+AGT-0021,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0021,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0021,3,APE Ticket Disparity,0.6,1.0,x,0.0,0.0
+AGT-0021,4,Manual/Cash Concentration,19.05,19.27,%,23.8,100.0
+AGT-0022,1,Volume Shock M12-M13,46.96,1.27,%,100.0,37.5
+AGT-0022,2,APE Leakage Shock M12-M13,42.05,1.2,%,70.1,26.3
+AGT-0022,3,APE Ticket Disparity,0.83,1.0,x,0.0,0.0
+AGT-0022,4,Manual/Cash Concentration,77.39,19.27,%,96.7,36.2
+AGT-0023,1,Volume Shock M12-M13,1.41,1.27,%,3.1,13.4
+AGT-0023,2,APE Leakage Shock M12-M13,2.12,1.2,%,3.5,15.2
+AGT-0023,3,APE Ticket Disparity,1.17,1.0,x,4.2,18.2
+AGT-0023,4,Manual/Cash Concentration,9.86,19.27,%,12.3,53.2
+AGT-0024,1,Volume Shock M12-M13,3.36,1.27,%,7.5,22.4
+AGT-0024,2,APE Leakage Shock M12-M13,3.0,1.2,%,5.0,14.9
+AGT-0024,3,APE Ticket Disparity,0.8,1.0,x,0.0,0.0
+AGT-0024,4,Manual/Cash Concentration,16.81,19.27,%,21.0,62.7
+AGT-0025,1,Volume Shock M12-M13,32.88,1.27,%,73.1,33.4
+AGT-0025,2,APE Leakage Shock M12-M13,35.58,1.2,%,59.3,27.1
+AGT-0025,3,APE Ticket Disparity,1.09,1.0,x,2.3,1.1
+AGT-0025,4,Manual/Cash Concentration,67.12,19.27,%,83.9,38.4
+AGT-0026,1,Volume Shock M12-M13,1.19,1.27,%,2.6,7.9
+AGT-0026,2,APE Leakage Shock M12-M13,3.4,1.2,%,5.7,17.2
+AGT-0026,3,APE Ticket Disparity,1.1,1.0,x,2.5,7.6
+AGT-0026,4,Manual/Cash Concentration,17.86,19.27,%,22.3,67.3
+AGT-0027,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0027,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0027,3,APE Ticket Disparity,1.23,1.0,x,5.8,19.9
+AGT-0027,4,Manual/Cash Concentration,18.75,19.27,%,23.4,80.1
+AGT-0028,1,Volume Shock M12-M13,3.57,1.27,%,7.9,3.7
+AGT-0028,2,APE Leakage Shock M12-M13,46.17,1.2,%,77.0,36.4
+AGT-0028,3,APE Ticket Disparity,8.82,1.0,x,100.0,47.2
+AGT-0028,4,Manual/Cash Concentration,21.43,19.27,%,26.8,12.7
+AGT-0029,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0029,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0029,3,APE Ticket Disparity,0.58,1.0,x,0.0,0.0
+AGT-0029,4,Manual/Cash Concentration,19.44,19.27,%,24.3,100.0
+AGT-0030,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0030,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0030,3,APE Ticket Disparity,0.7,1.0,x,0.0,0.0
+AGT-0030,4,Manual/Cash Concentration,27.78,19.27,%,34.7,100.0
+AGT-0031,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0031,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0031,3,APE Ticket Disparity,1.0,1.0,x,0.0,0.0
+AGT-0031,4,Manual/Cash Concentration,30.77,19.27,%,38.5,100.0
+AGT-0032,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0032,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0032,3,APE Ticket Disparity,1.25,1.0,x,6.2,25.0
+AGT-0032,4,Manual/Cash Concentration,14.89,19.27,%,18.6,75.0
+AGT-0033,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0033,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0033,3,APE Ticket Disparity,1.03,1.0,x,0.8,3.9
+AGT-0033,4,Manual/Cash Concentration,15.79,19.27,%,19.7,96.1
+AGT-0034,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0034,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0034,3,APE Ticket Disparity,0.9,1.0,x,0.0,0.0
+AGT-0034,4,Manual/Cash Concentration,18.92,19.27,%,23.7,100.0
+AGT-0035,1,Volume Shock M12-M13,1.39,1.27,%,3.1,8.6
+AGT-0035,2,APE Leakage Shock M12-M13,2.13,1.2,%,3.6,10.0
+AGT-0035,3,APE Ticket Disparity,1.27,1.0,x,6.8,18.8
+AGT-0035,4,Manual/Cash Concentration,18.06,19.27,%,22.6,62.6
+AGT-0036,1,Volume Shock M12-M13,1.26,1.27,%,2.8,7.5
+AGT-0036,2,APE Leakage Shock M12-M13,2.18,1.2,%,3.6,9.7
+AGT-0036,3,APE Ticket Disparity,1.16,1.0,x,4.0,10.8
+AGT-0036,4,Manual/Cash Concentration,21.38,19.27,%,26.7,72.0
+AGT-0037,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0037,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0037,3,APE Ticket Disparity,1.07,1.0,x,1.8,12.0
+AGT-0037,4,Manual/Cash Concentration,10.53,19.27,%,13.2,88.0
+AGT-0038,1,Volume Shock M12-M13,2.5,1.27,%,5.6,11.1
+AGT-0038,2,APE Leakage Shock M12-M13,2.4,1.2,%,4.0,7.9
+AGT-0038,3,APE Ticket Disparity,1.39,1.0,x,9.7,19.2
+AGT-0038,4,Manual/Cash Concentration,25.0,19.27,%,31.2,61.8
+AGT-0039,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0039,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0039,3,APE Ticket Disparity,0.94,1.0,x,0.0,0.0
+AGT-0039,4,Manual/Cash Concentration,11.9,19.27,%,14.9,100.0
+AGT-0040,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0040,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0040,3,APE Ticket Disparity,1.59,1.0,x,14.8,40.1
+AGT-0040,4,Manual/Cash Concentration,17.65,19.27,%,22.1,59.9
+AGT-0041,1,Volume Shock M12-M13,43.48,1.27,%,96.6,36.1
+AGT-0041,2,APE Leakage Shock M12-M13,46.05,1.2,%,76.8,28.7
+AGT-0041,3,APE Ticket Disparity,1.13,1.0,x,3.2,1.2
+AGT-0041,4,Manual/Cash Concentration,72.83,19.27,%,91.0,34.0
+AGT-0042,1,Volume Shock M12-M13,14.29,1.27,%,31.8,39.1
+AGT-0042,2,APE Leakage Shock M12-M13,10.36,1.2,%,17.3,21.3
+AGT-0042,3,APE Ticket Disparity,1.22,1.0,x,5.5,6.8
+AGT-0042,4,Manual/Cash Concentration,21.43,19.27,%,26.8,32.8
+AGT-0043,1,Volume Shock M12-M13,2.34,1.27,%,5.2,11.3
+AGT-0043,2,APE Leakage Shock M12-M13,3.18,1.2,%,5.3,11.5
+AGT-0043,3,APE Ticket Disparity,1.17,1.0,x,4.2,9.2
+AGT-0043,4,Manual/Cash Concentration,25.0,19.27,%,31.2,68.0
+AGT-0044,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0044,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0044,3,APE Ticket Disparity,1.19,1.0,x,4.7,13.2
+AGT-0044,4,Manual/Cash Concentration,24.62,19.27,%,30.8,86.8
+AGT-0045,1,Volume Shock M12-M13,2.0,1.27,%,4.4,11.1
+AGT-0045,2,APE Leakage Shock M12-M13,2.68,1.2,%,4.5,11.4
+AGT-0045,3,APE Ticket Disparity,1.09,1.0,x,2.3,5.8
+AGT-0045,4,Manual/Cash Concentration,22.67,19.27,%,28.3,71.7
+AGT-0046,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0046,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0046,3,APE Ticket Disparity,1.02,1.0,x,0.5,1.4
+AGT-0046,4,Manual/Cash Concentration,27.59,19.27,%,34.5,98.6
+AGT-0047,1,Volume Shock M12-M13,2.04,1.27,%,4.5,15.6
+AGT-0047,2,APE Leakage Shock M12-M13,0.81,1.2,%,1.4,4.8
+AGT-0047,3,APE Ticket Disparity,0.78,1.0,x,0.0,0.0
+AGT-0047,4,Manual/Cash Concentration,18.37,19.27,%,23.0,79.6
+AGT-0048,1,Volume Shock M12-M13,1.27,1.27,%,2.8,9.9
+AGT-0048,2,APE Leakage Shock M12-M13,1.0,1.2,%,1.7,6.0
+AGT-0048,3,APE Ticket Disparity,0.73,1.0,x,0.0,0.0
+AGT-0048,4,Manual/Cash Concentration,18.99,19.27,%,23.7,84.1
+AGT-0049,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0049,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0049,3,APE Ticket Disparity,0.91,1.0,x,0.0,0.0
+AGT-0049,4,Manual/Cash Concentration,16.91,19.27,%,21.1,100.0
+AGT-0050,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0050,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0050,3,APE Ticket Disparity,0.85,1.0,x,0.0,0.0
+AGT-0050,4,Manual/Cash Concentration,18.42,19.27,%,23.0,100.0
+AGT-0051,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0051,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0051,3,APE Ticket Disparity,0.41,1.0,x,0.0,0.0
+AGT-0051,4,Manual/Cash Concentration,33.33,19.27,%,41.7,100.0
+AGT-0052,1,Volume Shock M12-M13,2.83,1.27,%,6.3,17.0
+AGT-0052,2,APE Leakage Shock M12-M13,2.95,1.2,%,4.9,13.2
+AGT-0052,3,APE Ticket Disparity,0.89,1.0,x,0.0,0.0
+AGT-0052,4,Manual/Cash Concentration,20.75,19.27,%,25.9,69.8
+AGT-0053,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0053,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0053,3,APE Ticket Disparity,0.99,1.0,x,0.0,0.0
+AGT-0053,4,Manual/Cash Concentration,15.79,19.27,%,19.7,100.0
+AGT-0054,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0054,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0054,3,APE Ticket Disparity,0.68,1.0,x,0.0,0.0
+AGT-0054,4,Manual/Cash Concentration,32.56,19.27,%,40.7,100.0
+AGT-0055,1,Volume Shock M12-M13,2.78,1.27,%,6.2,30.4
+AGT-0055,2,APE Leakage Shock M12-M13,2.09,1.2,%,3.5,17.2
+AGT-0055,3,APE Ticket Disparity,1.01,1.0,x,0.3,1.5
+AGT-0055,4,Manual/Cash Concentration,8.33,19.27,%,10.4,50.9
+AGT-0056,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0056,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0056,3,APE Ticket Disparity,0.73,1.0,x,0.0,0.0
+AGT-0056,4,Manual/Cash Concentration,26.53,19.27,%,33.2,100.0
+AGT-0057,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0057,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0057,3,APE Ticket Disparity,0.92,1.0,x,0.0,0.0
+AGT-0057,4,Manual/Cash Concentration,18.87,19.27,%,23.6,100.0
+AGT-0058,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0058,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0058,3,APE Ticket Disparity,0.73,1.0,x,0.0,0.0
+AGT-0058,4,Manual/Cash Concentration,25.93,19.27,%,32.4,100.0
+AGT-0059,1,Volume Shock M12-M13,0.87,1.27,%,1.9,4.9
+AGT-0059,2,APE Leakage Shock M12-M13,1.45,1.2,%,2.4,6.2
+AGT-0059,3,APE Ticket Disparity,1.12,1.0,x,3.0,7.7
+AGT-0059,4,Manual/Cash Concentration,25.22,19.27,%,31.5,81.2
+AGT-0060,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0060,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0060,3,APE Ticket Disparity,1.09,1.0,x,2.3,8.5
+AGT-0060,4,Manual/Cash Concentration,19.78,19.27,%,24.7,91.5
+AGT-0061,1,Volume Shock M12-M13,4.76,1.27,%,10.6,29.6
+AGT-0061,2,APE Leakage Shock M12-M13,6.16,1.2,%,10.3,28.8
+AGT-0061,3,APE Ticket Disparity,1.04,1.0,x,1.0,2.8
+AGT-0061,4,Manual/Cash Concentration,11.11,19.27,%,13.9,38.8
+AGT-0062,1,Volume Shock M12-M13,2.22,1.27,%,4.9,9.2
+AGT-0062,2,APE Leakage Shock M12-M13,1.83,1.2,%,3.1,5.8
+AGT-0062,3,APE Ticket Disparity,1.69,1.0,x,17.2,32.5
+AGT-0062,4,Manual/Cash Concentration,22.22,19.27,%,27.8,52.5
+AGT-0063,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0063,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0063,3,APE Ticket Disparity,1.03,1.0,x,0.8,3.0
+AGT-0063,4,Manual/Cash Concentration,20.93,19.27,%,26.2,97.0
+AGT-0064,1,Volume Shock M12-M13,1.47,1.27,%,3.3,12.3
+AGT-0064,2,APE Leakage Shock M12-M13,2.07,1.2,%,3.4,12.6
+AGT-0064,3,APE Ticket Disparity,0.91,1.0,x,0.0,0.0
+AGT-0064,4,Manual/Cash Concentration,16.18,19.27,%,20.2,75.1
+AGT-0065,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0065,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0065,3,APE Ticket Disparity,1.13,1.0,x,3.2,9.1
+AGT-0065,4,Manual/Cash Concentration,25.42,19.27,%,31.8,90.9
+AGT-0066,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0066,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0066,3,APE Ticket Disparity,1.3,1.0,x,7.5,20.5
+AGT-0066,4,Manual/Cash Concentration,23.23,19.27,%,29.0,79.5
+AGT-0067,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0067,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0067,3,APE Ticket Disparity,1.09,1.0,x,2.3,9.1
+AGT-0067,4,Manual/Cash Concentration,18.42,19.27,%,23.0,90.9
+AGT-0068,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0068,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0068,3,APE Ticket Disparity,1.67,1.0,x,16.8,43.4
+AGT-0068,4,Manual/Cash Concentration,17.5,19.27,%,21.9,56.6
+AGT-0069,1,Volume Shock M12-M13,4.35,1.27,%,9.7,24.5
+AGT-0069,2,APE Leakage Shock M12-M13,2.93,1.2,%,4.9,12.4
+AGT-0069,3,APE Ticket Disparity,1.06,1.0,x,1.5,3.8
+AGT-0069,4,Manual/Cash Concentration,18.84,19.27,%,23.5,59.3
+AGT-0070,1,Volume Shock M12-M13,3.9,1.27,%,8.7,20.6
+AGT-0070,2,APE Leakage Shock M12-M13,3.62,1.2,%,6.0,14.2
+AGT-0070,3,APE Ticket Disparity,0.87,1.0,x,0.0,0.0
+AGT-0070,4,Manual/Cash Concentration,22.08,19.27,%,27.6,65.2
+AGT-0071,1,Volume Shock M12-M13,3.87,1.27,%,8.6,18.9
+AGT-0071,2,APE Leakage Shock M12-M13,3.93,1.2,%,6.6,14.5
+AGT-0071,3,APE Ticket Disparity,1.15,1.0,x,3.7,8.1
+AGT-0071,4,Manual/Cash Concentration,21.29,19.27,%,26.6,58.5
+AGT-0072,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0072,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0072,3,APE Ticket Disparity,1.61,1.0,x,15.3,51.0
+AGT-0072,4,Manual/Cash Concentration,11.76,19.27,%,14.7,49.0
+AGT-0073,1,Volume Shock M12-M13,1.79,1.27,%,4.0,11.9
+AGT-0073,2,APE Leakage Shock M12-M13,0.93,1.2,%,1.6,4.8
+AGT-0073,3,APE Ticket Disparity,0.76,1.0,x,0.0,0.0
+AGT-0073,4,Manual/Cash Concentration,22.32,19.27,%,27.9,83.3
+AGT-0074,1,Volume Shock M12-M13,4.69,1.27,%,10.4,19.0
+AGT-0074,2,APE Leakage Shock M12-M13,7.17,1.2,%,12.0,21.9
+AGT-0074,3,APE Ticket Disparity,1.2,1.0,x,5.0,9.1
+AGT-0074,4,Manual/Cash Concentration,21.88,19.27,%,27.4,50.0
+AGT-0075,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0075,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0075,3,APE Ticket Disparity,0.98,1.0,x,0.0,0.0
+AGT-0075,4,Manual/Cash Concentration,14.89,19.27,%,18.6,100.0
+AGT-0076,1,Volume Shock M12-M13,7.89,1.27,%,17.5,7.2
+AGT-0076,2,APE Leakage Shock M12-M13,59.09,1.2,%,98.5,40.4
+AGT-0076,3,APE Ticket Disparity,9.59,1.0,x,100.0,41.0
+AGT-0076,4,Manual/Cash Concentration,22.37,19.27,%,28.0,11.4
+AGT-0077,1,Volume Shock M12-M13,1.75,1.27,%,3.9,12.2
+AGT-0077,2,APE Leakage Shock M12-M13,1.09,1.2,%,1.8,5.6
+AGT-0077,3,APE Ticket Disparity,0.87,1.0,x,0.0,0.0
+AGT-0077,4,Manual/Cash Concentration,21.05,19.27,%,26.3,82.2
+AGT-0078,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0078,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0078,3,APE Ticket Disparity,0.89,1.0,x,0.0,0.0
+AGT-0078,4,Manual/Cash Concentration,22.45,19.27,%,28.1,100.0
+AGT-0079,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0079,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0079,3,APE Ticket Disparity,1.0,1.0,x,0.0,0.0
+AGT-0079,4,Manual/Cash Concentration,15.38,19.27,%,19.2,100.0
+AGT-0080,1,Volume Shock M12-M13,1.63,1.27,%,3.6,12.9
+AGT-0080,2,APE Leakage Shock M12-M13,1.1,1.2,%,1.8,6.4
+AGT-0080,3,APE Ticket Disparity,1.05,1.0,x,1.3,4.6
+AGT-0080,4,Manual/Cash Concentration,17.07,19.27,%,21.3,76.1
+AGT-0081,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0081,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0081,3,APE Ticket Disparity,1.82,1.0,x,20.5,48.1
+AGT-0081,4,Manual/Cash Concentration,17.65,19.27,%,22.1,51.9
+AGT-0082,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0082,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0082,3,APE Ticket Disparity,0.83,1.0,x,0.0,0.0
+AGT-0082,4,Manual/Cash Concentration,28.0,19.27,%,35.0,100.0
+AGT-0083,1,Volume Shock M12-M13,3.7,1.27,%,8.2,24.8
+AGT-0083,2,APE Leakage Shock M12-M13,3.81,1.2,%,6.4,19.3
+AGT-0083,3,APE Ticket Disparity,0.87,1.0,x,0.0,0.0
+AGT-0083,4,Manual/Cash Concentration,14.81,19.27,%,18.5,55.9
+AGT-0084,1,Volume Shock M12-M13,39.44,1.27,%,87.6,34.7
+AGT-0084,2,APE Leakage Shock M12-M13,43.43,1.2,%,72.4,28.7
+AGT-0084,3,APE Ticket Disparity,1.23,1.0,x,5.8,2.3
+AGT-0084,4,Manual/Cash Concentration,69.01,19.27,%,86.3,34.3
+AGT-0085,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0085,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0085,3,APE Ticket Disparity,1.14,1.0,x,3.5,8.9
+AGT-0085,4,Manual/Cash Concentration,28.57,19.27,%,35.7,91.1
+AGT-0086,1,Volume Shock M12-M13,2.56,1.27,%,5.7,16.3
+AGT-0086,2,APE Leakage Shock M12-M13,1.63,1.2,%,2.7,7.7
+AGT-0086,3,APE Ticket Disparity,1.29,1.0,x,7.3,20.9
+AGT-0086,4,Manual/Cash Concentration,15.38,19.27,%,19.2,55.1
+AGT-0087,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0087,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0087,3,APE Ticket Disparity,0.91,1.0,x,0.0,0.0
+AGT-0087,4,Manual/Cash Concentration,15.15,19.27,%,18.9,100.0
+AGT-0088,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0088,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0088,3,APE Ticket Disparity,0.83,1.0,x,0.0,0.0
+AGT-0088,4,Manual/Cash Concentration,20.0,19.27,%,25.0,100.0
+AGT-0089,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0089,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0089,3,APE Ticket Disparity,0.88,1.0,x,0.0,0.0
+AGT-0089,4,Manual/Cash Concentration,7.41,19.27,%,9.3,100.0
+AGT-0090,1,Volume Shock M12-M13,6.67,1.27,%,14.8,39.3
+AGT-0090,2,APE Leakage Shock M12-M13,3.7,1.2,%,6.2,16.4
+AGT-0090,3,APE Ticket Disparity,0.85,1.0,x,0.0,0.0
+AGT-0090,4,Manual/Cash Concentration,13.33,19.27,%,16.7,44.3
+AGT-0091,1,Volume Shock M12-M13,3.37,1.27,%,7.5,24.3
+AGT-0091,2,APE Leakage Shock M12-M13,1.91,1.2,%,3.2,10.4
+AGT-0091,3,APE Ticket Disparity,1.02,1.0,x,0.5,1.6
+AGT-0091,4,Manual/Cash Concentration,15.73,19.27,%,19.7,63.7
+AGT-0092,1,Volume Shock M12-M13,1.54,1.27,%,3.4,11.9
+AGT-0092,2,APE Leakage Shock M12-M13,2.36,1.2,%,3.9,13.7
+AGT-0092,3,APE Ticket Disparity,0.98,1.0,x,0.0,0.0
+AGT-0092,4,Manual/Cash Concentration,16.92,19.27,%,21.2,74.4
+AGT-0093,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0093,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0093,3,APE Ticket Disparity,1.0,1.0,x,0.0,0.0
+AGT-0093,4,Manual/Cash Concentration,25.0,19.27,%,31.2,100.0
+AGT-0094,1,Volume Shock M12-M13,0.68,1.27,%,1.5,5.8
+AGT-0094,2,APE Leakage Shock M12-M13,0.23,1.2,%,0.4,1.6
+AGT-0094,3,APE Ticket Disparity,0.7,1.0,x,0.0,0.0
+AGT-0094,4,Manual/Cash Concentration,19.05,19.27,%,23.8,92.6
+AGT-0095,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0095,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0095,3,APE Ticket Disparity,1.0,1.0,x,0.0,0.0
+AGT-0095,4,Manual/Cash Concentration,16.67,19.27,%,20.8,100.0
+AGT-0096,1,Volume Shock M12-M13,3.12,1.27,%,6.9,3.8
+AGT-0096,2,APE Leakage Shock M12-M13,29.41,1.2,%,49.0,26.7
+AGT-0096,3,APE Ticket Disparity,6.87,1.0,x,100.0,54.6
+AGT-0096,4,Manual/Cash Concentration,21.88,19.27,%,27.4,14.9
+AGT-0097,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0097,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0097,3,APE Ticket Disparity,1.48,1.0,x,12.0,56.3
+AGT-0097,4,Manual/Cash Concentration,7.41,19.27,%,9.3,43.7
+AGT-0098,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0098,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0098,3,APE Ticket Disparity,0.64,1.0,x,0.0,0.0
+AGT-0098,4,Manual/Cash Concentration,20.93,19.27,%,26.2,100.0
+AGT-0099,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0099,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0099,3,APE Ticket Disparity,1.2,1.0,x,5.0,19.7
+AGT-0099,4,Manual/Cash Concentration,16.28,19.27,%,20.4,80.3
+AGT-0100,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0100,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0100,3,APE Ticket Disparity,1.05,1.0,x,1.3,3.6
+AGT-0100,4,Manual/Cash Concentration,27.78,19.27,%,34.7,96.4
+AGT-0101,1,Volume Shock M12-M13,8.93,1.27,%,19.8,8.4
+AGT-0101,2,APE Leakage Shock M12-M13,54.11,1.2,%,90.2,38.1
+AGT-0101,3,APE Ticket Disparity,12.03,1.0,x,100.0,42.2
+AGT-0101,4,Manual/Cash Concentration,21.43,19.27,%,26.8,11.3
+AGT-0102,1,Volume Shock M12-M13,2.38,1.27,%,5.3,17.7
+AGT-0102,2,APE Leakage Shock M12-M13,1.46,1.2,%,2.4,8.0
+AGT-0102,3,APE Ticket Disparity,0.6,1.0,x,0.0,0.0
+AGT-0102,4,Manual/Cash Concentration,17.86,19.27,%,22.3,74.3
+AGT-0103,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0103,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0103,3,APE Ticket Disparity,0.83,1.0,x,0.0,0.0
+AGT-0103,4,Manual/Cash Concentration,20.0,19.27,%,25.0,100.0
+AGT-0104,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0104,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0104,3,APE Ticket Disparity,0.93,1.0,x,0.0,0.0
+AGT-0104,4,Manual/Cash Concentration,20.69,19.27,%,25.9,100.0
+AGT-0105,1,Volume Shock M12-M13,3.7,1.27,%,8.2,18.1
+AGT-0105,2,APE Leakage Shock M12-M13,4.03,1.2,%,6.7,14.8
+AGT-0105,3,APE Ticket Disparity,1.01,1.0,x,0.3,0.7
+AGT-0105,4,Manual/Cash Concentration,24.07,19.27,%,30.1,66.4
+AGT-0106,1,Volume Shock M12-M13,1.59,1.27,%,3.5,8.6
+AGT-0106,2,APE Leakage Shock M12-M13,0.85,1.2,%,1.4,3.4
+AGT-0106,3,APE Ticket Disparity,1.17,1.0,x,4.2,10.3
+AGT-0106,4,Manual/Cash Concentration,25.4,19.27,%,31.8,77.7
+AGT-0107,1,Volume Shock M12-M13,13.56,1.27,%,30.1,11.7
+AGT-0107,2,APE Leakage Shock M12-M13,72.53,1.2,%,100.0,38.8
+AGT-0107,3,APE Ticket Disparity,12.55,1.0,x,100.0,38.8
+AGT-0107,4,Manual/Cash Concentration,22.03,19.27,%,27.5,10.7
+AGT-0108,1,Volume Shock M12-M13,1.37,1.27,%,3.0,10.1
+AGT-0108,2,APE Leakage Shock M12-M13,0.53,1.2,%,0.9,3.0
+AGT-0108,3,APE Ticket Disparity,0.58,1.0,x,0.0,0.0
+AGT-0108,4,Manual/Cash Concentration,20.55,19.27,%,25.7,86.9
+AGT-0109,1,Volume Shock M12-M13,7.14,1.27,%,15.9,23.8
+AGT-0109,2,APE Leakage Shock M12-M13,9.11,1.2,%,15.2,22.8
+AGT-0109,3,APE Ticket Disparity,0.81,1.0,x,0.0,0.0
+AGT-0109,4,Manual/Cash Concentration,28.57,19.27,%,35.7,53.4
+AGT-0110,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0110,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0110,3,APE Ticket Disparity,1.05,1.0,x,1.3,12.1
+AGT-0110,4,Manual/Cash Concentration,7.5,19.27,%,9.4,87.9
+AGT-0111,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0111,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0111,3,APE Ticket Disparity,0.74,1.0,x,0.0,0.0
+AGT-0111,4,Manual/Cash Concentration,14.29,19.27,%,17.9,100.0
+AGT-0112,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0112,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0112,3,APE Ticket Disparity,0.99,1.0,x,0.0,0.0
+AGT-0112,4,Manual/Cash Concentration,24.63,19.27,%,30.8,100.0
+AGT-0113,1,Volume Shock M12-M13,14.18,1.27,%,31.5,12.2
+AGT-0113,2,APE Leakage Shock M12-M13,74.36,1.2,%,100.0,38.7
+AGT-0113,3,APE Ticket Disparity,12.85,1.0,x,100.0,38.7
+AGT-0113,4,Manual/Cash Concentration,21.28,19.27,%,26.6,10.4
+AGT-0114,1,Volume Shock M12-M13,4.88,1.27,%,10.8,22.0
+AGT-0114,2,APE Leakage Shock M12-M13,6.52,1.2,%,10.9,22.2
+AGT-0114,3,APE Ticket Disparity,0.96,1.0,x,0.0,0.0
+AGT-0114,4,Manual/Cash Concentration,21.95,19.27,%,27.4,55.8
+AGT-0115,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0115,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0115,3,APE Ticket Disparity,0.86,1.0,x,0.0,0.0
+AGT-0115,4,Manual/Cash Concentration,23.08,19.27,%,28.8,100.0
+AGT-0116,1,Volume Shock M12-M13,2.24,1.27,%,5.0,13.4
+AGT-0116,2,APE Leakage Shock M12-M13,2.54,1.2,%,4.2,11.3
+AGT-0116,3,APE Ticket Disparity,1.0,1.0,x,0.0,0.0
+AGT-0116,4,Manual/Cash Concentration,22.39,19.27,%,28.0,75.3
+AGT-0117,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0117,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0117,3,APE Ticket Disparity,0.68,1.0,x,0.0,0.0
+AGT-0117,4,Manual/Cash Concentration,23.81,19.27,%,29.8,100.0
+AGT-0118,1,Volume Shock M12-M13,2.5,1.27,%,5.6,17.1
+AGT-0118,2,APE Leakage Shock M12-M13,1.26,1.2,%,2.1,6.4
+AGT-0118,3,APE Ticket Disparity,0.87,1.0,x,0.0,0.0
+AGT-0118,4,Manual/Cash Concentration,20.0,19.27,%,25.0,76.5
+AGT-0119,1,Volume Shock M12-M13,1.45,1.27,%,3.2,10.0
+AGT-0119,2,APE Leakage Shock M12-M13,0.89,1.2,%,1.5,4.7
+AGT-0119,3,APE Ticket Disparity,0.98,1.0,x,0.0,0.0
+AGT-0119,4,Manual/Cash Concentration,21.74,19.27,%,27.2,85.3
+AGT-0120,1,Volume Shock M12-M13,4.44,1.27,%,9.9,40.9
+AGT-0120,2,APE Leakage Shock M12-M13,3.59,1.2,%,6.0,24.8
+AGT-0120,3,APE Ticket Disparity,0.71,1.0,x,0.0,0.0
+AGT-0120,4,Manual/Cash Concentration,6.67,19.27,%,8.3,34.3
+AGT-0121,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0121,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0121,3,APE Ticket Disparity,1.27,1.0,x,6.8,25.9
+AGT-0121,4,Manual/Cash Concentration,15.62,19.27,%,19.5,74.1
+AGT-0122,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0122,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0122,3,APE Ticket Disparity,1.14,1.0,x,3.5,11.1
+AGT-0122,4,Manual/Cash Concentration,22.39,19.27,%,28.0,88.9
+AGT-0123,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0123,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0123,3,APE Ticket Disparity,1.43,1.0,x,10.7,30.6
+AGT-0123,4,Manual/Cash Concentration,19.44,19.27,%,24.3,69.4
+AGT-0124,1,Volume Shock M12-M13,2.34,1.27,%,5.2,15.0
+AGT-0124,2,APE Leakage Shock M12-M13,1.78,1.2,%,3.0,8.7
+AGT-0124,3,APE Ticket Disparity,0.92,1.0,x,0.0,0.0
+AGT-0124,4,Manual/Cash Concentration,21.09,19.27,%,26.4,76.3
+AGT-0125,1,Volume Shock M12-M13,1.64,1.27,%,3.6,9.8
+AGT-0125,2,APE Leakage Shock M12-M13,1.48,1.2,%,2.5,6.8
+AGT-0125,3,APE Ticket Disparity,0.8,1.0,x,0.0,0.0
+AGT-0125,4,Manual/Cash Concentration,24.59,19.27,%,30.7,83.4
+AGT-0126,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0126,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0126,3,APE Ticket Disparity,0.59,1.0,x,0.0,0.0
+AGT-0126,4,Manual/Cash Concentration,3.45,19.27,%,4.3,100.0
+AGT-0127,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0127,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0127,3,APE Ticket Disparity,1.23,1.0,x,5.8,15.3
+AGT-0127,4,Manual/Cash Concentration,25.71,19.27,%,32.1,84.7
+AGT-0128,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0128,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0128,3,APE Ticket Disparity,1.25,1.0,x,6.2,18.5
+AGT-0128,4,Manual/Cash Concentration,21.82,19.27,%,27.3,81.5
+AGT-0129,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0129,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0129,3,APE Ticket Disparity,1.18,1.0,x,4.5,14.1
+AGT-0129,4,Manual/Cash Concentration,21.95,19.27,%,27.4,85.9
+AGT-0130,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0130,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0130,3,APE Ticket Disparity,1.25,1.0,x,6.2,32.0
+AGT-0130,4,Manual/Cash Concentration,10.53,19.27,%,13.2,68.0
+AGT-0131,1,Volume Shock M12-M13,1.12,1.27,%,2.5,10.0
+AGT-0131,2,APE Leakage Shock M12-M13,1.69,1.2,%,2.8,11.2
+AGT-0131,3,APE Ticket Disparity,1.06,1.0,x,1.5,6.0
+AGT-0131,4,Manual/Cash Concentration,14.61,19.27,%,18.3,72.8
+AGT-0132,1,Volume Shock M12-M13,1.57,1.27,%,3.5,9.2
+AGT-0132,2,APE Leakage Shock M12-M13,1.33,1.2,%,2.2,5.8
+AGT-0132,3,APE Ticket Disparity,0.92,1.0,x,0.0,0.0
+AGT-0132,4,Manual/Cash Concentration,25.98,19.27,%,32.5,85.0
+AGT-0133,1,Volume Shock M12-M13,41.33,1.27,%,91.8,38.1
+AGT-0133,2,APE Leakage Shock M12-M13,37.62,1.2,%,62.7,26.0
+AGT-0133,3,APE Ticket Disparity,0.93,1.0,x,0.0,0.0
+AGT-0133,4,Manual/Cash Concentration,69.33,19.27,%,86.7,35.9
+AGT-0134,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0134,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0134,3,APE Ticket Disparity,0.85,1.0,x,0.0,0.0
+AGT-0134,4,Manual/Cash Concentration,13.33,19.27,%,16.7,100.0
+AGT-0135,1,Volume Shock M12-M13,4.17,1.27,%,9.3,19.2
+AGT-0135,2,APE Leakage Shock M12-M13,4.82,1.2,%,8.0,16.5
+AGT-0135,3,APE Ticket Disparity,0.96,1.0,x,0.0,0.0
+AGT-0135,4,Manual/Cash Concentration,25.0,19.27,%,31.2,64.3
+AGT-0136,1,Volume Shock M12-M13,1.27,1.27,%,2.8,10.0
+AGT-0136,2,APE Leakage Shock M12-M13,0.84,1.2,%,1.4,5.0
+AGT-0136,3,APE Ticket Disparity,0.91,1.0,x,0.0,0.0
+AGT-0136,4,Manual/Cash Concentration,18.99,19.27,%,23.7,85.0
+AGT-0137,1,Volume Shock M12-M13,1.47,1.27,%,3.3,7.3
+AGT-0137,2,APE Leakage Shock M12-M13,0.45,1.2,%,0.8,1.8
+AGT-0137,3,APE Ticket Disparity,1.02,1.0,x,0.5,1.1
+AGT-0137,4,Manual/Cash Concentration,32.35,19.27,%,40.4,89.8
+AGT-0138,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0138,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0138,3,APE Ticket Disparity,1.41,1.0,x,10.2,40.6
+AGT-0138,4,Manual/Cash Concentration,11.9,19.27,%,14.9,59.4
+AGT-0139,1,Volume Shock M12-M13,4.0,1.27,%,8.9,18.2
+AGT-0139,2,APE Leakage Shock M12-M13,7.44,1.2,%,12.4,25.4
+AGT-0139,3,APE Ticket Disparity,0.94,1.0,x,0.0,0.0
+AGT-0139,4,Manual/Cash Concentration,22.0,19.27,%,27.5,56.4
+AGT-0140,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0140,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0140,3,APE Ticket Disparity,0.93,1.0,x,0.0,0.0
+AGT-0140,4,Manual/Cash Concentration,20.0,19.27,%,25.0,100.0
+AGT-0141,1,Volume Shock M12-M13,2.94,1.27,%,6.5,28.4
+AGT-0141,2,APE Leakage Shock M12-M13,1.03,1.2,%,1.7,7.4
+AGT-0141,3,APE Ticket Disparity,0.68,1.0,x,0.0,0.0
+AGT-0141,4,Manual/Cash Concentration,11.76,19.27,%,14.7,64.2
+AGT-0142,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0142,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0142,3,APE Ticket Disparity,0.8,1.0,x,0.0,0.0
+AGT-0142,4,Manual/Cash Concentration,13.33,19.27,%,16.7,100.0
+AGT-0143,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0143,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0143,3,APE Ticket Disparity,1.0,1.0,x,0.0,0.0
+AGT-0143,4,Manual/Cash Concentration,0.0,19.27,%,0.0,100.0
+AGT-0144,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0144,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0144,3,APE Ticket Disparity,0.95,1.0,x,0.0,0.0
+AGT-0144,4,Manual/Cash Concentration,18.0,19.27,%,22.5,100.0
+AGT-0145,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0145,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0145,3,APE Ticket Disparity,0.87,1.0,x,0.0,0.0
+AGT-0145,4,Manual/Cash Concentration,28.57,19.27,%,35.7,100.0
+AGT-0146,1,Volume Shock M12-M13,3.64,1.27,%,8.1,24.8
+AGT-0146,2,APE Leakage Shock M12-M13,3.28,1.2,%,5.5,16.9
+AGT-0146,3,APE Ticket Disparity,1.03,1.0,x,0.8,2.5
+AGT-0146,4,Manual/Cash Concentration,14.55,19.27,%,18.2,55.8
+AGT-0147,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0147,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0147,3,APE Ticket Disparity,0.55,1.0,x,0.0,0.0
+AGT-0147,4,Manual/Cash Concentration,30.77,19.27,%,38.5,100.0
+AGT-0148,1,Volume Shock M12-M13,2.86,1.27,%,6.4,20.4
+AGT-0148,2,APE Leakage Shock M12-M13,3.27,1.2,%,5.4,17.2
+AGT-0148,3,APE Ticket Disparity,0.99,1.0,x,0.0,0.0
+AGT-0148,4,Manual/Cash Concentration,15.71,19.27,%,19.6,62.4
+AGT-0149,1,Volume Shock M12-M13,3.3,1.27,%,7.3,18.5
+AGT-0149,2,APE Leakage Shock M12-M13,3.72,1.2,%,6.2,15.7
+AGT-0149,3,APE Ticket Disparity,1.16,1.0,x,4.0,10.1
+AGT-0149,4,Manual/Cash Concentration,17.58,19.27,%,22.0,55.7
+AGT-0150,1,Volume Shock M12-M13,1.59,1.27,%,3.5,9.5
+AGT-0150,2,APE Leakage Shock M12-M13,1.46,1.2,%,2.4,6.5
+AGT-0150,3,APE Ticket Disparity,1.6,1.0,x,15.0,40.8
+AGT-0150,4,Manual/Cash Concentration,12.7,19.27,%,15.9,43.2
+AGT-0151,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0151,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0151,3,APE Ticket Disparity,0.91,1.0,x,0.0,0.0
+AGT-0151,4,Manual/Cash Concentration,15.91,19.27,%,19.9,100.0
+AGT-0152,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0152,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0152,3,APE Ticket Disparity,0.41,1.0,x,0.0,0.0
+AGT-0152,4,Manual/Cash Concentration,14.29,19.27,%,17.9,100.0
+AGT-0153,1,Volume Shock M12-M13,0.98,1.27,%,2.2,6.2
+AGT-0153,2,APE Leakage Shock M12-M13,1.68,1.2,%,2.8,7.9
+AGT-0153,3,APE Ticket Disparity,0.99,1.0,x,0.0,0.0
+AGT-0153,4,Manual/Cash Concentration,24.51,19.27,%,30.6,85.9
+AGT-0154,1,Volume Shock M12-M13,4.0,1.27,%,8.9,40.3
+AGT-0154,2,APE Leakage Shock M12-M13,1.91,1.2,%,3.2,14.5
+AGT-0154,3,APE Ticket Disparity,0.97,1.0,x,0.0,0.0
+AGT-0154,4,Manual/Cash Concentration,8.0,19.27,%,10.0,45.2
+AGT-0155,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0155,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0155,3,APE Ticket Disparity,0.98,1.0,x,0.0,0.0
+AGT-0155,4,Manual/Cash Concentration,18.64,19.27,%,23.3,100.0
+AGT-0156,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0156,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0156,3,APE Ticket Disparity,1.03,1.0,x,0.8,8.8
+AGT-0156,4,Manual/Cash Concentration,6.67,19.27,%,8.3,91.2
+AGT-0157,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0157,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0157,3,APE Ticket Disparity,0.73,1.0,x,0.0,0.0
+AGT-0157,4,Manual/Cash Concentration,14.29,19.27,%,17.9,100.0
+AGT-0158,1,Volume Shock M12-M13,3.57,1.27,%,7.9,15.6
+AGT-0158,2,APE Leakage Shock M12-M13,4.38,1.2,%,7.3,14.5
+AGT-0158,3,APE Ticket Disparity,1.21,1.0,x,5.2,10.3
+AGT-0158,4,Manual/Cash Concentration,24.11,19.27,%,30.1,59.6
+AGT-0159,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0159,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0159,3,APE Ticket Disparity,0.89,1.0,x,0.0,0.0
+AGT-0159,4,Manual/Cash Concentration,23.91,19.27,%,29.9,100.0
+AGT-0160,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0160,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0160,3,APE Ticket Disparity,0.85,1.0,x,0.0,0.0
+AGT-0160,4,Manual/Cash Concentration,19.51,19.27,%,24.4,100.0
+AGT-0161,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0161,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0161,3,APE Ticket Disparity,1.11,1.0,x,2.8,8.0
+AGT-0161,4,Manual/Cash Concentration,25.71,19.27,%,32.1,92.0
+AGT-0162,1,Volume Shock M12-M13,3.23,1.27,%,7.2,22.4
+AGT-0162,2,APE Leakage Shock M12-M13,2.89,1.2,%,4.8,14.9
+AGT-0162,3,APE Ticket Disparity,0.76,1.0,x,0.0,0.0
+AGT-0162,4,Manual/Cash Concentration,16.13,19.27,%,20.2,62.7
+AGT-0163,1,Volume Shock M12-M13,1.04,1.27,%,2.3,7.5
+AGT-0163,2,APE Leakage Shock M12-M13,0.41,1.2,%,0.7,2.3
+AGT-0163,3,APE Ticket Disparity,1.07,1.0,x,1.8,5.8
+AGT-0163,4,Manual/Cash Concentration,20.83,19.27,%,26.0,84.4
+AGT-0164,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0164,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0164,3,APE Ticket Disparity,1.05,1.0,x,1.3,5.4
+AGT-0164,4,Manual/Cash Concentration,18.31,19.27,%,22.9,94.6
+AGT-0165,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0165,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0165,3,APE Ticket Disparity,1.04,1.0,x,1.0,5.1
+AGT-0165,4,Manual/Cash Concentration,14.93,19.27,%,18.7,94.9
+AGT-0166,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0166,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0166,3,APE Ticket Disparity,0.82,1.0,x,0.0,0.0
+AGT-0166,4,Manual/Cash Concentration,16.67,19.27,%,20.8,100.0
+AGT-0167,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0167,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0167,3,APE Ticket Disparity,0.49,1.0,x,0.0,0.0
+AGT-0167,4,Manual/Cash Concentration,19.05,19.27,%,23.8,100.0
+AGT-0168,1,Volume Shock M12-M13,1.47,1.27,%,3.3,8.4
+AGT-0168,2,APE Leakage Shock M12-M13,0.8,1.2,%,1.3,3.3
+AGT-0168,3,APE Ticket Disparity,0.93,1.0,x,0.0,0.0
+AGT-0168,4,Manual/Cash Concentration,27.94,19.27,%,34.9,88.3
+AGT-0169,1,Volume Shock M12-M13,4.0,1.27,%,8.9,17.2
+AGT-0169,2,APE Leakage Shock M12-M13,1.71,1.2,%,2.8,5.4
+AGT-0169,3,APE Ticket Disparity,0.42,1.0,x,0.0,0.0
+AGT-0169,4,Manual/Cash Concentration,32.0,19.27,%,40.0,77.4
+AGT-0170,1,Volume Shock M12-M13,2.67,1.27,%,5.9,15.8
+AGT-0170,2,APE Leakage Shock M12-M13,1.75,1.2,%,2.9,7.8
+AGT-0170,3,APE Ticket Disparity,1.07,1.0,x,1.8,4.8
+AGT-0170,4,Manual/Cash Concentration,21.33,19.27,%,26.7,71.6
+AGT-0171,1,Volume Shock M12-M13,1.8,1.27,%,4.0,11.1
+AGT-0171,2,APE Leakage Shock M12-M13,2.24,1.2,%,3.7,10.3
+AGT-0171,3,APE Ticket Disparity,1.09,1.0,x,2.3,6.4
+AGT-0171,4,Manual/Cash Concentration,20.72,19.27,%,25.9,72.2
+AGT-0172,1,Volume Shock M12-M13,43.86,1.27,%,97.5,38.7
+AGT-0172,2,APE Leakage Shock M12-M13,41.4,1.2,%,69.0,27.4
+AGT-0172,3,APE Ticket Disparity,0.9,1.0,x,0.0,0.0
+AGT-0172,4,Manual/Cash Concentration,68.42,19.27,%,85.5,33.9
+AGT-0173,1,Volume Shock M12-M13,2.33,1.27,%,5.2,13.6
+AGT-0173,2,APE Leakage Shock M12-M13,3.52,1.2,%,5.9,15.4
+AGT-0173,3,APE Ticket Disparity,1.27,1.0,x,6.8,17.8
+AGT-0173,4,Manual/Cash Concentration,16.28,19.27,%,20.4,53.2
+AGT-0174,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0174,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0174,3,APE Ticket Disparity,1.02,1.0,x,0.5,1.6
+AGT-0174,4,Manual/Cash Concentration,24.39,19.27,%,30.5,98.4
+AGT-0175,1,Volume Shock M12-M13,1.56,1.27,%,3.5,13.1
+AGT-0175,2,APE Leakage Shock M12-M13,1.05,1.2,%,1.8,6.7
+AGT-0175,3,APE Ticket Disparity,0.99,1.0,x,0.0,0.0
+AGT-0175,4,Manual/Cash Concentration,17.19,19.27,%,21.5,80.2
+AGT-0176,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0176,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0176,3,APE Ticket Disparity,0.68,1.0,x,0.0,0.0
+AGT-0176,4,Manual/Cash Concentration,19.7,19.27,%,24.6,100.0
+AGT-0177,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0177,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0177,3,APE Ticket Disparity,0.98,1.0,x,0.0,0.0
+AGT-0177,4,Manual/Cash Concentration,16.25,19.27,%,20.3,100.0
+AGT-0178,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0178,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0178,3,APE Ticket Disparity,0.62,1.0,x,0.0,0.0
+AGT-0178,4,Manual/Cash Concentration,20.69,19.27,%,25.9,100.0
+AGT-0179,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0179,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0179,3,APE Ticket Disparity,1.25,1.0,x,6.2,21.1
+AGT-0179,4,Manual/Cash Concentration,18.52,19.27,%,23.2,78.9
+AGT-0180,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0180,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0180,3,APE Ticket Disparity,1.31,1.0,x,7.8,23.1
+AGT-0180,4,Manual/Cash Concentration,20.78,19.27,%,26.0,76.9
+AGT-0181,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0181,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0181,3,APE Ticket Disparity,1.18,1.0,x,4.5,16.8
+AGT-0181,4,Manual/Cash Concentration,17.86,19.27,%,22.3,83.2
+AGT-0182,1,Volume Shock M12-M13,2.53,1.27,%,5.6,16.6
+AGT-0182,2,APE Leakage Shock M12-M13,1.69,1.2,%,2.8,8.3
+AGT-0182,3,APE Ticket Disparity,0.98,1.0,x,0.0,0.0
+AGT-0182,4,Manual/Cash Concentration,20.25,19.27,%,25.3,75.1
+AGT-0183,1,Volume Shock M12-M13,2.25,1.27,%,5.0,14.6
+AGT-0183,2,APE Leakage Shock M12-M13,3.27,1.2,%,5.4,15.7
+AGT-0183,3,APE Ticket Disparity,0.9,1.0,x,0.0,0.0
+AGT-0183,4,Manual/Cash Concentration,19.1,19.27,%,23.9,69.7
+AGT-0184,1,Volume Shock M12-M13,1.1,1.27,%,2.4,9.7
+AGT-0184,2,APE Leakage Shock M12-M13,1.0,1.2,%,1.7,6.9
+AGT-0184,3,APE Ticket Disparity,0.95,1.0,x,0.0,0.0
+AGT-0184,4,Manual/Cash Concentration,16.48,19.27,%,20.6,83.4
+AGT-0185,1,Volume Shock M12-M13,1.92,1.27,%,4.3,16.7
+AGT-0185,2,APE Leakage Shock M12-M13,2.83,1.2,%,4.7,18.2
+AGT-0185,3,APE Ticket Disparity,0.98,1.0,x,0.0,0.0
+AGT-0185,4,Manual/Cash Concentration,13.46,19.27,%,16.8,65.1
+AGT-0186,1,Volume Shock M12-M13,3.45,1.27,%,7.7,17.0
+AGT-0186,2,APE Leakage Shock M12-M13,4.49,1.2,%,7.5,16.5
+AGT-0186,3,APE Ticket Disparity,0.72,1.0,x,0.0,0.0
+AGT-0186,4,Manual/Cash Concentration,24.14,19.27,%,30.2,66.5
+AGT-0187,1,Volume Shock M12-M13,13.33,1.27,%,29.6,40.7
+AGT-0187,2,APE Leakage Shock M12-M13,10.84,1.2,%,18.1,24.9
+AGT-0187,3,APE Ticket Disparity,0.82,1.0,x,0.0,0.0
+AGT-0187,4,Manual/Cash Concentration,20.0,19.27,%,25.0,34.4
+AGT-0188,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0188,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0188,3,APE Ticket Disparity,0.93,1.0,x,0.0,0.0
+AGT-0188,4,Manual/Cash Concentration,21.57,19.27,%,27.0,100.0
+AGT-0189,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0189,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0189,3,APE Ticket Disparity,1.02,1.0,x,0.5,3.1
+AGT-0189,4,Manual/Cash Concentration,12.5,19.27,%,15.6,96.9
+AGT-0190,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0190,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0190,3,APE Ticket Disparity,1.17,1.0,x,4.2,19.0
+AGT-0190,4,Manual/Cash Concentration,14.29,19.27,%,17.9,81.0
+AGT-0191,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0191,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0191,3,APE Ticket Disparity,0.61,1.0,x,0.0,0.0
+AGT-0191,4,Manual/Cash Concentration,12.5,19.27,%,15.6,100.0
+AGT-0192,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0192,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0192,3,APE Ticket Disparity,1.56,1.0,x,14.0,38.4
+AGT-0192,4,Manual/Cash Concentration,18.0,19.27,%,22.5,61.6
+AGT-0193,1,Volume Shock M12-M13,1.83,1.27,%,4.1,12.5
+AGT-0193,2,APE Leakage Shock M12-M13,2.04,1.2,%,3.4,10.4
+AGT-0193,3,APE Ticket Disparity,0.9,1.0,x,0.0,0.0
+AGT-0193,4,Manual/Cash Concentration,20.12,19.27,%,25.2,77.1
+AGT-0194,1,Volume Shock M12-M13,4.55,1.27,%,10.1,24.7
+AGT-0194,2,APE Leakage Shock M12-M13,3.05,1.2,%,5.1,12.5
+AGT-0194,3,APE Ticket Disparity,1.12,1.0,x,3.0,7.3
+AGT-0194,4,Manual/Cash Concentration,18.18,19.27,%,22.7,55.5
+AGT-0195,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0195,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0195,3,APE Ticket Disparity,1.16,1.0,x,4.0,8.5
+AGT-0195,4,Manual/Cash Concentration,34.29,19.27,%,42.9,91.5
+AGT-0196,1,Volume Shock M12-M13,7.61,1.27,%,16.9,7.3
+AGT-0196,2,APE Leakage Shock M12-M13,56.73,1.2,%,94.5,40.5
+AGT-0196,3,APE Ticket Disparity,9.78,1.0,x,100.0,42.9
+AGT-0196,4,Manual/Cash Concentration,17.39,19.27,%,21.7,9.3
+AGT-0197,1,Volume Shock M12-M13,3.03,1.27,%,6.7,16.8
+AGT-0197,2,APE Leakage Shock M12-M13,1.68,1.2,%,2.8,7.0
+AGT-0197,3,APE Ticket Disparity,0.85,1.0,x,0.0,0.0
+AGT-0197,4,Manual/Cash Concentration,24.24,19.27,%,30.3,76.2
+AGT-0198,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0198,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0198,3,APE Ticket Disparity,0.83,1.0,x,0.0,0.0
+AGT-0198,4,Manual/Cash Concentration,16.9,19.27,%,21.1,100.0
+AGT-0199,1,Volume Shock M12-M13,5.88,1.27,%,13.1,5.1
+AGT-0199,2,APE Leakage Shock M12-M13,61.65,1.2,%,100.0,38.9
+AGT-0199,3,APE Ticket Disparity,25.72,1.0,x,100.0,38.9
+AGT-0199,4,Manual/Cash Concentration,35.29,19.27,%,44.1,17.1
+AGT-0200,1,Volume Shock M12-M13,0.0,1.27,%,0.0,0.0
+AGT-0200,2,APE Leakage Shock M12-M13,0.0,1.2,%,0.0,0.0
+AGT-0200,3,APE Ticket Disparity,1.06,1.0,x,1.5,7.6
+AGT-0200,4,Manual/Cash Concentration,14.58,19.27,%,18.2,92.4
