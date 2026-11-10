@@ -6,3 +6,8 @@ __pycache__/
 htmlcov/
 *.parquet
 
+
+# Power BI Desktop local cache & settings
+.pbi/
+**/localSettings.json
+*.tmp

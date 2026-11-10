@@ -1,0 +1,44 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "e8a2dc2c3a9941d115a8",
+  "position": {
+    "x": 20,
+    "y": 15,
+    "width": 780,
+    "height": 50,
+    "z": 1000,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "MNC Life - Watchlist & Profil Risiko Agen",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "15pt",
+                      "color": "#192C4D"
+                    }
+                  },
+                  {
+                    "value": "\nPemeriksaan Mendalam Perilaku Agen: Kurva Retensi 24 Bulan & Dekomposisi 4 Pilar Risiko",
+                    "textStyle": {
+                      "fontSize": "9.5pt",
+                      "color": "#5C768D"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

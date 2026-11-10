@@ -1,0 +1,59 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "da97941873155b45c75b",
+  "position": {
+    "x": 650,
+    "y": 80,
+    "width": 300,
+    "height": 85,
+    "z": 3200,
+    "tabOrder": 3200
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimAgent"
+                    }
+                  },
+                  "Property": "Flagged Agents Count"
+                }
+              },
+              "queryRef": "DimAgent.Flagged Agents Count",
+              "nativeQueryRef": "Flagged Agents Count"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Total Agen Anomali'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "718c91d56b5b1b76aa5c",
+  "position": {
+    "x": 20,
+    "y": 345,
+    "width": 615,
+    "height": 355,
+    "z": 4000,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FactPolicyMonthlyStatus"
+                    }
+                  },
+                  "Property": "Month Label"
+                }
+              },
+              "queryRef": "FactPolicyMonthlyStatus.Month Label",
+              "nativeQueryRef": "Month Label"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FactPolicyMonthlyStatus"
+                    }
+                  },
+                  "Property": "Persistency Volume %"
+                }
+              },
+              "queryRef": "FactPolicyMonthlyStatus.Persistency Volume %",
+              "nativeQueryRef": "Persistency Volume %"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FactPolicyMonthlyStatus"
+                    }
+                  },
+                  "Property": "Persistency APE %"
+                }
+              },
+              "queryRef": "FactPolicyMonthlyStatus.Persistency APE %",
+              "nativeQueryRef": "Persistency APE %"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Kurva Retensi Polis 24 Bulan Agen Terpilih (Volume vs Premi APE)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,264 @@
+table DimAgent
+
+	/// Total Agents count
+	measure 'Total Agents' = COUNTROWS(DimAgent)
+		formatString: #,##0
+
+	/// Flagged Agents count (Tier 1 or Tier 2)
+	measure 'Flagged Agents Count' = CALCULATE(COUNTROWS(DimAgent), DimAgent[risk_category] <> "Normal")
+		formatString: #,##0
+
+	/// Hit and Run Agents count
+	measure 'Hit and Run Agents Count' = CALCULATE(COUNTROWS(DimAgent), DimAgent[risk_category] = "Hit and Run")
+		formatString: #,##0
+
+	/// Cherry Picking Agents count
+	measure 'Cherry Picking Agents Count' = CALCULATE(COUNTROWS(DimAgent), DimAgent[risk_category] = "Cherry Picking")
+		formatString: #,##0
+
+	/// Flagged Agents Subtitle
+	measure 'Flagged Agents Subtitle' = "Hit & Run: " & [Hit and Run Agents Count] & " | Cherry Picking: " & [Cherry Picking Agents Count]
+		formatString: @
+
+	/// Ground Truth Anomalies
+	measure 'Ground Truth Anomalies' = CALCULATE(COUNTROWS(DimAgent), DimAgent[is_anomaly] = TRUE())
+		formatString: #,##0
+
+	/// True Positives in Top 20% Risk Ranking
+	measure 'True Positives (Top 20% Rank)' = CALCULATE(COUNTROWS(DimAgent), DimAgent[is_anomaly] = TRUE(), DimAgent[is_top20_risk_rank] = TRUE())
+		formatString: #,##0
+
+	/// Top-20% Recall % against Ground Truth (SPEC target >= 85%)
+	measure 'Top-20% Recall %' = DIVIDE([True Positives (Top 20% Rank)], [Ground Truth Anomalies])
+		formatString: 0.0%
+
+	/// True Positives Flagged
+	measure 'True Positives (Flagged)' = CALCULATE(COUNTROWS(DimAgent), DimAgent[is_anomaly] = TRUE(), DimAgent[risk_category] <> "Normal")
+		formatString: #,##0
+
+	/// Overall Recall %
+	measure 'Overall Recall %' = DIVIDE([True Positives (Flagged)], [Ground Truth Anomalies])
+		formatString: 0.0%
+
+	/// Detection Precision %
+	measure 'Detection Precision %' = DIVIDE([True Positives (Flagged)], [Flagged Agents Count])
+		formatString: 0.0%
+
+	column agent_id
+		dataType: string
+		isKey
+		summarizeBy: none
+		sourceColumn: agent_id
+
+	column agent_name
+		dataType: string
+		summarizeBy: none
+		sourceColumn: agent_name
+
+	column channel
+		dataType: string
+		summarizeBy: none
+		sourceColumn: channel
+
+	column branch_office
+		dataType: string
+		summarizeBy: none
+		sourceColumn: branch_office
+
+	column join_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		summarizeBy: none
+		sourceColumn: join_date
+
+	column total_policies
+		dataType: int64
+		formatString: #,##0
+		summarizeBy: sum
+		sourceColumn: total_policies
+
+	column total_ape
+		dataType: decimal
+		formatString: "Rp"#,##0
+		summarizeBy: sum
+		sourceColumn: total_ape
+
+	column m12_vol_persistency
+		dataType: double
+		formatString: 0.0%
+		summarizeBy: average
+		sourceColumn: m12_vol_persistency
+
+	column m13_vol_persistency
+		dataType: double
+		formatString: 0.0%
+		summarizeBy: average
+		sourceColumn: m13_vol_persistency
+
+	column lapse_shock_vol
+		dataType: double
+		formatString: 0.0%
+		summarizeBy: average
+		sourceColumn: lapse_shock_vol
+
+	column m12_ape_persistency
+		dataType: double
+		formatString: 0.0%
+		summarizeBy: average
+		sourceColumn: m12_ape_persistency
+
+	column m13_ape_persistency
+		dataType: double
+		formatString: 0.0%
+		summarizeBy: average
+		sourceColumn: m13_ape_persistency
+
+	column lapse_shock_ape
+		dataType: double
+		formatString: 0.0%
+		summarizeBy: average
+		sourceColumn: lapse_shock_ape
+
+	column ape_disparity_ratio
+		dataType: double
+		formatString: 0.00"x"
+		summarizeBy: average
+		sourceColumn: ape_disparity_ratio
+
+	column cash_payment_ratio
+		dataType: double
+		formatString: 0.0%
+		summarizeBy: average
+		sourceColumn: cash_payment_ratio
+
+	column grace_period_m11_m12_count
+		dataType: int64
+		formatString: #,##0
+		summarizeBy: sum
+		sourceColumn: grace_period_m11_m12_count
+
+	column grace_period_m11_m12_ape
+		dataType: decimal
+		formatString: "Rp"#,##0
+		summarizeBy: sum
+		sourceColumn: grace_period_m11_m12_ape
+
+	column tier1_violation
+		dataType: boolean
+		summarizeBy: none
+		sourceColumn: tier1_violation
+
+	column tier2_anomaly
+		dataType: boolean
+		summarizeBy: none
+		sourceColumn: tier2_anomaly
+
+	column anomaly_score
+		dataType: double
+		formatString: 0.00
+		summarizeBy: average
+		sourceColumn: anomaly_score
+
+	column risk_category
+		dataType: string
+		summarizeBy: none
+		sourceColumn: risk_category
+
+	column primary_risk_drivers
+		dataType: string
+		summarizeBy: none
+		sourceColumn: primary_risk_drivers
+
+	column true_label
+		dataType: string
+		summarizeBy: none
+		sourceColumn: true_label
+
+	column is_anomaly
+		dataType: boolean
+		summarizeBy: none
+		sourceColumn: is_anomaly
+
+	column score_vol_shock
+		dataType: double
+		formatString: 0.0
+		summarizeBy: average
+		sourceColumn: score_vol_shock
+
+	column score_ape_shock
+		dataType: double
+		formatString: 0.0
+		summarizeBy: average
+		sourceColumn: score_ape_shock
+
+	column score_ape_disparity
+		dataType: double
+		formatString: 0.0
+		summarizeBy: average
+		sourceColumn: score_ape_disparity
+
+	column score_cash_ratio
+		dataType: double
+		formatString: 0.0
+		summarizeBy: average
+		sourceColumn: score_cash_ratio
+
+	column share_vol_shock_pct
+		dataType: double
+		formatString: 0.0%
+		summarizeBy: average
+		sourceColumn: share_vol_shock_pct
+
+	column share_ape_shock_pct
+		dataType: double
+		formatString: 0.0%
+		summarizeBy: average
+		sourceColumn: share_ape_shock_pct
+
+	column share_ape_disparity_pct
+		dataType: double
+		formatString: 0.0%
+		summarizeBy: average
+		sourceColumn: share_ape_disparity_pct
+
+	column share_cash_ratio_pct
+		dataType: double
+		formatString: 0.0%
+		summarizeBy: average
+		sourceColumn: share_cash_ratio_pct
+
+	column dominant_risk_pillar
+		dataType: string
+		summarizeBy: none
+		sourceColumn: dominant_risk_pillar
+
+	column risk_rank
+		dataType: int64
+		formatString: #,##0
+		summarizeBy: none
+		sourceColumn: risk_rank
+
+	column is_top20_risk_rank
+		dataType: boolean
+		summarizeBy: none
+		sourceColumn: is_top20_risk_rank
+
+	partition DimAgent = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(File.Contents(DataFolderPath & "\agent_risk_scores.csv"), [Delimiter=",", Columns=35, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				#"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				#"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{
+					{"agent_id", type text}, {"agent_name", type text}, {"channel", type text}, {"branch_office", type text}, {"join_date", type date},
+					{"total_policies", Int64.Type}, {"total_ape", type number}, {"m12_vol_persistency", type number}, {"m13_vol_persistency", type number},
+					{"lapse_shock_vol", type number}, {"m12_ape_persistency", type number}, {"m13_ape_persistency", type number}, {"lapse_shock_ape", type number},
+					{"ape_disparity_ratio", type number}, {"cash_payment_ratio", type number}, {"grace_period_m11_m12_count", Int64.Type}, {"grace_period_m11_m12_ape", type number},
+					{"tier1_violation", type logical}, {"tier2_anomaly", type logical}, {"anomaly_score", type number}, {"risk_category", type text},
+					{"primary_risk_drivers", type text}, {"true_label", type text}, {"is_anomaly", type logical},
+					{"score_vol_shock", type number}, {"score_ape_shock", type number}, {"score_ape_disparity", type number}, {"score_cash_ratio", type number},
+					{"share_vol_shock_pct", type number}, {"share_ape_shock_pct", type number}, {"share_ape_disparity_pct", type number}, {"share_cash_ratio_pct", type number},
+					{"dominant_risk_pillar", type text}, {"risk_rank", Int64.Type}, {"is_top20_risk_rank", type logical}
+				})
+			in
+				#"Changed Type"

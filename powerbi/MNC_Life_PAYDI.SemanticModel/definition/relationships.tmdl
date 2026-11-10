@@ -1,0 +1,11 @@
+relationship 'DimPolicy to DimAgent'
+	fromColumn: DimPolicy.agent_id
+	toColumn: DimAgent.agent_id
+
+relationship 'FactPolicyMonthlyStatus to DimPolicy'
+	fromColumn: FactPolicyMonthlyStatus.policy_id
+	toColumn: DimPolicy.policy_id
+
+relationship 'FactAgentRiskPillars to DimAgent'
+	fromColumn: FactAgentRiskPillars.agent_id
+	toColumn: DimAgent.agent_id

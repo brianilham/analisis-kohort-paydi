@@ -1,0 +1,1 @@
+expression DataFolderPath = "C:\Users\USER\Downloads\Project Portfolio Data\Analisis Kohort Persistensi Polis & Deteksi Churn Agen\data" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]

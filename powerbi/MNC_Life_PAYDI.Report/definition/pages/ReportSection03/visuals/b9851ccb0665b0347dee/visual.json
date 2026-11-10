@@ -1,0 +1,72 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "b9851ccb0665b0347dee",
+  "position": {
+    "x": 1045,
+    "y": 15,
+    "width": 215,
+    "height": 76,
+    "z": 2100,
+    "tabOrder": 2100
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimPolicy"
+                    }
+                  },
+                  "Property": "payment_method"
+                }
+              },
+              "queryRef": "DimPolicy.payment_method",
+              "nativeQueryRef": "payment_method"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "data": [
+        {
+          "properties": {
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Dropdown'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "header": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Metode Bayar'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

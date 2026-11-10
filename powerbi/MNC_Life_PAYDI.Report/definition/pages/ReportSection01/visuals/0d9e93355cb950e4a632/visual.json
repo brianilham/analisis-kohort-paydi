@@ -1,0 +1,59 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "0d9e93355cb950e4a632",
+  "position": {
+    "x": 965,
+    "y": 80,
+    "width": 295,
+    "height": 85,
+    "z": 3300,
+    "tabOrder": 3300
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FactPolicyMonthlyStatus"
+                    }
+                  },
+                  "Property": "Grace Period Policies (M11-M12)"
+                }
+              },
+              "queryRef": "FactPolicyMonthlyStatus.Grace Period Policies (M11-M12)",
+              "nativeQueryRef": "Grace Period Policies (M11-M12)"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Polis Grace Period M11-M12'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

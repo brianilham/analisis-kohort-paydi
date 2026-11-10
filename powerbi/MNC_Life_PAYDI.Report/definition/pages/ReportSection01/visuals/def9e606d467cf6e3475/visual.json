@@ -1,0 +1,59 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "def9e606d467cf6e3475",
+  "position": {
+    "x": 20,
+    "y": 80,
+    "width": 300,
+    "height": 85,
+    "z": 3000,
+    "tabOrder": 3000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FactPolicyMonthlyStatus"
+                    }
+                  },
+                  "Property": "M13 Volume Persistency %"
+                }
+              },
+              "queryRef": "FactPolicyMonthlyStatus.M13 Volume Persistency %",
+              "nativeQueryRef": "M13 Volume Persistency %"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'M13 Volume Persistency (AAJI >= 85%)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

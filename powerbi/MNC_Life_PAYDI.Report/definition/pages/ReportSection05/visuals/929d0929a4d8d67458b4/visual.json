@@ -1,0 +1,59 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "929d0929a4d8d67458b4",
+  "position": {
+    "x": 335,
+    "y": 80,
+    "width": 300,
+    "height": 85,
+    "z": 3100,
+    "tabOrder": 3100
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimAgent"
+                    }
+                  },
+                  "Property": "Overall Recall %"
+                }
+              },
+              "queryRef": "DimAgent.Overall Recall %",
+              "nativeQueryRef": "Overall Recall %"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Overall Recall %'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

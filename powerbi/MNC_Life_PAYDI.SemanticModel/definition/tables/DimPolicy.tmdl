@@ -1,0 +1,63 @@
+table DimPolicy
+
+	/// Initial Policies Count
+	measure 'Initial Policies' = COUNTROWS(DimPolicy)
+		formatString: #,##0
+
+	/// Initial Total APE
+	measure 'Initial APE' = SUM(DimPolicy[ape])
+		formatString: "Rp"#,##0
+
+	/// Average Policy APE
+	measure 'Average Policy APE' = AVERAGE(DimPolicy[ape])
+		formatString: "Rp"#,##0
+
+	column policy_id
+		dataType: string
+		isKey
+		summarizeBy: none
+		sourceColumn: policy_id
+
+	column agent_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: agent_id
+
+	column cohort_month
+		dataType: string
+		summarizeBy: none
+		sourceColumn: cohort_month
+
+	column issue_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		summarizeBy: none
+		sourceColumn: issue_date
+
+	column ape
+		dataType: decimal
+		formatString: "Rp"#,##0
+		summarizeBy: sum
+		sourceColumn: ape
+
+	column payment_method
+		dataType: string
+		summarizeBy: none
+		sourceColumn: payment_method
+
+	partition DimPolicy = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(File.Contents(DataFolderPath & "\policies.csv"), [Delimiter=",", Columns=6, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				#"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				#"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{
+					{"policy_id", type text},
+					{"agent_id", type text},
+					{"cohort_month", type text},
+					{"issue_date", type date},
+					{"ape", type number},
+					{"payment_method", type text}
+				})
+			in
+				#"Changed Type"

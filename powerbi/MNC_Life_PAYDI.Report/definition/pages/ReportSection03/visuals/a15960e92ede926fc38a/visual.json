@@ -1,0 +1,59 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "a15960e92ede926fc38a",
+  "position": {
+    "x": 335,
+    "y": 80,
+    "width": 300,
+    "height": 85,
+    "z": 3100,
+    "tabOrder": 3100
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FactPolicyMonthlyStatus"
+                    }
+                  },
+                  "Property": "Grace Period APE (Miliar IDR)"
+                }
+              },
+              "queryRef": "FactPolicyMonthlyStatus.Grace Period APE (Miliar IDR)",
+              "nativeQueryRef": "Grace Period APE (Miliar IDR)"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Total Premi Kritis Berisiko'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

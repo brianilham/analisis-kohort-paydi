@@ -1,0 +1,157 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "3d00f72b5238816771f3",
+  "position": {
+    "x": 20,
+    "y": 80,
+    "width": 1240,
+    "height": 250,
+    "z": 3000,
+    "tabOrder": 3000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimAgent"
+                    }
+                  },
+                  "Property": "risk_rank"
+                }
+              },
+              "queryRef": "DimAgent.risk_rank",
+              "nativeQueryRef": "risk_rank"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimAgent"
+                    }
+                  },
+                  "Property": "agent_id"
+                }
+              },
+              "queryRef": "DimAgent.agent_id",
+              "nativeQueryRef": "agent_id"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimAgent"
+                    }
+                  },
+                  "Property": "agent_name"
+                }
+              },
+              "queryRef": "DimAgent.agent_name",
+              "nativeQueryRef": "agent_name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimAgent"
+                    }
+                  },
+                  "Property": "channel"
+                }
+              },
+              "queryRef": "DimAgent.channel",
+              "nativeQueryRef": "channel"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimAgent"
+                    }
+                  },
+                  "Property": "risk_category"
+                }
+              },
+              "queryRef": "DimAgent.risk_category",
+              "nativeQueryRef": "risk_category"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimAgent"
+                    }
+                  },
+                  "Property": "dominant_risk_pillar"
+                }
+              },
+              "queryRef": "DimAgent.dominant_risk_pillar",
+              "nativeQueryRef": "dominant_risk_pillar"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimAgent"
+                    }
+                  },
+                  "Property": "anomaly_score"
+                }
+              },
+              "queryRef": "DimAgent.anomaly_score",
+              "nativeQueryRef": "anomaly_score"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimAgent"
+                    }
+                  },
+                  "Property": "primary_risk_drivers"
+                }
+              },
+              "queryRef": "DimAgent.primary_risk_drivers",
+              "nativeQueryRef": "primary_risk_drivers"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Peringkat Risiko Agen (Top Risk Watchlist) & Pilar Dominan'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

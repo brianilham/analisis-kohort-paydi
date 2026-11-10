@@ -1,0 +1,59 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "a3b5503d50ab28d5051c",
+  "position": {
+    "x": 965,
+    "y": 80,
+    "width": 295,
+    "height": 85,
+    "z": 3300,
+    "tabOrder": 3300
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimAgent"
+                    }
+                  },
+                  "Property": "Total Agents"
+                }
+              },
+              "queryRef": "DimAgent.Total Agents",
+              "nativeQueryRef": "Total Agents"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Total Agen Terpantau'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

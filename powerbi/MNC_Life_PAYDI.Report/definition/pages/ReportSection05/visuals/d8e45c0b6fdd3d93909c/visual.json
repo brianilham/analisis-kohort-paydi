@@ -1,0 +1,95 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "d8e45c0b6fdd3d93909c",
+  "position": {
+    "x": 20,
+    "y": 180,
+    "width": 500,
+    "height": 260,
+    "z": 4000,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimAgent"
+                    }
+                  },
+                  "Property": "true_label"
+                }
+              },
+              "queryRef": "DimAgent.true_label",
+              "nativeQueryRef": "true_label"
+            }
+          ]
+        },
+        "Columns": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimAgent"
+                    }
+                  },
+                  "Property": "risk_category"
+                }
+              },
+              "queryRef": "DimAgent.risk_category",
+              "nativeQueryRef": "risk_category"
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimAgent"
+                    }
+                  },
+                  "Property": "Total Agents"
+                }
+              },
+              "queryRef": "DimAgent.Total Agents",
+              "nativeQueryRef": "Total Agents"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Matriks Kebingungan (Ground Truth vs Prediksi Model)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,82 @@
+table FactAgentRiskPillars
+
+	/// Agent Pillar Score (0-100 scale)
+	measure 'Agent Pillar Score (0-100)' = AVERAGE(FactAgentRiskPillars[pillar_score_100])
+		formatString: 0.0
+
+	/// Agent Pillar Contribution % (0-100% share of total risk)
+	measure 'Agent Pillar Contribution %' = DIVIDE(AVERAGE(FactAgentRiskPillars[contribution_pct]), 100)
+		formatString: 0.0%
+
+	/// Agent Raw Feature Value
+	measure 'Agent Raw Feature Value' = AVERAGE(FactAgentRiskPillars[agent_raw_value])
+		formatString: #,##0.00
+
+	/// Normal Benchmark Feature Value
+	measure 'Normal Benchmark Feature Value' = AVERAGE(FactAgentRiskPillars[normal_benchmark_value])
+		formatString: #,##0.00
+
+	column agent_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: agent_id
+
+	column pillar_order
+		dataType: int64
+		formatString: #,##0
+		summarizeBy: none
+		sourceColumn: pillar_order
+
+	column pillar_name
+		dataType: string
+		sortByColumn: pillar_order
+		summarizeBy: none
+		sourceColumn: pillar_name
+
+	column agent_raw_value
+		dataType: double
+		formatString: #,##0.00
+		summarizeBy: average
+		sourceColumn: agent_raw_value
+
+	column normal_benchmark_value
+		dataType: double
+		formatString: #,##0.00
+		summarizeBy: average
+		sourceColumn: normal_benchmark_value
+
+	column unit_label
+		dataType: string
+		summarizeBy: none
+		sourceColumn: unit_label
+
+	column pillar_score_100
+		dataType: double
+		formatString: 0.0
+		summarizeBy: average
+		sourceColumn: pillar_score_100
+
+	column contribution_pct
+		dataType: double
+		formatString: 0.0%
+		summarizeBy: average
+		sourceColumn: contribution_pct
+
+	partition FactAgentRiskPillars = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(File.Contents(DataFolderPath & "\agent_risk_pillars.csv"), [Delimiter=",", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				#"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				#"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{
+					{"agent_id", type text},
+					{"pillar_order", Int64.Type},
+					{"pillar_name", type text},
+					{"agent_raw_value", type number},
+					{"normal_benchmark_value", type number},
+					{"unit_label", type text},
+					{"pillar_score_100", type number},
+					{"contribution_pct", type number}
+				})
+			in
+				#"Changed Type"

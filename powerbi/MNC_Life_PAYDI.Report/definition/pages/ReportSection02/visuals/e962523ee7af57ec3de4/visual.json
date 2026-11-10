@@ -1,0 +1,146 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "e962523ee7af57ec3de4",
+  "position": {
+    "x": 20,
+    "y": 180,
+    "width": 680,
+    "height": 520,
+    "z": 4000,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "scatterChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimAgent"
+                    }
+                  },
+                  "Property": "agent_id"
+                }
+              },
+              "queryRef": "DimAgent.agent_id",
+              "nativeQueryRef": "agent_id"
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimAgent"
+                    }
+                  },
+                  "Property": "risk_category"
+                }
+              },
+              "queryRef": "DimAgent.risk_category",
+              "nativeQueryRef": "risk_category"
+            }
+          ]
+        },
+        "X": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DimAgent"
+                        }
+                      },
+                      "Property": "lapse_shock_vol"
+                    }
+                  },
+                  "Function": 1
+                }
+              },
+              "queryRef": "Avg(DimAgent.lapse_shock_vol)",
+              "nativeQueryRef": "Avg of lapse_shock_vol"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DimAgent"
+                        }
+                      },
+                      "Property": "lapse_shock_ape"
+                    }
+                  },
+                  "Function": 1
+                }
+              },
+              "queryRef": "Avg(DimAgent.lapse_shock_ape)",
+              "nativeQueryRef": "Avg of lapse_shock_ape"
+            }
+          ]
+        },
+        "Size": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "DimAgent"
+                        }
+                      },
+                      "Property": "ape_disparity_ratio"
+                    }
+                  },
+                  "Function": 1
+                }
+              },
+              "queryRef": "Avg(DimAgent.ape_disparity_ratio)",
+              "nativeQueryRef": "Avg of ape_disparity_ratio"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Distribusi Anomali Agen: Volume Shock vs APE Shock (Ukuran = Disparitas Premi)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

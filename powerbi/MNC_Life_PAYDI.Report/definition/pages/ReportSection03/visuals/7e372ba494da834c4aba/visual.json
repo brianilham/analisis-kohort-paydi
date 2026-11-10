@@ -1,0 +1,59 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "7e372ba494da834c4aba",
+  "position": {
+    "x": 965,
+    "y": 80,
+    "width": 295,
+    "height": 85,
+    "z": 3300,
+    "tabOrder": 3300
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FactPolicyMonthlyStatus"
+                    }
+                  },
+                  "Property": "Grace Period Auto-Debit Ratio %"
+                }
+              },
+              "queryRef": "FactPolicyMonthlyStatus.Grace Period Auto-Debit Ratio %",
+              "nativeQueryRef": "Grace Period Auto-Debit Ratio %"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Metode Bayar Auto-Debit'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

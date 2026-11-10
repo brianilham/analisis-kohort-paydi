@@ -1,0 +1,59 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "079d21a4bd471a1edd02",
+  "position": {
+    "x": 20,
+    "y": 80,
+    "width": 300,
+    "height": 85,
+    "z": 3000,
+    "tabOrder": 3000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimAgent"
+                    }
+                  },
+                  "Property": "Hit and Run Agents Count"
+                }
+              },
+              "queryRef": "DimAgent.Hit and Run Agents Count",
+              "nativeQueryRef": "Hit and Run Agents Count"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Agen Hit and Run (Tier 1)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

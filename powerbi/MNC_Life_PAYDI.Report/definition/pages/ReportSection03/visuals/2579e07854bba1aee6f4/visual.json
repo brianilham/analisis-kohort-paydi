@@ -1,0 +1,129 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "2579e07854bba1aee6f4",
+  "position": {
+    "x": 20,
+    "y": 445,
+    "width": 1240,
+    "height": 255,
+    "z": 6000,
+    "tabOrder": 6000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimPolicy"
+                    }
+                  },
+                  "Property": "policy_id"
+                }
+              },
+              "queryRef": "DimPolicy.policy_id",
+              "nativeQueryRef": "policy_id"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimPolicy"
+                    }
+                  },
+                  "Property": "agent_id"
+                }
+              },
+              "queryRef": "DimPolicy.agent_id",
+              "nativeQueryRef": "agent_id"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimPolicy"
+                    }
+                  },
+                  "Property": "cohort_month"
+                }
+              },
+              "queryRef": "DimPolicy.cohort_month",
+              "nativeQueryRef": "cohort_month"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimPolicy"
+                    }
+                  },
+                  "Property": "issue_date"
+                }
+              },
+              "queryRef": "DimPolicy.issue_date",
+              "nativeQueryRef": "issue_date"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimPolicy"
+                    }
+                  },
+                  "Property": "ape"
+                }
+              },
+              "queryRef": "DimPolicy.ape",
+              "nativeQueryRef": "ape"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimPolicy"
+                    }
+                  },
+                  "Property": "payment_method"
+                }
+              },
+              "queryRef": "DimPolicy.payment_method",
+              "nativeQueryRef": "payment_method"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Daftar Polis Prioritas Penyelamatan (M11-M12) untuk Tim Customer Retention'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

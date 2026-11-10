@@ -1,0 +1,168 @@
+table FactPolicyMonthlyStatus
+
+	/// Active Policies in current context (Active or Grace Period)
+	measure 'Active Policies' = ```
+		CALCULATE(
+			DISTINCTCOUNT(FactPolicyMonthlyStatus[policy_id]),
+			FactPolicyMonthlyStatus[status] IN {"Active", "Grace Period"}
+		)
+		```
+		formatString: #,##0
+
+	/// Active APE in current context (Weighted)
+	measure 'Active APE' = ```
+		CALCULATE(
+			SUM(DimPolicy[ape]),
+			TREATAS(
+				CALCULATETABLE(
+					VALUES(FactPolicyMonthlyStatus[policy_id]),
+					FactPolicyMonthlyStatus[status] IN {"Active", "Grace Period"}
+				),
+				DimPolicy[policy_id]
+			)
+		)
+		```
+		formatString: "Rp"#,##0
+
+	/// Persistency Volume %
+	measure 'Persistency Volume %' = DIVIDE([Active Policies], [Initial Policies])
+		formatString: 0.0%
+
+	/// Persistency APE %
+	measure 'Persistency APE %' = DIVIDE([Active APE], [Initial APE])
+		formatString: 0.0%
+
+	/// Leakage Gap % (Volume % - APE %)
+	measure 'Leakage Gap %' = [Persistency Volume %] - [Persistency APE %]
+		formatString: 0.0%
+
+	/// M13 Active Policies
+	measure 'M13 Active Policies' = CALCULATE([Active Policies], FactPolicyMonthlyStatus[month_index] = 13)
+		formatString: #,##0
+
+	/// M13 Active APE
+	measure 'M13 Active APE' = CALCULATE([Active APE], FactPolicyMonthlyStatus[month_index] = 13)
+		formatString: "Rp"#,##0
+
+	/// M13 Volume Persistency %
+	measure 'M13 Volume Persistency %' = DIVIDE([M13 Active Policies], [Initial Policies])
+		formatString: 0.0%
+
+	/// M13 Volume vs AAJI Benchmark (Target >= 85.0%)
+	measure 'M13 Volume vs AAJI Benchmark' = [M13 Volume Persistency %] - 0.85
+		formatString: +0.0%;-0.0%;0.0%
+
+	/// M13 APE Persistency %
+	measure 'M13 APE Persistency %' = DIVIDE([M13 Active APE], [Initial APE])
+		formatString: 0.0%
+
+	/// M13 Leakage Gap %
+	measure 'M13 Leakage Gap %' = [M13 Volume Persistency %] - [M13 APE Persistency %]
+		formatString: 0.0%
+
+	/// M13 Leaked APE (Total APE of policies lapsed/surrendered by M13)
+	measure 'M13 Leaked APE (IDR)' = ```
+		CALCULATE(
+			SUM(DimPolicy[ape]),
+			TREATAS(
+				CALCULATETABLE(
+					VALUES(FactPolicyMonthlyStatus[policy_id]),
+					FactPolicyMonthlyStatus[month_index] = 13,
+					FactPolicyMonthlyStatus[status] IN {"Lapsed", "Surrendered"}
+				),
+				DimPolicy[policy_id]
+			)
+		)
+		```
+		formatString: "Rp"#,##0
+
+	/// Grace Period Policies count at M11-M12
+	measure 'Grace Period Policies (M11-M12)' = ```
+		CALCULATE(
+			DISTINCTCOUNT(FactPolicyMonthlyStatus[policy_id]),
+			FactPolicyMonthlyStatus[month_index] IN {11, 12},
+			FactPolicyMonthlyStatus[status] = "Grace Period"
+		)
+		```
+		formatString: #,##0
+
+	/// Grace Period Total APE at Risk at M11-M12
+	measure 'Grace Period APE (M11-M12)' = ```
+		CALCULATE(
+			SUM(DimPolicy[ape]),
+			TREATAS(
+				CALCULATETABLE(
+					VALUES(FactPolicyMonthlyStatus[policy_id]),
+					FactPolicyMonthlyStatus[month_index] IN {11, 12},
+					FactPolicyMonthlyStatus[status] = "Grace Period"
+				),
+				DimPolicy[policy_id]
+			)
+		)
+		```
+		formatString: "Rp"#,##0
+
+	/// Grace Period APE in Billion IDR
+	measure 'Grace Period APE (Miliar IDR)' = DIVIDE([Grace Period APE (M11-M12)], 1000000000)
+		formatString: #,##0.00 "M"
+
+	/// Grace Period Manual/Cash Ratio %
+	measure 'Grace Period Cash Ratio %' = ```
+		VAR _CashGraceAPE =
+			CALCULATE(
+				SUM(DimPolicy[ape]),
+				DimPolicy[payment_method] = "Manual/Cash",
+				TREATAS(
+					CALCULATETABLE(
+						VALUES(FactPolicyMonthlyStatus[policy_id]),
+						FactPolicyMonthlyStatus[month_index] IN {11, 12},
+						FactPolicyMonthlyStatus[status] = "Grace Period"
+					),
+					DimPolicy[policy_id]
+				)
+			)
+		RETURN
+			DIVIDE(_CashGraceAPE, [Grace Period APE (M11-M12)])
+		```
+		formatString: 0.0%
+
+	/// Grace Period Auto-Debit Ratio %
+	measure 'Grace Period Auto-Debit Ratio %' = 1 - [Grace Period Cash Ratio %]
+		formatString: 0.0%
+
+	column policy_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: policy_id
+
+	column month_index
+		dataType: int64
+		formatString: #,##0
+		summarizeBy: none
+		sourceColumn: month_index
+
+	column status
+		dataType: string
+		summarizeBy: none
+		sourceColumn: status
+
+	column 'Month Label'
+		dataType: string
+		sortByColumn: month_index
+		summarizeBy: none
+		sourceColumn: Month Label
+
+	partition FactPolicyMonthlyStatus = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(File.Contents(DataFolderPath & "\policy_monthly_status.csv"), [Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				#"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				#"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{
+					{"policy_id", type text},
+					{"month_index", Int64.Type},
+					{"status", type text}
+				}),
+				#"Added Month Label" = Table.AddColumn(#"Changed Type", "Month Label", each "M" & Text.From([month_index]), type text)
+			in
+				#"Added Month Label"
