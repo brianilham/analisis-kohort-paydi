@@ -53,7 +53,7 @@ class SimulationConfig:
     n_agents: int = 200
     n_policies: int = 12000
     n_cohorts: int = 24
-    start_cohort: str = "2024-01"
+    start_cohort: str = "2022-01"
     hit_and_run_ratio: float = 0.03
     cherry_picking_ratio: float = 0.05
     normal_m13_target_min: float = 0.80
@@ -166,13 +166,13 @@ def _generate_policies_and_history(
             payment_methods.append(pm)
 
         else:  # Cherry-Picking
-            # Bimodal: 70% small policies (volume buffer), 30% jumbo policies (high commission)
-            is_jumbo = rng.random() < 0.30
+            # Bimodal: ~90% small policies (volume buffer), ~10% jumbo policies (high commission)
+            is_jumbo = rng.random() < 0.10
             if is_jumbo:
-                val = rng.uniform(40_000_000, 120_000_000)
+                val = rng.uniform(70_000_000, 160_000_000)
                 pm = "Manual/Cash" if rng.random() < 0.70 else "Auto-Debit"
             else:
-                val = rng.uniform(4_000_000, 10_000_000)
+                val = rng.uniform(4_000_000, 8_500_000)
                 pm = "Auto-Debit" if rng.random() < 0.85 else "Manual/Cash"
             apes[idx] = round(val, -5)
             payment_methods.append(pm)
@@ -235,18 +235,15 @@ def _generate_policies_and_history(
                 term_month = 999
 
         else:  # Cherry-Picking
-            # Small policies kept active (~82% at M13), jumbo policies (>25M) dropped at M13
+            # Small policies kept active (~88% at M13), jumbo policies (>25M) dropped at M13 (100%)
             if ape >= 25_000_000:
-                # Jumbo policy: 80% intentionally lapsed at M13
-                if rng.random() < 0.80:
-                    term_month = 13
-                else:
-                    term_month = rng.integers(14, 25) if rng.random() < 0.5 else 999
+                # Jumbo policy: deliberately lapsed at M13 (fraudulent retention manipulation)
+                term_month = 13
             else:
-                # Small policy: normal retention ~83% at M13
-                if rng.random() < 0.17:
+                # Small policy: high volume buffer retention (~90% at M13)
+                if rng.random() < 0.10:
                     term_month = rng.integers(2, 14)
-                elif rng.random() < 0.25:
+                elif rng.random() < 0.20:
                     term_month = rng.integers(14, 25)
                 else:
                     term_month = 999

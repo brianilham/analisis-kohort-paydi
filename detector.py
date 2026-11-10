@@ -327,9 +327,11 @@ def run_two_tier_detection(
     # ---------------------------------------------------------
     # Tier 1: Hard Rule-Based Screening
     # ---------------------------------------------------------
+    # Flags acute M12->M13 volume collapse (Hit-and-Run)
+    # Does not penalize normal agents experiencing gradual natural attrition
     cond_vol_shock = df["lapse_shock_vol"] > rule_lapse_vol_thresh
-    cond_substandard_m13 = df["m13_vol_persistency"] < rule_m13_vol_min
-    df["tier1_violation"] = cond_vol_shock | cond_substandard_m13
+    cond_substandard_with_shock = (df["m13_vol_persistency"] < rule_m13_vol_min) & (df["lapse_shock_vol"] >= 15.0)
+    df["tier1_violation"] = cond_vol_shock | cond_substandard_with_shock
 
     # ---------------------------------------------------------
     # Tier 2: Unsupervised Isolation Forest (4 Core Features)
