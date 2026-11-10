@@ -10,6 +10,12 @@ Visualisasi dan tata letak laporan dirancang sesuai identitas visual korporat **
 
 ---
 
+## Preview Demo Interaktif Dashboard (Power BI)
+
+![Demo Interaktif Dashboard Power BI MNC Life](powerbi/assets/dashboard_demo.gif)
+
+---
+
 ## 1. Masalah Bisnis & Celah Moral Hazard
 
 Dalam industri asuransi jiwa, struktur komisi tahun pertama (*First Year Commission* / FYC) dan bonus persistensi bulan ke-13 (M13) memiliki bobot finansial signifikan. Hal ini menimbulkan celah manipulasi:
@@ -59,6 +65,7 @@ Laporan dibangun dengan arsitektur modern Fabric/Power BI Desktop Developer Mode
 powerbi/
 ├── MNC_Life_PAYDI.pbip                      # File pembuka project Power BI Desktop
 ├── assets/
+│   ├── dashboard_demo.gif                   # Animasi demo interaktif dashboard (1280px)
 │   └── mnc_life_logo.png                    # Brand logo MNC Life resolusi tinggi
 ├── MNC_Life_PAYDI.SemanticModel/            # Model Semantik (TMDL Formats)
 │   ├── definition.pbism
