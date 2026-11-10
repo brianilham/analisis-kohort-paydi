@@ -22,6 +22,17 @@
           "type": "BaseTheme"
         }
       ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "mnc_life_logo_1001.png",
+          "path": "mnc_life_logo_1001.png",
+          "type": "Image"
+        }
+      ]
     }
   ],
   "settings": {

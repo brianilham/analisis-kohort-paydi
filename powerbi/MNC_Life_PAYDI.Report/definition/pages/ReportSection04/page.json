@@ -1,8 +1,0 @@
-{
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
-  "name": "ReportSection04",
-  "displayName": "4. Watchlist & Pemeriksaan Detail Agen",
-  "displayOption": "FitToPage",
-  "height": 720,
-  "width": 1280
-}

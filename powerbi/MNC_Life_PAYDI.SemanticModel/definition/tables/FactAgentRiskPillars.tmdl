@@ -58,7 +58,7 @@ table FactAgentRiskPillars
 
 	column contribution_pct
 		dataType: double
-		formatString: 0.0%
+		formatString: 0.0"%"
 		summarizeBy: average
 		sourceColumn: contribution_pct
 

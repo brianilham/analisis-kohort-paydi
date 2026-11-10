@@ -12,10 +12,10 @@ flowchart LR
     subgraph E2["Epic 2: Semantic Model Power BI (.pbip / TMDL)"]
         T3["TICKET-03: Scaffold .pbip, Star Schema TMDL & DAX Measures"]
     end
-    subgraph E3["Epic 3: Visualisasi 5 Halaman Report PBIR"]
-        T4["TICKET-04: Page 1 (Matriks Kohort) & Page 2 (Scatter Anomali 4D)"]
-        T5["TICKET-05: Page 3 (Grace Period) & Page 4 (Watchlist + 4 Pilar)"]
-        T6["TICKET-06: Page 5 (Validasi Model) & Verifikasi Power BI Desktop"]
+    subgraph E3["Epic 3: Visualisasi Report PBIR (Single-Page Helicopter View)"]
+        T4["TICKET-04: Visualisasi Makro Kohort & Klaster Anomali"]
+        T5["TICKET-05: Early Warning Grace Period & Watchlist Interaktif"]
+        T6["TICKET-06: Konsolidasi 1-Page Executive View & Verifikasi Desktop"]
     end
     subgraph E4["Epic 4: Contract Cleanup & Dokumentasi"]
         T7["TICKET-07: Cleanup Artefak Streamlit & Finalisasi README"]
@@ -34,13 +34,13 @@ flowchart LR
 
 | ID Tiket | Judul Tiket | Blocked By | Status |
 | :--- | :--- | :--- | :--- |
-| **TICKET-01** | Kalibrasi Kohort *Seasoned* (`2022-01` s/d `2023-12`) & Pemisahan Klaster Deteksi Two-Tier | None *(Dapat dimulai langsung)* | `ready-for-agent` |
-| **TICKET-02** | Dekomposisi Explainability 4 Pilar Risiko (`0–100`), Pipeline Ekspor CSV Power BI & Aset Logo PNG | **TICKET-01** | `ready-for-agent` |
-| **TICKET-03** | Scaffolding Proyek `.pbip`, Star Schema TMDL, Parameter `DataFolderPath`, & DAX Measures Berbobot | **TICKET-02** | `ready-for-agent` |
-| **TICKET-04** | Implementasi PBIR Halaman 1 (Matriks Kohort Volume vs APE) & Halaman 2 (Peta Sebaran Anomali 4D) | **TICKET-03** | `ready-for-agent` |
-| **TICKET-05** | Implementasi PBIR Halaman 3 (Early Warning Grace Period) & Halaman 4 (Watchlist, Kurva M1–M24 & 4 Pilar Risiko) | **TICKET-03** | `ready-for-agent` |
-| **TICKET-06** | Implementasi PBIR Halaman 5 (Validasi & Evaluasi Model) & Verifikasi End-to-End di Power BI Desktop | **TICKET-04**, **TICKET-05** | `ready-for-agent` |
-| **TICKET-07** | Pembersihan Artefak Streamlit/Docker/Mockup Lama (*Contract Phase*) & Pembaruan Dokumentasi Portofolio | **TICKET-06** | `ready-for-agent` |
+| **TICKET-01** | Kalibrasi Kohort *Seasoned* (`2022-01` s/d `2023-12`) & Pemisahan Klaster Deteksi Two-Tier | None *(Dapat dimulai langsung)* | `completed` |
+| **TICKET-02** | Dekomposisi Explainability 4 Pilar Risiko (`0–100`), Pipeline Ekspor CSV Power BI & Aset Logo PNG | **TICKET-01** | `completed` |
+| **TICKET-03** | Scaffolding Proyek `.pbip`, Star Schema TMDL, Parameter `DataFolderPath`, & DAX Measures Berbobot | **TICKET-02** | `completed` |
+| **TICKET-04** | Implementasi PBIR Visualisasi Kohort (Volume vs APE) & Peta Klaster Anomali 4D | **TICKET-03** | `completed` |
+| **TICKET-05** | Implementasi PBIR Early Warning Grace Period & Watchlist Agen Terpadu | **TICKET-03** | `completed` |
+| **TICKET-06** | Konsolidasi **Single-Page Executive Helicopter View (`1280×720`)** & Verifikasi Power BI Desktop | **TICKET-04**, **TICKET-05** | `completed` |
+| **TICKET-07** | Pembersihan Artefak Streamlit/Docker/Mockup Lama (*Contract Phase*) & Pembaruan Dokumentasi Portofolio | **TICKET-06** | `completed` |
 
 ---
 
@@ -195,13 +195,15 @@ Membangun proyek **Power BI Project (`powerbi/MNC_Life_PAYDI.pbip`)** beserta de
 
 ---
 
-## EPIC 3: Implementasi 5 Halaman Visualisasi Report PBIR (`MNC_Life_PAYDI.Report`)
+## EPIC 3: Implementasi Single-Page Executive Helicopter View PBIR (`MNC_Life_PAYDI.Report`)
 
-### 🎫 TICKET-04: Implementasi PBIR Halaman 1 (Matriks Kohort Volume vs APE) & Halaman 2 (Peta Sebaran Anomali 4D)
+> **Catatan Arsitektur Final (Konsolidasi Solusi C):** Setelah tinjauan eksekutif terhadap versi awal 5 halaman, disepakati penyederhanaan menjadi **1 Halaman Utama (`Executive Helicopter View`, kanvas `1280 × 720`, 13 Visual)** agar pesan bisnis tersampaikan dalam satu layar tanpa navigasi tab, sementara seluruh ukuran model semantik (DAX & 4 pilar risiko) tetap tersedia penuh untuk tooltip dan analisis lanjutan.
+
+### 🎫 TICKET-04 s/d TICKET-06: Implementasi Konsolidasi 1-Halaman PBIR & Verifikasi Desktop (`completed`)
 
 - **Blocked by**: **TICKET-03**
-- **Status**: `ready-for-agent`
-- **User Stories**: US-01, US-02, US-03, US-05, US-07
+- **Status**: `completed`
+- **User Stories**: US-01 s/d US-12
 
 #### What to Build (End-to-End Behavior)
 Membangun definisi PBIR lengkap (`page.json` & `visual.json`) untuk **Halaman 1 (Matriks Kohort Volume vs APE & Leakage Gap)** dan **Halaman 2 (Peta Sebaran Anomali Agen 4D)** lengkap dengan header korporat MNC Life, Slicer Global (`channel` & `branch_office`), dan 4 Kartu KPI Eksekutif.

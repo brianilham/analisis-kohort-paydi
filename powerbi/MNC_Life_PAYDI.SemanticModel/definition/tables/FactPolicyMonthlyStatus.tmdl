@@ -76,6 +76,10 @@ table FactPolicyMonthlyStatus
 		```
 		formatString: "Rp"#,##0
 
+	/// M13 Leaked APE in Billion IDR
+	measure 'M13 Leaked APE (Miliar IDR)' = DIVIDE([M13 Leaked APE (IDR)], 1000000000)
+		formatString: #,##0.00 "M"
+
 	/// Grace Period Policies count at M11-M12
 	measure 'Grace Period Policies (M11-M12)' = ```
 		CALCULATE(

@@ -75,18 +75,17 @@ powerbi/
 └── MNC_Life_PAYDI.Report/                   # Definisi Laporan PBIR (PBIR v2.0 / 4.0)
     ├── .platform
     ├── definition.pbir                      # Binding report ke model semantik lokal
-    ├── StaticResources/SharedResources/BaseThemes/
-    │   └── Fluent2-CY26SU10.json            # Tema korporat MNC Life
+    ├── StaticResources/
+    │   ├── RegisteredResources/
+    │   │   └── mnc_life_logo_1001.png       # Aset logo resmi MNC Life
+    │   └── SharedResources/BaseThemes/
+    │       └── Fluent2-CY26SU10.json        # Tema korporat MNC Life
     └── definition/
         ├── version.json
         ├── report.json
         └── pages/
-            ├── pages.json                   # Urutan 5 halaman laporan
-            ├── ReportSection01/             # Hal 1: Matriks Kohort Persistensi
-            ├── ReportSection02/             # Hal 2: Peta Sebaran Anomali Agen
-            ├── ReportSection03/             # Hal 3: Early Warning Grace Period M11-M12
-            ├── ReportSection04/             # Hal 4: Watchlist & Pemeriksaan Detail Agen
-            └── ReportSection05/             # Hal 5: Validasi & Evaluasi Model
+            ├── pages.json                   # Konfigurasi halaman tunggal (Helicopter View)
+            └── ReportSection01/             # Executive Helicopter View (1280x720, 13 Visual)
 ```
 
 ### Formula DAX Utama (Portofolio Berbobot & Distinct)
@@ -115,6 +114,7 @@ powerbi/
 - **Persistency APE %:** `DIVIDE([Active APE], [Initial APE])`
 - **Leakage Gap %:** `[Persistency Volume %] - [Persistency APE %]`
 - **M13 Volume vs AAJI Benchmark:** `[M13 Volume Persistency %] - 0.85`
+- **M13 Leaked APE (Miliar IDR):** `DIVIDE([M13 Leaked APE (IDR)], 1000000000)`
 - **Grace Period Policies (M11-M12):**
   ```dax
   CALCULATE(
@@ -126,28 +126,25 @@ powerbi/
 
 ---
 
-## 4. 5 Halaman Laporan Power BI
+## 4. Arsitektur Tampilan: Single-Page Executive Helicopter View (`1280 × 720`)
 
-1. **Halaman 1: Matriks Kohort Persistensi**
-   - KPI Banner: Persistensi Volume M13 (vs AAJI 85%), Persistensi Premi APE M13, Jumlah Agen Terindikasi Anomali, Polis Kritis Masa Tenggang (M11-M12).
-   - Matriks Heatmap: Volume Persistency Matrix (M1–M24) dan APE Persistency Matrix (M1–M24).
-   - Grafik Tren: Rata-rata kurva retensi volume vs APE serta visualisasi *Leakage Gap*.
-2. **Halaman 2: Peta Sebaran Anomali Agen**
-   - Scatter Chart Klasterisasi: Sumbu X = `lapse_shock_vol`, Sumbu Y = `lapse_shock_ape`, Ukuran Titik = `ape_disparity_ratio`, Pewarnaan = `risk_category` (*Hit and Run*, *Cherry Picking*, *Normal*).
-   - Tabel Ringkasan Anomali: Menampilkan agen terindikasi beserta skor dan *primary risk drivers*.
-3. **Halaman 3: Early Warning Grace Period M11-M12**
-   - Panel KPI: Jumlah polis kritis, total APE berisiko (dalam Miliar Rupiah), dan rasio pembayaran tunai vs auto-debit.
-   - Donut Chart: Komposisi metode pembayaran polis kritis.
-   - Bar Chart: Sebaran premi kritis per kantor cabang.
-   - Action List Table: Daftar nomor polis prioritas penyelamatan untuk tim *Customer Retention*.
-4. **Halaman 4: Watchlist & Pemeriksaan Detail Agen**
-   - Top Risk Watchlist Table: Urutan peringkat risiko agen, pilar risiko dominan, dan pemicu anomali.
-   - Master-Detail Kiri (Line Chart): Kurva retensi M1–M24 spesifik agen yang dipilih.
-   - Master-Detail Kanan (Bar Chart): Skor dekomposisi 4 pilar risiko agen (skala 0–100) untuk sidang komite kepatuhan.
-5. **Halaman 5: Validasi & Evaluasi Model**
-   - KPI Metrik Evaluasi: Top-20% Recall (100%), Overall Recall (100%), Tingkat Presisi Deteksi, Total Ground Truth Anomali.
-   - Confusion Matrix (Pivot Table): Perbandingan silang antara *Ground Truth Label* dan *Model Risk Category*.
-   - Tabel Audit Lengkap: Validasi transparansi penilaian model terhadap setiap agen anomali.
+Laporan didesain menjadi **1 halaman tunggal** (*One-Page Executive Cockpit*) berkapasitas 13 visual yang langsung menyajikan gambaran utuh dalam satu layar tanpa navigasi tab:
+
+1. **Header Korporat & 3 Global Slicers:**
+   - Logo resmi PT MNC Life Assurance, judul eksekutif beserta standar regulasi (AAJI / SEOJK No. 5/SEOJK.05/2022), serta 3 Dropdown Slicer tersinkronisasi (**Channel**, **Cabang**, **Kategori Risiko**).
+2. **4 North Star KPI Cards (`cardVisual` dengan Left Accent Bar & Supporting Tooltips):**
+   - **Persistensi Volume M13** vs target AAJI $\ge 85\%$ (tooltip selisih benchmark).
+   - **Persistensi Premi APE M13** tertimbang (tooltip `M13 Leakage Gap %` & nilai kebocoran APE dalam Miliar Rp).
+   - **Premi Kritis Grace Period M11–M12** dalam Miliar Rp (tooltip jumlah polis kritis & rasio pembayaran tunai).
+   - **Agen Anomali (Tier 1 & 2)** (tooltip rincian jumlah *Hit and Run*, *Cherry Picking*, dan `Top-20% Recall %`).
+3. **Kurva Retensi Kohort M1–M24 (`lineChart` — Kiri Atas):**
+   - Membandingkan garis retensi volume polis (`#192C4D`) vs nilai premi APE (`#D94B4B`) dari M1–M24 dengan garis konstan emas **Target AAJI (85%)**. Terhubung otomatis dengan *cross-filtering* saat salah satu agen diklik.
+4. **Early Warning Grace Period M11–M12 (`clusteredBarChart` — Kanan Atas):**
+   - Menggabungkan peringkat premi kritis per kantor cabang beserta komposisi metode pembayaran (`Manual/Cash` vs `Auto-Debit`) yang diurutkan dari beban premi tertinggi.
+5. **Peta Klaster Anomali Agen (`scatterChart` — Kiri Bawah):**
+   - Memvisualisasikan `lapse_shock_vol` vs `lapse_shock_ape` dengan ukuran gelembung `ape_disparity_ratio` dan warna per klaster (*Hit and Run* Coral Red, *Cherry Picking* Gold, *Normal* Emerald).
+6. **Executive Audit Watchlist (`tableEx` — Kanan Bawah):**
+   - Tabel prioritas pemeriksaan diurutkan otomatis dari peringkat risiko tertinggi (`#1`), menampilkan **Rank**, **Nama Agen**, **Klaster**, **Skor**, dan **Pemicu Risiko Utama (Audit)**.
 
 ---
 
@@ -192,7 +189,7 @@ powerbi/
    ```powershell
    & "C:\Program Files\Microsoft Power BI Desktop\bin\PBIDesktop.exe" "powerbi\MNC_Life_PAYDI.pbip"
    ```
-   *Power BI Desktop akan memuat model semantik TMDL dan menampilkan seluruh 5 halaman laporan secara otomatis.*
+   *Power BI Desktop akan memuat model semantik TMDL dan menampilkan Single-Page Executive Helicopter View secara otomatis.*
 
 ---
 

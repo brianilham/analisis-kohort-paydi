@@ -85,37 +85,37 @@ table DimAgent
 
 	column m12_vol_persistency
 		dataType: double
-		formatString: 0.0%
+		formatString: 0.0"%"
 		summarizeBy: average
 		sourceColumn: m12_vol_persistency
 
 	column m13_vol_persistency
 		dataType: double
-		formatString: 0.0%
+		formatString: 0.0"%"
 		summarizeBy: average
 		sourceColumn: m13_vol_persistency
 
 	column lapse_shock_vol
 		dataType: double
-		formatString: 0.0%
+		formatString: 0.0"%"
 		summarizeBy: average
 		sourceColumn: lapse_shock_vol
 
 	column m12_ape_persistency
 		dataType: double
-		formatString: 0.0%
+		formatString: 0.0"%"
 		summarizeBy: average
 		sourceColumn: m12_ape_persistency
 
 	column m13_ape_persistency
 		dataType: double
-		formatString: 0.0%
+		formatString: 0.0"%"
 		summarizeBy: average
 		sourceColumn: m13_ape_persistency
 
 	column lapse_shock_ape
 		dataType: double
-		formatString: 0.0%
+		formatString: 0.0"%"
 		summarizeBy: average
 		sourceColumn: lapse_shock_ape
 
@@ -127,7 +127,7 @@ table DimAgent
 
 	column cash_payment_ratio
 		dataType: double
-		formatString: 0.0%
+		formatString: 0.0"%"
 		summarizeBy: average
 		sourceColumn: cash_payment_ratio
 
@@ -205,25 +205,25 @@ table DimAgent
 
 	column share_vol_shock_pct
 		dataType: double
-		formatString: 0.0%
+		formatString: 0.0"%"
 		summarizeBy: average
 		sourceColumn: share_vol_shock_pct
 
 	column share_ape_shock_pct
 		dataType: double
-		formatString: 0.0%
+		formatString: 0.0"%"
 		summarizeBy: average
 		sourceColumn: share_ape_shock_pct
 
 	column share_ape_disparity_pct
 		dataType: double
-		formatString: 0.0%
+		formatString: 0.0"%"
 		summarizeBy: average
 		sourceColumn: share_ape_disparity_pct
 
 	column share_cash_ratio_pct
 		dataType: double
-		formatString: 0.0%
+		formatString: 0.0"%"
 		summarizeBy: average
 		sourceColumn: share_cash_ratio_pct
 
