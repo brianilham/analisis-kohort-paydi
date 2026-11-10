@@ -1,220 +1,340 @@
-# TICKETS.md: Analisis Kohort Persistensi Polis & Deteksi Churn Agen (PAYDI)
+# TICKETS.md: Analisis Kohort Persistensi Polis & Deteksi Churn Agen (PAYDI) — Migrasi Power BI (.pbip)
 
-Dokumen ini memecah spesifikasi di [SPEC.md](file:///c:/Users/USER/Downloads/Project%20Portfolio%20Data/Analisis%20Kohort%20Persistensi%20Polis%20&%20Deteksi%20Churn%20Agen/SPEC.md) menjadi **4 Epic** dan **10 Tiket Pengerjaan** yang terstruktur secara berurutan. Setiap tiket mencakup tujuan, pemetaan *User Stories*, rincian tugas teknis, spesifikasi input/output, serta *Acceptance Criteria*.
+Dokumen ini memecah spesifikasi di [SPEC.md](file:///c:/Users/USER/Downloads/Project%20Portfolio%20Data/Analisis%20Kohort%20Persistensi%20Polis%20%26%20Deteksi%20Churn%20Agen/SPEC.md) menjadi **4 Epic** dan **7 Tracer-Bullet Tickets** yang terstruktur dengan ketergantungan (*blocking edges*) yang jelas. Strategi migrasi menggunakan pola **Expand–Contract**: membangun dan memvalidasi pipeline ETL + proyek Power BI (`.pbip`) terlebih dahulu hingga terverifikasi penuh, lalu membersihkan artefak Streamlit lama di tiket penutup.
 
 ```mermaid
 flowchart LR
-    subgraph E1["Epic 1: Data Generator Engine"]
-        T1["TICKET-01: Setup & Parameter"] --> T2["TICKET-02: Simulasi & Injeksi Anomali"]
-        T2 --> T3["TICKET-03: Unit Test Invarian Data"]
+    subgraph E1["Epic 1: Kalibrasi Data, Model & Explainable ETL"]
+        T1["TICKET-01: Kalibrasi Kohort Seasoned & Klaster Deteksi"]
+        T2["TICKET-02: Explainability 4 Pilar Risiko & Ekspor ETL Power BI"]
+        T1 --> T2
     end
-    subgraph E2["Epic 2: Cohort & Feature Engine"]
-        T4["TICKET-04: Matriks Kohort 2D (Vol vs APE)"]
-        T5["TICKET-05: Feature Engineering 4D"]
+    subgraph E2["Epic 2: Semantic Model Power BI (.pbip / TMDL)"]
+        T3["TICKET-03: Scaffold .pbip, Star Schema TMDL & DAX Measures"]
     end
-    subgraph E3["Epic 3: Two-Tier Anomaly Detection"]
-        T6["TICKET-06: Rule-Based + Isolation Forest"] --> T7["TICKET-07: Unit Test Kohort & Recall"]
+    subgraph E3["Epic 3: Visualisasi 5 Halaman Report PBIR"]
+        T4["TICKET-04: Page 1 (Matriks Kohort) & Page 2 (Scatter Anomali 4D)"]
+        T5["TICKET-05: Page 3 (Grace Period) & Page 4 (Watchlist + 4 Pilar)"]
+        T6["TICKET-06: Page 5 (Validasi Model) & Verifikasi Power BI Desktop"]
     end
-    subgraph E4["Epic 4: Dashboard Streamlit"]
-        T8["TICKET-08: Sidebar Filter & KPI Cards"] --> T9["TICKET-09: Dual Heatmap & Scatter"]
-        T9 --> T10["TICKET-10: Watchlist, Drill-Down & CSV"]
+    subgraph E4["Epic 4: Contract Cleanup & Dokumentasi"]
+        T7["TICKET-07: Cleanup Artefak Streamlit & Finalisasi README"]
     end
+    T2 --> T3
     T3 --> T4
     T3 --> T5
-    T4 --> T8
+    T4 --> T6
     T5 --> T6
-    T7 --> T8
+    T6 --> T7
 ```
 
 ---
 
-## EPIC 1: Synthetic Data Generator Engine (`generate_data.py`)
+## Ringkasan Urutan & Ketergantungan Tiket (*Task Graph*)
 
-### 🎫 TICKET-01: Inisialisasi Proyek, Dependensi, & Konfigurasi Parameter Regulasi PAYDI
-- **User Stories**: US-10 (*Parameterized synthetic data pipeline*)
-- **File Target**: `requirements.txt`, `pytest.ini`, `generate_data.py` (konfigurasi & skema dasar)
-- **Deskripsi & Cakupan Teknis**:
-  1. Menyiapkan `requirements.txt` berisi pustaka inti: `streamlit`, `pandas`, `numpy`, `scikit-learn`, `plotly`, dan `pytest`.
-  2. Menyiapkan struktur konfigurasi simulasi (`SimulationConfig`) yang dapat diparameterisasi:
-     - Jumlah kohort bulanan: `24` bulan (*Issue Date* rentang 2 tahun, `M1`–`M24`).
-     - Populasi agen: `150–200` agen (default `200`).
-     - Populasi polis: `10.000–15.000` polis (default `12.000`).
-     - Dimensi atribut organisasi: Kanal Distribusi (`Agency`, `Bancassurance`, `Worksite`) dan Kantor Cabang (`Jakarta`, `Surabaya`, `Bandung`, `Medan`, dll.).
-     - Parameter benchmark persistensi M13 normal sesuai standar OJK/AAJI (`80%–85%`).
-     - Parameter proporsi *ground-truth* anomali: `8%` total (`3%` *Hit-and-Run*, `5%` *Cherry-Picking*).
-- **Acceptance Criteria**:
-  - [ ] Struktur direktori (`data/`, `tests/`) dan `requirements.txt` siap digunakan.
-  - [ ] Parameter simulasi dapat diubah melalui argumen fungsi tanpa *hardcode* di dalam logika transisi.
+| ID Tiket | Judul Tiket | Blocked By | Status |
+| :--- | :--- | :--- | :--- |
+| **TICKET-01** | Kalibrasi Kohort *Seasoned* (`2022-01` s/d `2023-12`) & Pemisahan Klaster Deteksi Two-Tier | None *(Dapat dimulai langsung)* | `ready-for-agent` |
+| **TICKET-02** | Dekomposisi Explainability 4 Pilar Risiko (`0–100`), Pipeline Ekspor CSV Power BI & Aset Logo PNG | **TICKET-01** | `ready-for-agent` |
+| **TICKET-03** | Scaffolding Proyek `.pbip`, Star Schema TMDL, Parameter `DataFolderPath`, & DAX Measures Berbobot | **TICKET-02** | `ready-for-agent` |
+| **TICKET-04** | Implementasi PBIR Halaman 1 (Matriks Kohort Volume vs APE) & Halaman 2 (Peta Sebaran Anomali 4D) | **TICKET-03** | `ready-for-agent` |
+| **TICKET-05** | Implementasi PBIR Halaman 3 (Early Warning Grace Period) & Halaman 4 (Watchlist, Kurva M1–M24 & 4 Pilar Risiko) | **TICKET-03** | `ready-for-agent` |
+| **TICKET-06** | Implementasi PBIR Halaman 5 (Validasi & Evaluasi Model) & Verifikasi End-to-End di Power BI Desktop | **TICKET-04**, **TICKET-05** | `ready-for-agent` |
+| **TICKET-07** | Pembersihan Artefak Streamlit/Docker/Mockup Lama (*Contract Phase*) & Pembaruan Dokumentasi Portofolio | **TICKET-06** | `ready-for-agent` |
 
 ---
 
-### 🎫 TICKET-02: Engine Simulasi Siklus Status Polis Bulanan & Injeksi Anomali Ground-Truth
-- **User Stories**: US-06, US-07, US-08, US-10
-- **File Target**: `generate_data.py`
-- **Deskripsi & Cakupan Teknis**:
-  1. **Master Agen (`agents_df`)**:
-     - Menghasilkan `agent_id`, `agent_name`, `channel`, `branch_office`, `join_date`, serta label *ground-truth* (`Normal` 92%, `Hit-and-Run` 3%, `Cherry-Picking` 5%).
-  2. **Master Polis (`policies_df`)**:
-     - Menghasilkan `policy_id`, `agent_id`, `cohort_month` (24 bulan), `issue_date`, `ape` (distribusi *log-normal* realistis untuk produk Unit Link/PAYDI), dan `payment_method` (`Auto-Debit` vs `Manual/Cash`).
-  3. **Simulasi Transisi Status Bulanan (`history_df` dari M1 hingga M24)**:
-     - Memodelkan 4 status siklus hidup polis: `Active`, `Grace Period` (30–45 hari sebelum *lapse*), `Lapsed`, dan `Surrendered`.
-     - Menjamin aturan transisi satu arah: polis yang sudah `Lapsed` atau `Surrendered` tetap berada di status terminal pada bulan-bulan berikutnya (tanpa *resurrection* ilegal).
-  4. **Skenario Injeksi Perilaku Agen**:
-     - **Agen Normal (92%)**: Atribusi `Auto-Debit` dominan (~80%), laju *attrition* alami bertahap sehingga persistensi M13 berada di rentang target **80%–85%**.
-     - **Agen Hit-and-Run (3%)**: Konsentrasi pembayaran `Manual/Cash` tinggi (indikasi potensi talangan premi/nasabah fiktif), persistensi M1–M12 tampak sangat sehat (>90%), lalu mengalami *lapse shock* serempak (>35%–60% drop) di **M13–M14** pasca pencairan FYC & bonus M13. Sebagian polis menunjukkan sinyal `Grace Period` di M11–M12.
-     - **Agen Cherry-Picking (5%)**: Memiliki variasi nilai polis (premi kecil vs premi *high-ticket*). Pada M13, agen mempertahankan polis-polis bernominal kecil agar **Persistensi Volume M13 tetap ~80%** (lolos ambang batas standar), tetapi membiarkan polis bernilai APE besar *lapse* sehingga **Persistensi APE M13 anjlok >50%**.
-- **Acceptance Criteria**:
-  - [ ] Output menghasilkan 3 tabel utama (`agents`, `policies`, `history`) yang dapat disimpan ke CSV/Parquet di `data/` atau dipanggil langsung di memori dengan `random_seed` deterministik.
-  - [ ] Sinyal `Grace Period` terefleksi secara spesifik di sekitar M11 dan M12 sebelum polis jatuh ke status `Lapsed` di M13.
+## EPIC 1: Kalibrasi Data Sintetis Aktuaria, Model Deteksi, & Explainable ETL
+
+### 🎫 TICKET-01: Kalibrasi Kohort *Seasoned* (`2022-01` s/d `2023-12`) & Pemisahan Klaster Deteksi Two-Tier
+
+- **Blocked by**: None *(can start immediately)*
+- **Status**: `ready-for-agent`
+- **User Stories**: US-01, US-04, US-05, US-11
+
+#### What to Build (End-to-End Behavior)
+Memperbaiki logika simulasi data sintetis dan mesin deteksi dua tingkat (*Two-Tier Anomaly Detection*) agar:
+1. Periode terbit kohort merepresentasikan studi observasi 24 bulan penuh yang telah matang (*Fully Seasoned Cohort Study* dari `2022-01` hingga `2023-12`), sehingga matriks retensi 24×24 (`M1–M24`) dan evaluasi `M13` valid 100% secara kalender aktuaria.
+2. Tidak ada lagi agen `Normal` dengan *lapse shock* M12→M13 rendah (`0%–3%`) yang salah diklasifikasikan sebagai `Hit and Run` akibat penurunan alami bertahap.
+3. Agen `Cherry-Picking` mempertahankan persistensi Volume M13 di sekitar ~80% (lolos saringan volume Tier 1 sesuai definisi bisnis) namun mengalami kejatuhan APE M13 yang tajam dan rasio disparitas premi tinggi, sehingga tertangkap secara akurat sebagai `Cherry Picking` oleh Tier 2 (*Isolation Forest*), bukan tertelan menjadi `Hit and Run`.
+
+#### Kriteria Teknis & Dokumentasi Detail
+1. **Kalibrasi Generator Data Sintetis**:
+   - Ubah parameter default awal kohort pada konfigurasi simulasi menjadi `2022-01` dengan `24` kohort bulanan (`2022-01` s/d `2023-12`).
+   - Kalibrasi profil polis agen `Cherry-Picking`: gunakan komposisi bimodal (~85% polis penyangga bernominal kecil Rp 4–9 Juta dengan retensi M13 tinggi ~88%–90%, dan ~15% polis *jumbo* Rp 60–150 Juta dengan tingkat *lapse* di M13 sebesar ~85%–90%). Pastikan total Persistensi Volume M13 agen `Cherry-Picking` berada di atas ambang batas minimum Tier 1 (`>= 75%`, rata-rata ~80%), sedangkan Persistensi APE M13 anjlok drastis (`lapse_shock_ape >= 30%`) dan `ape_disparity_ratio >= 2.5`.
+   - Kalibrasi variansi agen `Normal` agar persistensi M13 populasi normal tetap berada di rentang benchmark OJK/AAJI (**80%–85%**) tanpa menghasilkan *outlier* penurunan palsu di M13.
+2. **Perbaikan Aturan Deteksi Tier 1 & Klasifikasi Tier 2**:
+   - **Tier 1 (`Hit and Run`)**: Tandai `tier1_violation = True` hanya jika terjadi guncangan volume akut di M13, yaitu `lapse_shock_vol > 25.0%` **ATAU** (`m13_vol_persistency < 75.0%` **DAN** `lapse_shock_vol >= 15.0%`).
+   - **Tier 2 (`Cherry Picking`)**: Pertahankan `IsolationForest(n_estimators=150, contamination=0.08, random_state=42)` pada 4 fitur terstandarisasi (`lapse_shock_vol`, `lapse_shock_ape`, `ape_disparity_ratio`, `cash_payment_ratio`), dan pastikan agen yang lolos Tier 1 namun terdeteksi anomali pada Tier 2 diklasifikasikan sebagai `Cherry Picking`.
+   - Perbarui fungsi penjelas faktor risiko (`_format_risk_drivers`) agar membedakan dengan jelas antara agen normal kepatuhan penuh, agen dengan *attrition* bertahap, *Hit and Run*, dan *Cherry Picking*.
+
+#### Acceptance Criteria
+- [ ] Rentang `cohort_month` yang dihasilkan adalah 24 bulan dari `2022-01` sampai `2023-12` dengan matriks retensi Volume dan APE berukuran `24×24` yang monoton tidak meningkat ($M_{t+1} \le M_t$).
+- [ ] Tingkat persistensi Volume M13 untuk populasi agen `Normal` berada di dalam rentang benchmark OJK/AAJI (`80%–85%`).
+- [ ] Pada evaluasi terhadap *ground-truth*:
+  - Minimal **83%** agen `Hit-and-Run` tertangkap oleh Tier 1 (`Hit and Run`).
+  - Minimal **80%** agen `Cherry-Picking` diklasifikasikan sebagai `Cherry Picking` (lolos dari Tier 1 namun tertangkap oleh Tier 2).
+  - **0 agen `Normal`** dengan `lapse_shock_vol < 10%` yang salah dilabeli sebagai `Hit and Run`.
+  - **Recall pada Top-20% Risk Ranking $\ge 85\%$** dan **Precision keseluruhan $\ge 80\%$**.
+- [ ] Seluruh unit test invarian data dan evaluasi detektor lulus (`pytest` hijau).
 
 ---
 
-### 🎫 TICKET-03: Pengujian Invarian & Integritas Data Generator (`tests/test_generate_data.py`)
-- **User Stories**: Testing Decisions (*Data Generator Invariant Tests*)
-- **File Target**: `tests/test_generate_data.py`
-- **Deskripsi & Cakupan Teknis**:
-  1. **Test Skala & Dimensi Kohort**: Memastikan jumlah agen (150–200), jumlah polis (10.000–15.000), dan jumlah kohort (24 bulan) sesuai spesifikasi.
-  2. **Test Integritas Referensial Polis**: Memastikan jumlah polis unik di log riwayat bulanan (`history_df`) tidak melebihi dan merupakan himpunan bagian dari master polis (`policies_df`).
-  3. **Test Validitas Transisi Status**: Memastikan tidak ada polis dengan status `Lapsed` atau `Surrendered` pada bulan $M_t$ yang kembali menjadi `Active` atau `Grace Period` pada bulan $M_{t+1}$.
-  4. **Test Benchmark OJK Populasi Normal**: Memastikan tingkat persistensi M13 populasi agen normal berada di dalam rentang **80%–85%**.
-  5. **Test Proporsi Ground-Truth**: Memastikan proporsi injeksi agen *Hit-and-Run* (3%) dan *Cherry-Picking* (5%) akurat.
-- **Acceptance Criteria**:
-  - [ ] Seluruh pengujian di `pytest tests/test_generate_data.py` lulus (`PASSED` 100%).
+### 🎫 TICKET-02: Dekomposisi Explainability 4 Pilar Risiko (`0–100`), Pipeline Ekspor CSV Power BI & Aset Logo PNG
+
+- **Blocked by**: **TICKET-01**
+- **Status**: `ready-for-agent`
+- **User Stories**: US-06, US-12, US-13
+
+#### What to Build (End-to-End Behavior)
+Membangun dekomposisi *visual explainability* untuk membuka *black-box* skor *Isolation Forest* ke dalam **4 Skor Pilar Risiko (`0–100`)** beserta persentase kontribusinya, serta menyediakan satu skrip pipeline ETL deterministik yang mengekspor seluruh tabel CSV siap pakai untuk Power BI dan mengonversi logo resmi MNC Life ke format PNG resolusi tinggi.
+
+#### Kriteria Teknis & Dokumentasi Detail
+1. **Dekomposisi 4 Pilar Risiko Ternormalisasi (`0–100`) & Kontribusi Fitur**:
+   - Tambahkan perhitungan 4 skor pilar pada level agen (skala `0.0` hingga `100.0`, dibulatkan 1 desimal):
+     1. `score_vol_shock`: $\min(100, \frac{\text{lapse\_shock\_vol}}{45.0} \times 100)$ — mengukur keparahan guncangan volume M12→M13.
+     2. `score_ape_shock`: $\min(100, \frac{\text{lapse\_shock\_ape}}{60.0} \times 100)$ — mengukur keparahan kebocoran premi APE M12→M13.
+     3. `score_ape_disparity`: $\min(100, \frac{\max(0, \text{ape\_disparity\_ratio} - 1.0)}{4.0} \times 100)$ — mengukur ketimpangan nominal polis yang *lapse* vs *active*.
+     4. `score_cash_ratio`: $\min(100, \frac{\text{cash\_payment\_ratio}}{80.0} \times 100)$ — mengukur konsentrasi pembayaran tunai/manual.
+   - Hitung kontribusi proporsional tiap pilar (`share_vol_shock_pct`, `share_ape_shock_pct`, `share_ape_disparity_pct`, `share_cash_ratio_pct`) sehingga total keempatnya berjumlah `100.0%` untuk setiap agen, serta kolom `dominant_risk_pillar` (nama pilar dengan skor tertinggi).
+   - Tambahkan kolom peringkat `risk_rank` (`1` s/d `200` berdasarkan `anomaly_score` menurun) dan flag boolean `is_top20_risk_rank` (`risk_rank <= 40`).
+2. **Tabel Ekspor Power BI (Disimpan di `data/`)**:
+   - `agents.csv` (200 baris), `policies.csv` (12.000 baris), `policy_monthly_status.csv` (288.000 baris).
+   - `agent_risk_scores.csv` (200 baris): memuat seluruh atribut profil agen, `true_label`, `is_anomaly`, metrik retensi M12 & M13, 4 fitur risiko, `tier1_violation`, `tier2_anomaly`, `anomaly_score`, `risk_rank`, `is_top20_risk_rank`, `risk_category`, `primary_risk_drivers`, `dominant_risk_pillar`, 4 skor pilar (`0–100`), dan 4 persentase kontribusi pilar.
+   - `agent_risk_pillars.csv` (800 baris = 200 agen × 4 pilar, format *unpivoted/long*):
+     - Kolom: `agent_id`, `pillar_order` (`1–4`), `pillar_name` (`Volume Shock M12-M13`, `APE Leakage Shock M12-M13`, `APE Ticket Disparity`, `Manual/Cash Concentration`), `agent_raw_value`, `normal_benchmark_value`, `unit_label` (`%` atau `x`), `pillar_score_100`, `contribution_pct`.
+3. **Konversi Aset Identitas Visual**:
+   - Konversi logo resmi MNC Life dari SVG ke PNG beresolusi tinggi (`powerbi/assets/mnc_life_logo.png`) dengan latar transparan agar kompatibel penuh dengan visual *Image* native di Power BI Desktop.
+
+#### Acceptance Criteria
+- [ ] Menjalankan skrip ekspor ETL menghasilkan kelima file CSV di `data/` dan file `powerbi/assets/mnc_life_logo.png` tanpa error.
+- [ ] `agent_risk_scores.csv` memiliki tepat 200 baris tanpa nilai `NaN`/`inf`, dengan seluruh skor pilar berada di rentang `[0, 100]` dan total persentase kontribusi = `100%`.
+- [ ] `agent_risk_pillars.csv` memiliki tepat 800 baris (4 baris per `agent_id`) dengan nilai `normal_benchmark_value` yang akurat mewakili rata-rata populasi agen normal.
+- [ ] Unit test khusus untuk dekomposisi 4 pilar dan skema ekspor ETL ditambahkan dan lulus (`pytest` hijau).
 
 ---
 
-## EPIC 2: Matriks Analisis Kohort 2D & Rekayasa Fitur Agen (`detector.py` - Bagian 1)
+## EPIC 2: Fondasi Proyek Power BI (`.pbip`), Star Schema TMDL, & Ukuran DAX Berbobot
 
-### 🎫 TICKET-04: Kalkulasi Matriks Kohort Dua Dimensi (Volume vs APE M1–M24) & Monitor Grace Period
-- **User Stories**: US-01, US-02, US-06, US-08
-- **File Target**: `detector.py`
-- **Deskripsi & Cakupan Teknis**:
-  1. **Fungsi Filter Granular**: Mendukung pemfilteran dataset berdasarkan `channel`, `branch_office`, dan `agent_id`.
-  2. **Kalkulasi Matriks Persistensi Volume (`Volume Cohort Matrix`)**:
-     - Baris: `cohort_month` (24 kohort bulanan), Kolom: bulan polis `M1` s/d `M24`.
-     - Formula: $\text{Persistency}_{Vol}(M_t) = \frac{\text{Polis Aktif pada } M_t}{\text{Total Polis Awal Kohort } (M_1)} \times 100\%$.
-  3. **Kalkulasi Matriks Persistensi Premi (`APE Cohort Matrix`)**:
-     - Baris: `cohort_month`, Kolom: `M1` s/d `M24`.
-     - Formula: $\text{Persistency}_{APE}(M_t) = \frac{\sum \text{APE Aktif pada } M_t}{\sum \text{Total APE Awal Kohort } (M_1)} \times 100\%$.
-  4. **Kalkulasi Discrepancy / Leakage Matrix**: Selisih antara retensi Volume dan retensi APE ($\text{Persistency}_{Vol} - \text{Persistency}_{APE}$) per sel kohort untuk menyoroti kebocoran premi.
-  5. **Early Warning Grace Period Extractor (M11–M12)**: Fungsi khusus untuk mengisolasi daftar polis dan agen yang sedang berada pada status `Grace Period` di bulan ke-11 dan ke-12 sebelum jatuh tempo M13.
-- **Acceptance Criteria**:
-  - [ ] Menghasilkan matriks DataFrame 24×24 untuk Volume dan APE yang akurat dan bebas dari *division-by-zero*.
-  - [ ] Menyediakan ringkasan metrik agregat M13 (Volume vs APE) untuk dibandingkan langsung dengan ambang batas OJK/AAJI (80%–85%).
+### 🎫 TICKET-03: Scaffolding Proyek `.pbip`, Star Schema TMDL, Parameter `DataFolderPath`, & DAX Measures Berbobot
 
----
+- **Blocked by**: **TICKET-02**
+- **Status**: `ready-for-agent`
+- **User Stories**: US-02, US-03, US-07, US-12
 
-### 🎫 TICKET-05: Rekayasa Fitur Multivariat Level Agen (4 Dimensi Risiko)
-- **User Stories**: US-05, US-07, US-11
-- **File Target**: `detector.py`
-- **Deskripsi & Cakupan Teknis**:
-  1. Membangun fungsi `engineer_agent_features(agents_df, policies_df, history_df)` yang mengekstrak **4 fitur utama** sesuai [SPEC.md](file:///c:/Users/USER/Downloads/Project%20Portfolio%20Data/Analisis%20Kohort%20Persistensi%20Polis%20&%20Deteksi%20Churn%20Agen/SPEC.md):
-     - **Fitur 1 — `lapse_shock_vol` ($\Delta \text{Persistency}_{Vol}$)**: Selisih tingkat persistensi jumlah polis antara bulan ke-12 dan bulan ke-13 ($\text{Persistency}_{Vol, M12} - \text{Persistency}_{Vol, M13}$).
-     - **Fitur 2 — `lapse_shock_ape` ($\Delta \text{Persistency}_{APE}$)**: Selisih rasio retensi nilai premi antara bulan ke-12 dan bulan ke-13 ($\text{Persistency}_{APE, M12} - \text{Persistency}_{APE, M13}$).
-     - **Fitur 3 — `ape_disparity_ratio`**: Rasio rata-rata nominal APE polis yang mengalami *lapse* (khususnya di sekitar M13) dibagi rata-rata nominal APE polis yang tetap *Active* ($\frac{\overline{\text{APE}}_{\text{Lapsed}}}{\overline{\text{APE}}_{\text{Active}}}$).
-     - **Fitur 4 — `cash_payment_ratio` (*Payment Method Risk Concentration*)**: Persentase transaksi/polis agen yang menggunakan metode pembayaran `Manual/Cash` terhadap total polis agen.
-  2. Menambahkan metrik pendukung (*context metrics*) untuk kebutuhan audit & *early warning*:
-     - `m12_vol_persistency`, `m13_vol_persistency`, `m12_ape_persistency`, `m13_ape_persistency`
-     - `grace_period_m11_m12_count` & `grace_period_m11_m12_ape` (volatilitas *Grace Period* M11–M12)
-     - Penanganan *missing values* / *smoothing* aman untuk agen dengan volume penjualan rendah atau polis yang belum mencapai M13.
-- **Acceptance Criteria**:
-  - [ ] Keempat fitur bebas dari nilai `NaN` atau `inf` (aman untuk input model *scikit-learn*).
-  - [ ] Fitur memiliki daya pisah (*separability*) yang jelas antara agen *Normal*, *Hit-and-Run*, dan *Cherry-Picking*.
+#### What to Build (End-to-End Behavior)
+Membangun proyek **Power BI Project (`powerbi/MNC_Life_PAYDI.pbip`)** beserta definisi **Semantic Model (`MNC_Life_PAYDI.SemanticModel/definition/*.tmdl`)** dan **Theme JSON MNC Life** yang memuat *Star Schema* 4 tabel, parameter portabel `DataFolderPath`, pengurutan bulan polis `M1–M24` yang benar, serta seluruh **DAX Measures** berstandar aktuaria/BI berbobot.
 
----
+#### Kriteria Teknis & Dokumentasi Detail
+1. **Struktur File Proyek `.pbip`**:
+   - Entry point `powerbi/MNC_Life_PAYDI.pbip` yang menunjuk ke `MNC_Life_PAYDI.Report`.
+   - `powerbi/MNC_Life_PAYDI.SemanticModel/definition.pbism` (versi skema standar Power BI).
+   - `powerbi/MNC_Life_PAYDI.Report/definition.pbir` dengan referensi `byPath` ke `../MNC_Life_PAYDI.SemanticModel`.
+2. **Desain Star Schema & Partisi Power Query (TMDL)**:
+   - Buat *Named Expression / Parameter* `DataFolderPath` yang menunjuk ke direktori `data/` proyek agar path sumber data terpusat di satu parameter.
+   - **Tabel 1 — `DimAgent`** (sumber: `agent_risk_scores.csv`):
+     - Kunci utama: `agent_id`.
+     - Menyimpan atribut organisasi (`agent_name`, `channel`, `branch_office`, `join_date`), metrik 4D fisik (untuk sumbu X/Y/Size Scatter Chart), `risk_category` (untuk Slicer & Legend Scatter Chart), `anomaly_score`, `risk_rank`, `is_top20_risk_rank`, `primary_risk_drivers`, `dominant_risk_pillar`, serta `true_label` & `is_anomaly` (di-organisir rapi untuk halaman validasi model).
+   - **Tabel 2 — `DimPolicy`** (sumber: `policies.csv`):
+     - Kunci utama: `policy_id`, kunci tamu: `agent_id`.
+     - Menyimpan `cohort_month`, `issue_date` (Date), `ape` (Decimal/Currency), `payment_method`.
+   - **Tabel 3 — `FactPolicyMonthlyStatus`** (sumber: `policy_monthly_status.csv`):
+     - Kunci tamu: `policy_id`.
+     - Menyimpan `month_index` (Int64 `1–24`), `status` (`Active`, `Grace Period`, `Lapsed`, `Surrendered`), dan kolom `Month Label` (`"M" & Text.From([month_index])`) dengan properti TMDL **`sortByColumn: month_index`**.
+   - **Tabel 4 — `FactAgentRiskPillars`** (sumber: `agent_risk_pillars.csv`):
+     - Kunci tamu: `agent_id`.
+     - Menyimpan `pillar_order` (Int64 `1–4`), `pillar_name` (dengan **`sortByColumn: pillar_order`**), `agent_raw_value`, `normal_benchmark_value`, `unit_label`, `pillar_score_100`, `contribution_pct`.
+   - **Relasi (`relationships.tmdl`)**:
+     - `DimPolicy[agent_id]` (*) → (1) `DimAgent[agent_id]` (*Single direction*)
+     - `FactPolicyMonthlyStatus[policy_id]` (*) → (1) `DimPolicy[policy_id]` (*Single direction*)
+     - `FactAgentRiskPillars[agent_id]` (*) → (1) `DimAgent[agent_id]` (*Single direction*)
+3. **Katalog DAX Measures Berbobot (*Weighted Portfolio Standard*)**:
+   - **Kelompok 1 — Basis & Retensi Kohort Dinamis (M1–M24)**:
+     - `Initial Policies` = `COUNTROWS(DimPolicy)`
+     - `Initial APE` = `SUM(DimPolicy[ape])`
+     - `Active Policies` = menghitung polis unik di `FactPolicyMonthlyStatus` dengan `status IN {"Active", "Grace Period"}`.
+     - `Active APE` = menggunakan `TREATAS` dari daftar `policy_id` aktif di `FactPolicyMonthlyStatus` ke `DimPolicy[policy_id]` untuk menjumlahkan `DimPolicy[ape]` secara akurat pada setiap bulan polis.
+     - `Persistency Volume %` = `DIVIDE([Active Policies], [Initial Policies])` (format `0.0%`)
+     - `Persistency APE %` = `DIVIDE([Active APE], [Initial APE])` (format `0.0%`)
+     - `Leakage Gap %` = `[Persistency Volume %] - [Persistency APE %]` (format `+0.0%;-0.0%;0.0%`)
+   - **Kelompok 2 — KPI Eksekutif M13 & Benchmark Regulasi**:
+     - `M13 Active Policies` & `M13 Active APE` (difilter pada `FactPolicyMonthlyStatus[month_index] = 13`).
+     - `M13 Volume Persistency %` = `DIVIDE([M13 Active Policies], [Initial Policies])`
+     - `M13 Volume vs AAJI Benchmark` = `[M13 Volume Persistency %] - 0.80`
+     - `M13 APE Persistency %` = `DIVIDE([M13 Active APE], [Initial APE])`
+     - `M13 Leakage Gap %` = `[M13 Volume Persistency %] - [M13 APE Persistency %]`
+     - `M13 Leaked APE (IDR)` = `[Initial APE] - [M13 Active APE]`
+     - `Total Agents` = `COUNTROWS(DimAgent)`
+     - `Flagged Agents Count` = `CALCULATE(COUNTROWS(DimAgent), DimAgent[risk_category] <> "Normal")`
+     - `Hit and Run Agents Count` = `CALCULATE(COUNTROWS(DimAgent), DimAgent[risk_category] = "Hit and Run")`
+     - `Cherry Picking Agents Count` = `CALCULATE(COUNTROWS(DimAgent), DimAgent[risk_category] = "Cherry Picking")`
+     - `Flagged Agents Subtitle` = teks dinamis `"Hit & Run: " & [Hit and Run Agents Count] & " | Cherry Picking: " & [Cherry Picking Agents Count]`
+   - **Kelompok 3 — Early Warning Grace Period (M11–M12 Distinct per Polis)**:
+     - `Grace Period Policies (M11-M12)` = `CALCULATE(DISTINCTCOUNT(FactPolicyMonthlyStatus[policy_id]), FactPolicyMonthlyStatus[month_index] IN {11, 12}, FactPolicyMonthlyStatus[status] = "Grace Period")`
+     - `Grace Period APE (M11-M12)` = menggunakan `TREATAS` dari polis unik `Grace Period` di M11–M12 ke `DimPolicy[policy_id]` untuk menjumlahkan `DimPolicy[ape]` tanpa *double-counting*.
+     - `Grace Period APE (Miliar IDR)` = `DIVIDE([Grace Period APE (M11-M12)], 1000000000)`
+     - `Grace Period Cash Ratio %` & `Grace Period Auto-Debit Ratio %`.
+   - **Kelompok 4 — Explainability 4 Pilar & Evaluasi Model (Ground-Truth Validation)**:
+     - `Agent Pillar Score (0-100)` = `AVERAGE(FactAgentRiskPillars[pillar_score_100])`
+     - `Agent Pillar Contribution %` = `DIVIDE(AVERAGE(FactAgentRiskPillars[contribution_pct]), 100)`
+     - `Agent Raw Feature Value` = `AVERAGE(FactAgentRiskPillars[agent_raw_value])`
+     - `Normal Benchmark Feature Value` = `AVERAGE(FactAgentRiskPillars[normal_benchmark_value])`
+     - `Ground Truth Anomalies` = `CALCULATE(COUNTROWS(DimAgent), DimAgent[is_anomaly] = TRUE())`
+     - `True Positives (Top 20% Rank)` = `CALCULATE(COUNTROWS(DimAgent), DimAgent[is_anomaly] = TRUE(), DimAgent[is_top20_risk_rank] = TRUE())`
+     - `Top-20% Recall %` = `DIVIDE([True Positives (Top 20% Rank)], [Ground Truth Anomalies])`
+     - `True Positives (Flagged)` = `CALCULATE(COUNTROWS(DimAgent), DimAgent[is_anomaly] = TRUE(), DimAgent[risk_category] <> "Normal")`
+     - `Overall Recall %` = `DIVIDE([True Positives (Flagged)], [Ground Truth Anomalies])`
+     - `Detection Precision %` = `DIVIDE([True Positives (Flagged)], [Flagged Agents Count])`
+4. **Identitas Visual & Theme JSON MNC Life (`MNC_Life_Theme.json`)**:
+   - Konfigurasi warna data, latar kanvas `#FFFFFF`, permukaan kartu `#F5F8FC`, border `#D9E5F2`, warna primer `#192C4D`, aksen emas `#C89B2C`, merah peringatan `#D94B4B`, hijau kepatuhan `#1E6B52`, dan tipografi kontras tinggi mengacu pada [DESIGN.md](file:///c:/Users/USER/Downloads/Project%20Portfolio%20Data/Analisis%20Kohort%20Persistensi%20Polis%20%26%20Deteksi%20Churn%20Agen/DESIGN.md).
 
-## EPIC 3: Mesin Deteksi Anomali Two-Tier & Evaluasi Model (`detector.py` - Bagian 2)
-
-### 🎫 TICKET-06: Arsitektur Deteksi Two-Tier (Rule-Based Screening + Isolation Forest)
-- **User Stories**: US-03, US-04, US-05
-- **File Target**: `detector.py`
-- **Deskripsi & Cakupan Teknis**:
-  1. **Tier 1 — Hard Rule-Based Screening (Kepatuhan Deterministik)**:
-     - Menandai agen yang melanggar batas kepatuhan eksplisit:
-       - $\Delta \text{Persistency}_{Vol} > 25\%$ (indikasi kuat *Hit-and-Run*), **ATAU**
-       - Persistensi Volume M13 $< 75\%$ (di bawah batas toleransi minimum OJK/AAJI).
-  2. **Tier 2 — Unsupervised Isolation Forest (Deteksi Multivariat Halus)**:
-     - Melatih `IsolationForest` (dengan *standard scaling* pada 4 fitur: `lapse_shock_vol`, `lapse_shock_ape`, `ape_disparity_ratio`, `cash_payment_ratio`).
-     - Mengonversi *decision function* menjadi **Anomaly Score kontinu (`0.0` hingga `1.0`)**, di mana skor mendekati `1.0` menunjukkan tingkat anomali tertinggi.
-     - Mengidentifikasi agen *outlier* yang **lolos dari saringan Tier 1** namun tertangkap oleh pola multivariat Tier 2 (seperti perilaku *Cherry-Picking* di mana volume M13 aman ~80% tetapi APE anjlok dan `ape_disparity_ratio` tinggi).
-  3. **Interpretabilitas & Risk Driver Attribution**:
-     - Menghasilkan kolom klasifikasi risiko (`Normal`, `Tier 1: Rule Violation (Hit-and-Run)`, `Tier 2: ML Anomaly (Cherry-Picking / Hidden Leakage)`).
-     - Menghasilkan teks penjelasan otomatis (`primary_risk_drivers`) per agen (contoh: *"APE Lapse Shock 54.2% vs Vol Drop 12.0%; High-value policies lapsed (Disparity 3.4x); Cash Ratio 68%"*) sebagai bukti kuantitatif sidang audit.
-- **Acceptance Criteria**:
-  - [ ] Setiap agen memiliki `anomaly_score` dalam rentang `[0, 1]`, status flag Tier 1, status flag Tier 2, kategori risiko gabungan, dan rincian *risk drivers*.
-
----
-
-### 🎫 TICKET-07: Pengujian Seam Kalkulasi Kohort & Evaluasi Model Deteksi (`tests/test_detector.py`)
-- **User Stories**: Testing Decisions (*Cohort Calculation Seam Tests* & *Detection Model Evaluation Tests*)
-- **File Target**: `tests/test_detector.py`
-- **Deskripsi & Cakupan Teknis**:
-  1. **Cohort Calculation Seam Tests**:
-     - Memvalidasi akurasi formula persistensi Volume dan APE terhadap perhitungan manual pada sampel kohort.
-     - Memverifikasi sifat **monoton menurun atau konstan** ($\text{Persistency}(M_{t+1}) \le \text{Persistency}(M_t)$) di seluruh baris kohort M1–M24 baik untuk matriks Volume maupun APE.
-  2. **Detection Model Evaluation Tests**:
-     - Menguji **Recall** deteksi terhadap label *ground-truth* sintetis (`is_anomaly == True`), memastikan **Recall $\ge 85\%$ pada Top-20% *risk ranking*** (berdasarkan `anomaly_score` dan flag Tier 1/2).
-     - Menguji kemampuan Tier 2 (*Isolation Forest*) dalam menangkap agen *Cherry-Picking* yang sengaja lolos dari aturan volume Tier 1.
-     - Menguji ketahanan (*robustness*) pipeline terhadap input *missing values* (`NaN`) atau agen dengan jumlah polis sangat sedikit (misal 1–2 polis).
-- **Acceptance Criteria**:
-  - [ ] Seluruh pengujian di `pytest tests/test_detector.py` lulus (`PASSED` 100%) dengan *Recall* $\ge 85\%$.
-
----
-
-## EPIC 4: Presentation & Interactive Dashboard Layer (`app.py`)
-
-### 🎫 TICKET-08: Kerangka UI Streamlit, Sidebar Filter Multi-Dimensi, & Executive KPI Banner
-- **User Stories**: US-01, US-02, US-06, US-08, US-09
-- **File Target**: `app.py`
-- **Deskripsi & Cakupan Teknis**:
-  1. **Sidebar Kontrol & Filter**:
-     - Filter multi-pilih untuk **Kanal Distribusi** (`Agency`, `Bancassurance`, `Worksite`) dan **Kantor Cabang**.
-     - Parameter kustomisasi ambang batas deteksi (slider threshold $\Delta \text{Persistency}_{Vol}$ Tier 1 & kuantil kontaminasi *Isolation Forest* Tier 2).
-     - Tombol regenerasi/muat ulang dataset sintetis dengan *seed* yang dapat diatur.
-  2. **Executive Summary KPI Cards**:
-     - **M13 Volume Persistency** (dengan indikator status terhadap standar OJK/AAJI 80%–85%).
-     - **M13 APE Persistency & Premium Leakage Gap** (selisih % dan nominal Rp APE yang bocor di M13).
-     - **Flagged High-Risk Agents** (jumlah agen terdeteksi di Tier 1 vs Tier 2).
-     - **Early Warning M11–M12 Grace Period** (jumlah polis & total APE yang saat ini berada di *Grace Period* M11–M12 dan butuh intervensi retensi segera).
-- **Acceptance Criteria**:
-  - [ ] Perubahan filter pada sidebar memperbarui seluruh metrik KPI dan visualisasi secara *real-time*.
+#### Acceptance Criteria
+- [ ] Struktur folder `powerbi/MNC_Life_PAYDI.pbip`, `MNC_Life_PAYDI.SemanticModel`, dan `MNC_Life_PAYDI.Report` terbentuk lengkap dan sesuai spesifikasi skema PBIP/TMDL.
+- [ ] Seluruh tabel, kolom, tipe data, properti `sortByColumn`, relasi *Star Schema*, dan formula DAX terdefinisi secara valid tanpa syntax error.
+- [ ] Theme JSON MNC Life terdaftar di definisi laporan (`report.json`) dan siap digunakan oleh seluruh halaman visual.
 
 ---
 
-### 🎫 TICKET-09: Visualisasi Dual-Cohort Heatmap (Volume vs APE) & Scatter Plot Klaster Anomali
-- **User Stories**: US-01, US-02, US-04, US-08, US-09
-- **File Target**: `app.py`
-- **Deskripsi & Cakupan Teknis**:
-  1. **Dual-Cohort Heatmap Berdampingan (*Side-by-Side*)**:
-     - Panel Kiri: **Volume Retention Matrix (M1–M24)** dengan gradien warna persistensi dan garis penanda batas kritis **M12–M13**.
-     - Panel Kanan: **APE Retention Matrix (M1–M24)** pada skala warna yang sama agar *premium leakage* (perubahan warna drastis di M13 pada matriks APE dibanding Volume) langsung terlihat secara visual.
-     - Opsi *toggle* untuk melihat **Discrepancy Heatmap (Volume % − APE %)**.
-  2. **Scatter Plot Anomali Multivariat**:
-     - Sumbu X: $\Delta \text{Persistency}_{Vol}$ (*Lapse Shock Volume* M12–M13).
-     - Sumbu Y: $\Delta \text{Persistency}_{APE}$ (*Lapse Shock APE* M12–M13).
-     - Ukuran titik (*bubble size*): `ape_disparity_ratio` atau total APE agen; Warna titik: Kategori Deteksi (`Normal`, `Tier 1: Hit-and-Run`, `Tier 2: Cherry-Picking`).
-     - Garis bantu (*threshold lines*) yang membagi kuadran perilaku agen normal vs zona *Cherry-Picking* vs zona *Hit-and-Run*.
-  3. **Panel Early Warning Retensi (M11–M12 Grace Period)**:
-     - Grafik & tabel ringkas polis berisiko tinggi yang sedang dalam masa tenggang (*Grace Period*) di M11–M12 untuk ditindaklanjuti oleh *Retention Manager*.
-- **Acceptance Criteria**:
-  - [ ] Kedua heatmap tampil berdampingan dengan *tooltip* detail per kohort dan bulan polis.
-  - [ ] Scatter plot memisahkan klaster *Normal*, *Hit-and-Run*, dan *Cherry-Picking* secara jelas dan interaktif.
+## EPIC 3: Implementasi 5 Halaman Visualisasi Report PBIR (`MNC_Life_PAYDI.Report`)
+
+### 🎫 TICKET-04: Implementasi PBIR Halaman 1 (Matriks Kohort Volume vs APE) & Halaman 2 (Peta Sebaran Anomali 4D)
+
+- **Blocked by**: **TICKET-03**
+- **Status**: `ready-for-agent`
+- **User Stories**: US-01, US-02, US-03, US-05, US-07
+
+#### What to Build (End-to-End Behavior)
+Membangun definisi PBIR lengkap (`page.json` & `visual.json`) untuk **Halaman 1 (Matriks Kohort Volume vs APE & Leakage Gap)** dan **Halaman 2 (Peta Sebaran Anomali Agen 4D)** lengkap dengan header korporat MNC Life, Slicer Global (`channel` & `branch_office`), dan 4 Kartu KPI Eksekutif.
+
+#### Kriteria Teknis & Dokumentasi Detail
+1. **Header Global, Slicer Panel, & 4 KPI Cards**:
+   - Judul dashboard, lencana regulasi (`SEOJK No. 5/SEOJK.05/2022 | Standar AAJI M13: 80%-85% | Fully Seasoned Cohort 2022–2023`), dan logo MNC Life.
+   - Slicer `DimAgent[channel]` dan `DimAgent[branch_office]`.
+   - 4 Kartu KPI utama:
+     1. `M13 Volume Persistency %` (beserta selisih terhadap target AAJI 80%).
+     2. `M13 APE Persistency %` (beserta `M13 Leakage Gap %`).
+     3. `Flagged Agents Count` (beserta rincian `Hit and Run` vs `Cherry Picking`).
+     4. `Grace Period Policies (M11-M12)` (beserta `Grace Period APE (Miliar IDR)`).
+2. **Halaman 1 — `Matriks Kohort (Volume vs APE)`**:
+   - **Matrix 1 — Retensi Volume Polis (%)**: Baris `DimPolicy[cohort_month]`, Kolom `FactPolicyMonthlyStatus[Month Label]` (`M1–M24`), Nilai `[Persistency Volume %]`.
+   - **Matrix 2 — Retensi Premi APE (%)**: Baris `DimPolicy[cohort_month]`, Kolom `FactPolicyMonthlyStatus[Month Label]` (`M1–M24`), Nilai `[Persistency APE %]`.
+   - **Matrix 3 — Selisih Kebocoran Premi (`Leakage Gap %`)**: Baris `DimPolicy[cohort_month]`, Kolom `FactPolicyMonthlyStatus[Month Label]` (`M1–M24`), Nilai `[Leakage Gap %]` untuk menyoroti lonjakan kebocoran di `M13–M24`.
+3. **Halaman 2 — `Peta Sebaran Anomali Agen`**:
+   - **Scatter/Bubble Chart 4D**:
+     - Details/Values: `DimAgent[agent_id]`
+     - X-Axis: `DimAgent[lapse_shock_vol]` ($\Delta$ Persistensi Volume M12→M13 %)
+     - Y-Axis: `DimAgent[lapse_shock_ape]` ($\Delta$ Persistensi APE M12→M13 %)
+     - Size: `DimAgent[ape_disparity_ratio]` (Disparitas Premi)
+     - Legend: `DimAgent[risk_category]` (`Normal`, `Hit and Run`, `Cherry Picking`)
+     - Tooltips: `agent_name`, `channel`, `branch_office`, `anomaly_score`, `cash_payment_ratio`, `primary_risk_drivers`.
+   - Kartu/visual penjelas karakteristik 3 zona perilaku (*Normal*, *Hit and Run*, *Cherry Picking*) beserta perbandingan rata-rata metriknya.
+
+#### Acceptance Criteria
+- [ ] Halaman 1 dan Halaman 2 terdefinisi lengkap di dalam `MNC_Life_PAYDI.Report/definition/pages/` dengan ukuran kanvas, tata letak non-overlapping, dan binding kolom/measure yang valid terhadap `MNC_Life_PAYDI.SemanticModel`.
+- [ ] Kolom bulan pada ketiga Matrix di Halaman 1 terurut rapi dari `M1` hingga `M24`.
+- [ ] Scatter Chart di Halaman 2 memetakan keempat dimensi risiko (`lapse_shock_vol`, `lapse_shock_ape`, `ape_disparity_ratio`, `risk_category`) secara akurat.
 
 ---
 
-### 🎫 TICKET-10: Agent Risk Watchlist Interaktif, Drill-Down Bukti Audit, & Ekspor CSV
-- **User Stories**: US-03, US-05, US-07, US-12
-- **File Target**: `app.py`
-- **Deskripsi & Cakupan Teknis**:
-  1. **Tabel Interaktif *Agent Risk Watchlist***:
-     - Filter berdasarkan Status Tier (`All`, `Tier 1 Only`, `Tier 2 Only`), rentang `Anomaly Score`, dan status investigasi audit.
-     - Menampilkan kolom kunci: `agent_id`, `agent_name`, `channel`, `branch_office`, `detection_tier`, `anomaly_score`, `m13_vol_persistency`, `m13_ape_persistency`, `lapse_shock_vol`, `lapse_shock_ape`, `ape_disparity_ratio`, `cash_payment_ratio`, dan `primary_risk_drivers`.
-  2. **Fitur *Agent Evidence Drill-Down* (Pembuktian Audit per Agen)**:
-     - Saat pengguna memilih satu agen dari *Watchlist*, dashboard menampilkan:
-       - **Dual-Cohort Curve / Heatmap Spesifik Agen** (perbandingan kurva retensi Volume vs APE dari M1–M24 milik agen tersebut vs benchmark perusahaan).
-       - **Profil Risiko 4 Dimensi & Distribusi Pembayaran** (proporsi `Manual/Cash` vs `Auto-Debit`, serta perbandingan ukuran APE polis yang *Active* vs *Lapsed*).
-  3. **Tombol Ekspor Audit CSV**:
-     - Tombol `Download Prioritized Watchlist (CSV)` yang mengekspor daftar agen berisiko sesuai filter aktif untuk diimpor langsung ke sistem manajemen audit internal.
-- **Acceptance Criteria**:
-  - [ ] Auditor dapat memilih agen mana pun di *Watchlist* untuk melihat pembuktian visual *dual-cohort* dan penjelasan fitur kuantitatifnya.
-  - [ ] File CSV yang diunduh memiliki struktur kolom yang bersih dan lengkap untuk pelaporan audit.
+### 🎫 TICKET-05: Implementasi PBIR Halaman 3 (Early Warning Grace Period) & Halaman 4 (Watchlist, Kurva M1–M24 & 4 Pilar Risiko)
+
+- **Blocked by**: **TICKET-03**
+- **Status**: `ready-for-agent`
+- **User Stories**: US-06, US-08, US-09, US-10
+
+#### What to Build (End-to-End Behavior)
+Membangun definisi PBIR lengkap untuk **Halaman 3 (Early Warning Grace Period M11–M12)** guna intervensi retensi proaktif, serta **Halaman 4 (Watchlist & Pemeriksaan Detail Agen)** yang mengintegrasikan tabel pengawasan agen dengan kurva siklus hidup M1–M24 dan **Bar Chart Explainability 4 Pilar Risiko (0–100)**.
+
+#### Kriteria Teknis & Dokumentasi Detail
+1. **Halaman 3 — `Early Warning Grace Period (M11-M12)`**:
+   - Kartu metrik ringkasan: `Grace Period Policies (M11-M12)`, `Grace Period APE (Miliar IDR)`, `Grace Period Cash Ratio %`, dan `Grace Period Auto-Debit Ratio %`.
+   - **Donut / Bar Chart Metode Pembayaran** (`DimPolicy[payment_method]` terhadap `[Grace Period Policies (M11-M12)]` dan `[Grace Period APE (M11-M12)]`).
+   - **Bar Chart Cabang / Kanal Rawan Lapse**: Distribusi nominal APE *Grace Period* M11–M12 per `branch_office` dan `channel`.
+   - **Tabel Prioritas Intervensi Polis (M11–M12)**: Menampilkan daftar polis yang berstatus `Grace Period` pada `month_index IN {11, 12}` beserta `policy_id`, `agent_id`, `agent_name`, `branch_office`, `cohort_month`, `month_index`, `ape`, dan `payment_method`.
+2. **Halaman 4 — `Watchlist & Detail Bukti Agen`**:
+   - Filter Slicer: `DimAgent[risk_category]`, `DimAgent[dominant_risk_pillar]`, dan Slicer pilihan `DimAgent[agent_id]` / `agent_name`.
+   - **Tabel Interaktif *Agent Risk Watchlist***: Menampilkan `risk_rank`, `agent_id`, `agent_name`, `channel`, `branch_office`, `risk_category`, `anomaly_score`, `m13_vol_persistency`, `m13_ape_persistency`, `lapse_shock_vol`, `lapse_shock_ape`, `ape_disparity_ratio`, `cash_payment_ratio`, `dominant_risk_pillar`, dan `primary_risk_drivers`.
+   - **Panel Master-Detail Kiri — Kurva Siklus Hidup M1–M24 (`Line Chart`)**:
+     - X-Axis: `FactPolicyMonthlyStatus[Month Label]` (`M1–M24`)
+     - Y-Axis: `[Persistency Volume %]` dan `[Persistency APE %]`
+     - Menampilkan divergennya kurva Volume vs APE tepat di titik `M13` ketika satu agen berisiko dipilih pada tabel Watchlist.
+   - **Panel Master-Detail Kanan — Dekomposisi Explainability 4 Pilar Risiko (`Bar Chart`)**:
+     - Sumbu Kategori: `FactAgentRiskPillars[pillar_name]` (`Volume Shock M12-M13`, `APE Leakage Shock M12-M13`, `APE Ticket Disparity`, `Manual/Cash Concentration`).
+     - Nilai: `[Agent Pillar Score (0-100)]` dan `[Agent Pillar Contribution %]` (beserta tooltip perbandingan `[Agent Raw Feature Value]` vs `[Normal Benchmark Feature Value]`).
+     - Menjawab secara visual dan instan *mengapa* agen terpilih mendapatkan skor anomali tinggi.
+
+#### Acceptance Criteria
+- [ ] Halaman 3 menampilkan khusus polis yang berada pada status `Grace Period` di bulan ke-11 dan ke-12 tanpa *double-counting* pada KPI total polis maupun total APE.
+- [ ] Halaman 4 memungkinkan interaksi *cross-filtering*: saat satu baris agen pada *Watchlist* diklik, *Line Chart* M1–M24 dan *Bar Chart* 4 Pilar Risiko otomatis memperbarui kurva serta profil dekomposisi risiko agen tersebut.
+- [ ] Seluruh visual di Halaman 3 dan Halaman 4 memiliki binding field yang valid terhadap model TMDL.
+
+---
+
+### 🎫 TICKET-06: Implementasi PBIR Halaman 5 (Validasi & Evaluasi Model) & Verifikasi End-to-End di Power BI Desktop
+
+- **Blocked by**: **TICKET-04**, **TICKET-05**
+- **Status**: `ready-for-agent`
+- **User Stories**: US-04, US-05, US-11, US-12
+
+#### What to Build (End-to-End Behavior)
+Membangun **Halaman 5 (Evaluasi & Validasi Model terhadap Ground-Truth)** untuk membuktikan akurasi metodologi deteksi secara transparan, lalu membuka dan memverifikasi keseluruhan proyek `MNC_Life_PAYDI.pbip` di Power BI Desktop lokal serta menguji akurasi setiap ukuran DAX melalui `powerbi-modeling-mcp`.
+
+#### Kriteria Teknis & Dokumentasi Detail
+1. **Halaman 5 — `Evaluasi & Validasi Model`**:
+   - **4 Kartu KPI Validasi Metodologi**:
+     1. `Top-20% Recall %` (membuktikan pencapaian target $\ge 85\%$ sesuai [SPEC.md](file:///c:/Users/USER/Downloads/Project%20Portfolio%20Data/Analisis%20Kohort%20Persistensi%20Polis%20%26%20Deteksi%20Churn%20Agen/SPEC.md)).
+     2. `Overall Recall %` (proporsi total agen anomali *ground-truth* yang berhasil ditangkap).
+     3. `Detection Precision %` (kemurnian tangkapan agen berisiko tanpa *false positive* berlebih).
+     4. `Ground Truth Anomalies` vs `Flagged Agents Count`.
+   - **Visual Confusion Matrix (`Matrix Visual`)**:
+     - Baris: `DimAgent[true_label]` (`Normal`, `Hit-and-Run`, `Cherry-Picking`)
+     - Kolom: `DimAgent[risk_category]` (`Normal`, `Hit and Run`, `Cherry Picking`)
+     - Nilai: `[Total Agents]`
+   - **Visual Perbandingan Profil Fitur & Skor per Ground-Truth (`Clustered Column / Bar Chart`)**:
+     - Membandingkan rata-rata 4 Skor Pilar Risiko (`score_vol_shock`, `score_ape_shock`, `score_ape_disparity`, `score_cash_ratio`) dan `anomaly_score` antar kelompok `true_label`.
+   - **Tabel Audit Perbandingan Prediksi vs Ground-Truth**: Menampilkan daftar agen anomali beserta `true_label`, `risk_category`, `risk_rank`, `is_top20_risk_rank`, `anomaly_score`, dan `dominant_risk_pillar`.
+2. **Verifikasi End-to-End di Power BI Desktop & Modeling MCP**:
+   - Buka `powerbi/MNC_Life_PAYDI.pbip` menggunakan Power BI Desktop lokal (`PBIDesktop.exe`).
+   - Hubungkan `powerbi-modeling-mcp` ke instance lokal / proyek untuk memverifikasi bahwa seluruh tabel, relasi, dan ukuran DAX dievaluasi tanpa error.
+   - Jalankan kueri DAX verifikasi untuk memastikan angka KPI M13, matriks kohort, *Grace Period*, dan *Confusion Matrix* di Power BI cocok 100% dengan perhitungan Python.
+
+#### Acceptance Criteria
+- [ ] Halaman 5 terdefinisi lengkap di `MNC_Life_PAYDI.Report` dan menampilkan Confusion Matrix serta metrik `Top-20% Recall %` $\ge 85\%$.
+- [ ] Proyek `powerbi/MNC_Life_PAYDI.pbip` berhasil dibuka di Power BI Desktop lokal tanpa pesan error skema TMDL maupun PBIR.
+- [ ] Evaluasi kueri DAX membuktikan kecocokan angka antara model semantik Power BI dan hasil pipeline Python.
+
+---
+
+## EPIC 4: Finalisasi Migrasi, Cleanup Artefak Streamlit Lama, & Dokumentasi Portofolio
+
+### 🎫 TICKET-07: Pembersihan Artefak Streamlit/Docker/Mockup Lama (*Contract Phase*) & Pembaruan Dokumentasi Portofolio
+
+- **Blocked by**: **TICKET-06**
+- **Status**: `ready-for-agent`
+- **User Stories**: US-12, US-13
+
+#### What to Build (End-to-End Behavior)
+Menyelesaikan fase *Contract* dari migrasi penuh ke Power BI dengan menghapus seluruh kode antarmuka Streamlit, konfigurasi Docker, dan file mockup lama, merampingkan dependensi Python, serta memperbarui `README.md` menjadi dokumentasi portofolio Power BI + Python ML ETL yang bersih dan komprehensif.
+
+#### Kriteria Teknis & Dokumentasi Detail
+1. **Pembersihan Berkas Legacy UI**:
+   - Hapus berkas antarmuka Streamlit dan mockup yang sudah digantikan oleh proyek `.pbip`:
+     - `app.py`
+     - `visuals.py`
+     - `.streamlit/` (`config.toml`)
+     - `Dockerfile` dan `.dockerignore`
+     - `mockup_app.py`, `generate_pygwalker_mockup.py`, dan `pygwalker_mockup.html`
+     - `tests/test_app_components.py`
+2. **Pembaruan Dependensi & Konfigurasi Git**:
+   - Perbarui `requirements.txt` agar hanya memuat pustaka yang benar-benar digunakan oleh engine data, model ML, dan pengujian (`pandas`, `numpy`, `scikit-learn`, `pytest`).
+   - Pastikan `.gitignore` mengecualikan file cache sementara Power BI (`*.abf`, `cache.abf`, `.pbi/localSettings.json`, `.pbi/cache.abf`) agar repositori Git tetap bersih.
+3. **Pembaruan Dokumentasi Utama (`README.md`)**:
+   - Jelaskan arsitektur baru: **Python Actuarial & Anomaly Detection ETL** + **Power BI Project (`.pbip`)**.
+   - Dokumentasikan masalah bisnis (SEOJK No. 5/SEOJK.05/2022 & standar AAJI), metodologi *Fully Seasoned Cohort (2022–2023)*, kalibrasi *Two-Tier Detection*, serta **Visual Explainability 4 Pilar Risiko (`0–100`)**.
+   - Dokumentasikan panduan langkah demi langkah menjalankan ulang pipeline ETL (`python export_powerbi_data.py`), menjalankan rangkaian pengujian (`pytest -v`), serta membuka `powerbi/MNC_Life_PAYDI.pbip` di Power BI Desktop (termasuk cara mengubah parameter `DataFolderPath`).
+
+#### Acceptance Criteria
+- [ ] Seluruh file legacy Streamlit, Docker, dan PyGWalker telah dihapus bersih dari direktori kerja.
+- [ ] `requirements.txt` hanya berisi dependensi backend Python/ML/testing yang relevan, dan `.gitignore` sudah menangani file cache lokal Power BI (`.pbi/`).
+- [ ] Seluruh pengujian di `pytest -v` berjalan dan lulus 100% (`PASSED`).
+- [ ] `README.md` terdokumentasi dengan rapi, akurat, dan mencerminkan struktur berkas serta alur kerja Power BI `.pbip` yang baru.
