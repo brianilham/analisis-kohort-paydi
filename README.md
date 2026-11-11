@@ -199,13 +199,3 @@ Laporan didesain menjadi **1 halaman tunggal** (*One-Page Executive Cockpit*) be
    *Power BI Desktop akan memuat model semantik TMDL dan menampilkan Single-Page Executive Helicopter View secara otomatis.*
 
 ---
-
-## 6. Identitas Visual & Standar Desain
-
-Mengikuti panduan merek PT MNC Life Assurance:
-- **Primary Navy:** `#192C4D` (Header, Kartu Metrik Utama, Sumbu Utama)
-- **Accent Gold:** `#C89B2C` (Aksen, Sorotan Kepatuhan AAJI)
-- **Alert / Danger Red:** `#D94B4B` (Indikator Anomali, Hit and Run, Tingkat Kebocoran APE)
-- **Success Emerald:** `#1E6B52` (Polis Patuh, Normal Persistency)
-- **Background Slate:** `#F5F8FC`
-- **Tipografi:** Segoe UI / Plus Jakarta Sans
